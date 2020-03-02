@@ -14,23 +14,33 @@ namespace Api.Core.DataAccess.Repository
 
         }
 
-        //public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
-        //public DbSet<Item> Items { get; set; }
+        public DbSet<ArticleCategory> ArticleCategories { get; set; }
 
-        //public DbSet<Menu> Menus { get; set; }
+        public DbSet<CertificateStatus> CertificateStatuses { get; set; }
 
-        //public DbSet<Order> Orders { get; set; }
+        public DbSet<Class> Classes { get; set; }
 
-        //public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Extracurricular> Extracurriculars { get; set; }
 
-        //public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<ExtracurricularActivity> ExtracurricularActivities { get; set; }
 
-        //public DbSet<Review> Reviews { get; set; }
+        public DbSet<ExtracurricularPoint> ExtracurricularPoints { get; set; }
+
+        public DbSet<Faculty> Faculties { get; set; }
+
+        public DbSet<Major> Majors { get; set; }
+
+        public DbSet<Report> Reports { get; set; }
 
         public DbSet<Role> Roles { get; set; }
 
-        //public DbSet<Table> Tables { get; set; }
+        public DbSet<Specialty> Specialties { get; set; }
+
+        public DbSet<StandardOfCertificate> StandardOfCertificates { get; set; }
+
+        public DbSet<Student> Students { get; set; }
 
         public DbSet<User> Users { get; set; }
 
@@ -47,6 +57,16 @@ namespace Api.Core.DataAccess.Repository
                 .HasOne(pt => pt.Role)
                 .WithMany(p => p.UserInRoles)
                 .HasForeignKey(pt => pt.RoleId);
+
+            modelBuilder.Entity<Extracurricular>().HasKey(t => new { t.ExtracurricularActivityId, t.ExtracurricularPointId });
+            modelBuilder.Entity<Extracurricular>()
+                .HasOne(pt => pt.ExtracurricularActivity)
+                .WithMany(p => p.Extracurriculars)
+                .HasForeignKey(pt => pt.ExtracurricularActivityId);
+            modelBuilder.Entity<Extracurricular>()
+                .HasOne(pt => pt.ExtracurricularPoint)
+                .WithMany(p => p.Extracurriculars)
+                .HasForeignKey(pt => pt.ExtracurricularPointId);
         }
     }
 }

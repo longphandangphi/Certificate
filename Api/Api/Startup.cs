@@ -89,9 +89,11 @@ namespace Api
             //services.AddScoped<IOrderService, OrderService>();
             //services.AddScoped<IOrderDetailService, OrderDetailService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IFacultyService, FacultyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISSOAuthService, SSOAuthService>();
+            services.AddScoped<IMajorService, MajorService>();
             //services.AddScoped<IItemService, ItemService>();
             //services.AddScoped<IReviewService, ReviewService>();
             //services.AddScoped<IItemService, ItemService>();

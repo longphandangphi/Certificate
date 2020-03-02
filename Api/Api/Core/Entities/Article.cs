@@ -18,9 +18,10 @@ namespace Api.Core.Entities
 
         public string Picture { get; set; }
 
-
         [Required]
         public Guid CategoryId { get; set; }
-        public virtual ArticleCategory ArticleCategoryName { get; set; }
+
+
+        public virtual ArticleCategory ArticleCategory { get; set; }
     }
 }

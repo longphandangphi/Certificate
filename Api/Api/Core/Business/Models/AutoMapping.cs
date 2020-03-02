@@ -1,13 +1,10 @@
-﻿using Api.Core.Business.Models.Roles;
+﻿using Api.Core.Business.Models.Faculties;
+using Api.Core.Business.Models.Majors;
+using Api.Core.Business.Models.Roles;
 using Api.Core.Business.Models.Users;
-using Api.Core.Business.Services;
 using Api.Core.Entities;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Core.Business.Models
 {
@@ -25,6 +22,8 @@ namespace Api.Core.Business.Models
             CreateMap<UserRegisterModel, User>();
             CreateMap<UserLoginModel, User>();
             CreateMap<User, JwtPayload>();
+            CreateMap<FacultyManageModel, Faculty>();
+            CreateMap<MajorManageModel, Major>();
             //CreateMap<ItemManageModel, Item>();
             //CreateMap<ReviewManageModel, Review>();
             //CreateMap<ItemManageModel, Item>();

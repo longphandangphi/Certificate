@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,9 +12,14 @@ namespace Api.Core.Entities
     {
         public ExtracurricularPoint() : base()
         {
-
+            Point = 0;
         }
 
-        public int MyProperty { get; set; }
+        [Required]
+        public int Point { get; set; }
+
+        public virtual Student Student { get; set; }
+
+        public virtual IList<Extracurricular> Extracurriculars { get; set; }
     }
 }
