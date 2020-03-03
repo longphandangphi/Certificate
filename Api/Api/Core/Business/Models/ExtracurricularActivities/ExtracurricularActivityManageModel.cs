@@ -23,7 +23,12 @@ namespace Api.Core.Business.Models.ExtracurricularActivities
         public void GetExtracurricularActivityFromModel(ExtracurricularActivity extracurricularActivity)
         {
             extracurricularActivity.Name = Name;
+            extracurricularActivity.Semester = Semester;
+            extracurricularActivity.OrgnizedTime = OrgnizedTime;
+            extracurricularActivity.ExpectedLocation = ExpectedLocation;
             extracurricularActivity.OrgnizedUnit = OrgnizedUnit;
+            extracurricularActivity.Point = Point;
         }
+        //validate
     }
 }

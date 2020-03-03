@@ -22,6 +22,6 @@ namespace Api.Core.Entities
         public Guid CategoryId { get; set; }
 
 
-        public virtual ArticleCategory ArticleCategory { get; set; }
+        public ArticleCategory ArticleCategory { get; set; }
     }
 }

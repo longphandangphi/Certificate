@@ -28,6 +28,6 @@ namespace Api.Core.Entities
         public bool IsChecked { get; set; }
 
 
-        public virtual Student Student { get; set; }
+        public Student Student { get; set; }
     }
 }

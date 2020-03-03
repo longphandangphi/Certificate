@@ -118,6 +118,7 @@ namespace Api.Core.Business.Services
 
             await _userRepository.InsertAsync(user);
 
+            // Tạo userInRoles để add vào DB vì tạo user phải tạo luôn UserInRole (tương tự lúc update)
             var userInRoles = new List<UserInRole>();
             foreach (var roleId in userRegisterModel.RoleIds)
             {
@@ -127,6 +128,8 @@ namespace Api.Core.Business.Services
                     RoleId = roleId
                 });
             }
+
+            // Add userInRoles vào DB 
             _userInRoleRepository.GetDbContext().UserInRoles.AddRange(userInRoles);
             await _userInRoleRepository.GetDbContext().SaveChangesAsync();
 
@@ -152,7 +155,7 @@ namespace Api.Core.Business.Services
             else
             {
                 await _userInRoleRepository.DeleteAsync(user.UserInRoles);
-
+                
                 var userInRoles = new List<UserInRole>();
                 foreach (var roleId in userUpdateProfileModel.RoleIds)
                 {
@@ -162,7 +165,7 @@ namespace Api.Core.Business.Services
                         RoleId = roleId
                     });
                 }
-
+                
                 _userInRoleRepository.GetDbContext().UserInRoles.AddRange(userInRoles);
                 await _userInRoleRepository.GetDbContext().SaveChangesAsync();
 

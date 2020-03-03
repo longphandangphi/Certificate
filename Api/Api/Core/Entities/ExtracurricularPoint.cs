@@ -18,7 +18,7 @@ namespace Api.Core.Entities
         [Required]
         public int Point { get; set; }
 
-        public virtual Student Student { get; set; }
+        public Student Student { get; set; }
 
         public virtual IList<Extracurricular> Extracurriculars { get; set; }
     }

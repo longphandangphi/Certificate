@@ -25,7 +25,6 @@ namespace Api.Core.Entities
         public int Point { get; set; }
 
 
-
         public virtual IList<Extracurricular> Extracurriculars { get; set; }
     }
 }

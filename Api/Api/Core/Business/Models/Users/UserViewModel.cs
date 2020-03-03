@@ -2,9 +2,7 @@
 using Api.Core.Entities;
 using Api.Core.Entities.Enums;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Core.Business.Models.Users
 {

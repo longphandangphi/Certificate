@@ -23,7 +23,7 @@ namespace Api.Core.Entities
 
 
 
-        public virtual Faculty Faculty { get; set; }
+        public Faculty Faculty { get; set; }
         public virtual IList<Student> Students { get; set; }
     }
 }

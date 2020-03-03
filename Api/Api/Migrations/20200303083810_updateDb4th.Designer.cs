@@ -4,14 +4,16 @@ using Api.Core.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Api.Migrations
 {
     [DbContext(typeof(CertificateDbContext))]
-    partial class CertificateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200303083810_updateDb4th")]
+    partial class updateDb4th
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -595,7 +597,7 @@ namespace Api.Migrations
                     b.Property<int>("RecordOrder")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("StandardOfCertificateId")
+                    b.Property<Guid>("StandardOfCertificateId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UpdatedBy")
@@ -969,7 +971,9 @@ namespace Api.Migrations
 
                     b.HasOne("Api.Core.Entities.StandardOfCertificate", "StandardOfCertificate")
                         .WithMany("Specialty")
-                        .HasForeignKey("StandardOfCertificateId");
+                        .HasForeignKey("StandardOfCertificateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Api.Core.Entities.Student", b =>

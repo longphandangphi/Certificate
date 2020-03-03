@@ -26,7 +26,7 @@ namespace Api.Core.Entities
         [Required]
         public bool InformaticsCertificateStatus { get; set; }
 
-        [Required]
-        public virtual Student Student { get; set; }
+
+        public Student Student { get; set; }
     }
 }

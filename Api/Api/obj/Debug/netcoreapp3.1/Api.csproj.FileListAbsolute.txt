@@ -425,7 +425,6 @@ C:\Users\long.phan\Desktop\Certificate\Api\Api\bin\Debug\netcoreapp3.1\runtimes\
 C:\Users\long.phan\Desktop\Certificate\Api\Api\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\long.phan\Desktop\Certificate\Api\Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\long.phan\Desktop\Certificate\Api\Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\Api.csprojAssemblyReference.cache
 C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\staticwebassets\Api.StaticWebAssets.Manifest.cache
 C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\staticwebassets\Api.StaticWebAssets.xml
 C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\Api.MvcApplicationPartsAssemblyInfo.cs
@@ -436,3 +435,4 @@ C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\Api.Razor
 C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\Api.csproj.CopyComplete
 C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\Api.dll
 C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\Api.pdb
+C:\Users\long.phan\Desktop\Certificate\Api\Api\obj\Debug\netcoreapp3.1\Api.csprojAssemblyReference.cache

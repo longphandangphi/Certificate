@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace Api.Controllers
 {
     [Route("api/faculties")]
+    [ValidateModel]
     public class FacultyController : Controller
     {
         private readonly IFacultyService _facultyService;

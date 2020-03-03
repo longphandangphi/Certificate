@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace Api.Controllers
 {
     [Route("api/majors")]
+    [ValidateModel]
     public class MajorController : Controller
     {
         private readonly IMajorService _majorService;

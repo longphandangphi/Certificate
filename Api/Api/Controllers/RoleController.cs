@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Api.Controllers
 {
     [Route("api/roles")]
+    [ValidateModel]
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;

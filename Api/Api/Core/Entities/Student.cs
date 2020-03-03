@@ -61,13 +61,13 @@ namespace Api.Core.Entities
         //public Guid HighSchoolGraduationId { get; set; }
 
 
-        public virtual Class Class { get; set; }
+        public Class Class { get; set; }
 
-        public virtual ExtracurricularPoint ExtracurricularPoint { get; set; }
+        public ExtracurricularPoint ExtracurricularPoint { get; set; }
 
-        public virtual Specialty Specialty { get; set; }
+        public Specialty Specialty { get; set; }
 
-        public virtual CertificateStatus CertificateStatus { get; set; }
+        public CertificateStatus CertificateStatus { get; set; }
 
         public virtual IList<Report> Reports { get; set; }
     }

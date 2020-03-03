@@ -1,6 +1,10 @@
-﻿using Api.Core.Business.Models.Faculties;
+﻿using Api.Core.Business.Models.ExtracurricularActivities;
+using Api.Core.Business.Models.Extracurriculars;
+using Api.Core.Business.Models.Faculties;
 using Api.Core.Business.Models.Majors;
 using Api.Core.Business.Models.Roles;
+using Api.Core.Business.Models.Specialties;
+using Api.Core.Business.Models.StandardOfCertificates;
 using Api.Core.Business.Models.Users;
 using Api.Core.Entities;
 using AutoMapper;
@@ -24,6 +28,10 @@ namespace Api.Core.Business.Models
             CreateMap<User, JwtPayload>();
             CreateMap<FacultyManageModel, Faculty>();
             CreateMap<MajorManageModel, Major>();
+            CreateMap<ExtracurricularActivityManageModel, ExtracurricularActivity>();
+            CreateMap<ExtracurricularManageModel, Extracurricular>();
+            CreateMap<SpecialtyManageModel, Specialty>();
+            CreateMap<StandardOfCertificateManageModel, StandardOfCertificate>();
             //CreateMap<ItemManageModel, Item>();
             //CreateMap<ReviewManageModel, Review>();
             //CreateMap<ItemManageModel, Item>();

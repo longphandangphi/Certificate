@@ -1,4 +1,7 @@
 ﻿using Api.Core.Business.Filters;
+using Api.Core.Business.Models.Base;
+using Api.Core.Business.Models.Specialties;
+using Api.Core.Business.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,70 +14,47 @@ namespace Api.Controllers
     [ValidateModel]
     public class SpecialtyController : Controller
     {
-        //private readonly ISpecialtyService _specialtyService;
+        private readonly ISpecialtyService _specialtyService;
 
-        //public SpecialtyController(ISpecialtyService specialtyService)
-        //{
-        //    _specialtyService = specialtyService;
-        //}
+        public SpecialtyController(ISpecialtyService specialtyService)
+        {
+            _specialtyService = specialtyService;
+        }
 
-        //#region GET
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] RequestListViewModel requestListViewModel)
+        {
+            var specialty = await _specialtyService.ListSpecialtyAsync(requestListViewModel);
+            return Ok(specialty);
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetAll(RequestListViewModel userRequestListViewModel)
-        //{
-        //    var users = await _userService.ListUserAsync(userRequestListViewModel);
-        //    return Ok(users);
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSpecialtyById(Guid id)
+        {
+            var specialty = await _specialtyService.GetSpecialtyByIdAsync(id);
+            return Ok(specialty);
+        }
 
-        //[HttpGet("{id}")]
-        ////[CustomAuthorize]
-        //public async Task<IActionResult> GetUserById(Guid id)
-        //{
-        //    var user = await _userService.GetUserByIdAsync(id);
-        //    return Ok(user);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] SpecialtyManageModel specialtyManageModel)
+        {
+            var response = await _specialtyService.CreateSpecialtyAsync(specialtyManageModel);
+            return new CustomActionResult(response);
+        }
 
-        ////[HttpGet("email/{email}")]
-        ////[CustomAuthorize]
-        ////public async Task<IActionResult> GetUserByEmail(string email)
-        ////{
-        ////    var user = await _userService.GetUserByEmailAsync(email);
-        ////    return Ok(user);
-        ////}
-
-        //#endregion
-
-        //#region POST
-
-        //#endregion
-
-        //#region PUT
-
-        //[HttpPut("{id}")]
-        ////[CustomAuthorize]
-        //public async Task<IActionResult> Put(Guid id, [FromBody] UserUpdateProfileModel userUpdateProfileModel)
-        //{
-        //    var responseModel = await _userService.UpdateProfileAsync(id, userUpdateProfileModel);
-        //    return new CustomActionResult(responseModel);
-        //}
-
-        //#endregion
-
-        //#region DELETE
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] SpecialtyManageModel specialtyManageModel)
+        {
+            var response = await _specialtyService.UpdateSpecialtyAsync(id, specialtyManageModel);
+            return new CustomActionResult(response);
+        }
 
         //[HttpDelete("{id}")]
-        ////[CustomAuthorize]
         //public async Task<IActionResult> Delete(Guid id)
         //{
-        //    var responseModel = await _userService.DeleteUserAsync(id);
-        //    return new CustomActionResult(responseModel);
+        //    var response = await _specialtyService.DeleteSpecialtyAsync(id);
+        //    return new CustomActionResult(response);
         //}
 
-        //#endregion
-
-        //#region Other Methods
-
-        //#endregion
     }
 }

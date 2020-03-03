@@ -50,7 +50,5 @@ namespace Api.Core.Entities
 
         [Required]
         public string LanguageCertificateReferenceContent { get; set; }
-
-        public virtual IList<Specialty> Specialty { get; set; }
     }
 }

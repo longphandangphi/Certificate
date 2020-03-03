@@ -1,4 +1,5 @@
-﻿using Api.Core.Entities;
+﻿using Api.Core.Business.Models.Majors;
+using Api.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,20 @@ namespace Api.Core.Business.Models.Specialties
 
         }
 
-        public SpecialtyViewModel(Specialty specialty)
+        public SpecialtyViewModel(Specialty specialty) : this()
         {
-
+            Id = specialty.Id;
+            Name = specialty.Name;
+            Description = specialty.Description;
+            Major = new MajorViewModel(specialty.Major);
         }
 
+        public Guid Id { get; set; }
 
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public MajorViewModel Major { get; set; }
     }
 }

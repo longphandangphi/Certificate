@@ -5,7 +5,6 @@ using Api.Core.Common.Reflections;
 using Api.Core.DataAccess.Repository.Base;
 using Api.Core.Entities;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

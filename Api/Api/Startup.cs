@@ -94,6 +94,11 @@ namespace Api
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISSOAuthService, SSOAuthService>();
             services.AddScoped<IMajorService, MajorService>();
+            services.AddScoped<IExtracurricularActivityService, ExtracurricularActivityService>();
+            services.AddScoped<ICertificateStatusService, CertificateStatusService>();
+            services.AddScoped<IExtracurricularService, ExtracurricularService>();
+            services.AddScoped<ISpecialtyService, SpecialtyService>();
+            services.AddScoped<IStandardOfCertificateService, StandardOfCertificateService>();
             //services.AddScoped<IItemService, ItemService>();
             //services.AddScoped<IReviewService, ReviewService>();
             //services.AddScoped<IItemService, ItemService>();
