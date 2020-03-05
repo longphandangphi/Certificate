@@ -20,20 +20,21 @@ namespace Api.Core.Business.Services
         Task<ExtracurricularActivityViewModel> GetExtracurricularActivityByIdAsync(Guid? id);
         Task<ResponseModel> CreateExtracurricularActivityAsync(ExtracurricularActivityManageModel extracurricularActivityManagerModel);
         Task<ResponseModel> UpdateExtracurricularActivityAsync(Guid id, ExtracurricularActivityManageModel extracurricularActivityManagerModel);
-
-        //Task<ResponseModel> DeleteItemAsync(Guid id);
+        Task<ResponseModel> DeleteExtracurricularActivityAsync(Guid id);
 
     }
     public class ExtracurricularActivityService : IExtracurricularActivityService
     {
         private readonly IRepository<ExtracurricularActivity> _extracurricularActivityRepository;
+        private readonly IRepository<Extracurricular> _extracurricularRepository;
         private readonly IMapper _mapper;
 
         #region constructor
 
-        public ExtracurricularActivityService(IRepository<ExtracurricularActivity> extracurricularActivityRepository, IMapper mapper)
+        public ExtracurricularActivityService(IRepository<ExtracurricularActivity> extracurricularActivityRepository, IRepository<Extracurricular> extracurricularRepository, IMapper mapper)
         {
             _extracurricularActivityRepository = extracurricularActivityRepository;
+            _extracurricularRepository = extracurricularRepository;
             _mapper = mapper;
         }
 
@@ -70,16 +71,6 @@ namespace Api.Core.Business.Services
 
             string matchedPropertyName = extracurricularActivityViewModelProperties.FirstOrDefault(x => x == requestPropertyName);
 
-            //foreach (var promotionViewModelProperty in promotionViewModelProperties)
-            //{
-            //    var lowerTypeViewModelProperty = promotionViewModelProperty.ToLower();
-            //    if (lowerTypeViewModelProperty.Equals(requestPropertyName))
-            //    {
-            //        matchedPropertyName = promotionViewModelProperty;
-            //        break;
-            //    }
-            //}
-
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
                 matchedPropertyName = "Name";
@@ -97,39 +88,42 @@ namespace Api.Core.Business.Services
         public async Task<ExtracurricularActivityViewModel> GetExtracurricularActivityByIdAsync(Guid? id)
         {
             var extracurricularActivity = await _extracurricularActivityRepository.GetByIdAsync(id);
-            //var user = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
             return new ExtracurricularActivityViewModel(extracurricularActivity);
         }
 
         public async Task<ResponseModel> CreateExtracurricularActivityAsync(ExtracurricularActivityManageModel extracurricularActivityManageModel)
         {
-            var extracurricularActivity = await _extracurricularActivityRepository.FetchFirstAsync(x => x.Name == extracurricularActivityManageModel.Name);
-            if (extracurricularActivity != null)
+            if (extracurricularActivityManageModel.Point <= 0)
             {
                 return new ResponseModel()
                 {
                     StatusCode = System.Net.HttpStatusCode.BadRequest,
-                    Message = "This ExtracurricularActivity's name is exist!",
+                    Message = "This ExtracurricularActivity's point must be greater than 0!",
                 };
             }
-            else
-            {
-                //var menu = await _menuResponstory.GetByIdAsync(itemManageModel.MenuId);
-                extracurricularActivity = _mapper.Map<ExtracurricularActivity>(extracurricularActivityManageModel);
-                //item.Menu = menu;
 
-                await _extracurricularActivityRepository.InsertAsync(extracurricularActivity);
-                extracurricularActivity = await GetAll().FirstOrDefaultAsync(x => x.Id == extracurricularActivity.Id);
-                return new ResponseModel()
-                {
-                    StatusCode = System.Net.HttpStatusCode.OK,
-                    Data = new ExtracurricularActivityViewModel(extracurricularActivity)
-                };
-            }
+            var extracurricularActivity = _mapper.Map<ExtracurricularActivity>(extracurricularActivityManageModel);
+
+            await _extracurricularActivityRepository.InsertAsync(extracurricularActivity);
+            extracurricularActivity = await GetAll().FirstOrDefaultAsync(x => x.Id == extracurricularActivity.Id);
+            return new ResponseModel()
+            {
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Data = new ExtracurricularActivityViewModel(extracurricularActivity)
+            };
+
         }
 
         public async Task<ResponseModel> UpdateExtracurricularActivityAsync(Guid id, ExtracurricularActivityManageModel extracurricularActivityManageModel)
         {
+            if (extracurricularActivityManageModel.Point <= 0)
+            {
+                return new ResponseModel()
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Message = "This ExtracurricularActivity's point must be greater than 0!",
+                };
+            }
             var extracurricularActivity = await _extracurricularActivityRepository.GetByIdAsync(id);
             if (extracurricularActivity == null)
             {
@@ -141,21 +135,24 @@ namespace Api.Core.Business.Services
             }
             else
             {
-                var existedExtracurricularActivity = await _extracurricularActivityRepository.FetchFirstAsync(x => x.Name == extracurricularActivityManageModel.Name);
-                if (existedExtracurricularActivity != null)
-                {
-                    return new ResponseModel
-                    {
-                        StatusCode = System.Net.HttpStatusCode.BadRequest,
-                        Message = "This ExtracurricularActivity's name is exist!"
-                    };
-                }
-                else
-                {
-                    extracurricularActivityManageModel.GetExtracurricularActivityFromModel(extracurricularActivity);
-                    return await _extracurricularActivityRepository.UpdateAsync(extracurricularActivity);
-                }
+                extracurricularActivityManageModel.GetExtracurricularActivityFromModel(extracurricularActivity);
+                return await _extracurricularActivityRepository.UpdateAsync(extracurricularActivity);
             }
+        }
+
+        public async Task<ResponseModel> DeleteExtracurricularActivityAsync(Guid id)
+        {
+            var extracurricularActivity = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            if (extracurricularActivity == null)
+            {
+                return new ResponseModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Message = "This ExtracurricularActivity is not exist!"
+                };
+            }
+            await _extracurricularRepository.DeleteAsync(extracurricularActivity.Extracurriculars);
+            return await _extracurricularActivityRepository.DeleteAsync(id); 
         }
     }
 }

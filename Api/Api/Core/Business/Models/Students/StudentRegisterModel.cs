@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Api.Core.Business.Models.Students
 {
-    public class StudentRegisterModel
+    public class StudentRegisterModel : IValidatableObject
     {
         [Required]
         [MinLength(8)]
@@ -19,7 +19,12 @@ namespace Api.Core.Business.Models.Students
         [Required]
         [MinLength(2)]
         [MaxLength(32)]
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+
+        [Required]
+        [MinLength(2)]
+        [MaxLength(32)]
+        public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
@@ -30,6 +35,9 @@ namespace Api.Core.Business.Models.Students
         [MinLength(8)]
         [MaxLength(32)]
         public string Password { get; set; }
+
+        [Required]
+        public string PlaceOfBirth { get; set; }
 
         [Required]
         public Guid ClassId { get; set; }

@@ -88,6 +88,7 @@ namespace Api
             //services.AddScoped<ITableService, TableService>();
             //services.AddScoped<IOrderService, OrderService>();
             //services.AddScoped<IOrderDetailService, OrderDetailService>();
+            services.AddScoped<IClassService, ClassService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IFacultyService, FacultyService>();
             services.AddScoped<IUserService, UserService>();
@@ -99,6 +100,7 @@ namespace Api
             services.AddScoped<IExtracurricularService, ExtracurricularService>();
             services.AddScoped<ISpecialtyService, SpecialtyService>();
             services.AddScoped<IStandardOfCertificateService, StandardOfCertificateService>();
+            services.AddScoped<IStudentService, StudentService>();
             //services.AddScoped<IItemService, ItemService>();
             //services.AddScoped<IReviewService, ReviewService>();
             //services.AddScoped<IItemService, ItemService>();

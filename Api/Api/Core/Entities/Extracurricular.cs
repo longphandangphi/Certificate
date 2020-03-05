@@ -15,10 +15,14 @@ namespace Api.Core.Entities
 
         }
 
-        [Required]
-        public Guid ExtracurricularPointId { get; set; }
+        //[Required]
+        //public Guid ExtracurricularPointId { get; set; }
 
-        public ExtracurricularPoint ExtracurricularPoint { get; set; }
+        //public ExtracurricularPoint ExtracurricularPoint { get; set; }
+
+        public Guid StudentId { get; set; }
+
+        public Student Student { get; set; }
 
         [Required]
         public Guid ExtracurricularActivityId { get; set; }

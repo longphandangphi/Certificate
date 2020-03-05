@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 
 namespace Api.Core.Business.Models.Students
 {
-    public class StudentProfileViewModel
+    public class StudentViewDetailModel
     {
-        public StudentProfileViewModel()
+        public StudentViewDetailModel()
         {
 
         }
 
-        public StudentProfileViewModel(Student student) : this()
+        public StudentViewDetailModel(Student student) : base()
         {
             if (student != null)
             {
                 Id = student.Id;
+                Username = student.Username;
                 FirstName = student.FirstName;
                 LastName = student.LastName;
-                Photo = student.Photo;
-                DateOfBirth = student.DateOfBirth;
                 Email = student.Email;
                 Gender = student.Gender;
+                DateOfBirth = student.DateOfBirth;
                 ExtracurricularPoint = 0;
 
                 var extracurricularRepository = IoCHelper.GetInstance<IRepository<Extracurricular>>();
@@ -39,17 +39,28 @@ namespace Api.Core.Business.Models.Students
                 {
                     ExtracurricularPoint += extracurricularActivityRepository.GetAll().FirstOrDefault(x => x.Id == extracurricularActivityId).Point;
                 }
-
+                // Lấy điểm của từng 
+                //ExtracurricularPoint = studen
+                //Roles = user.UserInRoles != null ? user.UserInRoles.Select(y => new RoleViewModel(y.Role)).ToArray() : null;
             }
         }
 
         public Guid Id { get; set; }
+
+        public string Username { get; set; }
+
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
-        public string Photo { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+
         public string Email { get; set; }
+
         public StudentEnums.Gender? Gender { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+
         public int ExtracurricularPoint { get; set; }
+
+        //public RoleViewModel[] Roles { get; set; }
     }
 }

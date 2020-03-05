@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Api.Core.Business.Models.StandardOfCertificates
 {
-    public class StandardOfCertificateManageModel : IValidatableObject
+    public class StandardOfCertificateManageModel // : IValidatableObject
     {
         [Required]
         public string Name { get; set; }
@@ -68,14 +68,14 @@ namespace Api.Core.Business.Models.StandardOfCertificates
         }
 
         //validate trung ten
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var standardOfCertificateRepository = IoCHelper.GetInstance<IRepository<StandardOfCertificate>>();
-            var standardOfCertificate = standardOfCertificateRepository.GetAll().FirstOrDefault(x => x.Name == Name);
-            if (standardOfCertificate != null)
-            {
-                yield return new ValidationResult("StandardOfCertificateName already exists!", new string[] { "StandardOfCertificateName" });
-            }
-        }
+        //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        //{
+        //    //var standardOfCertificateRepository = IoCHelper.GetInstance<IRepository<StandardOfCertificate>>();
+        //    //var standardOfCertificate = standardOfCertificateRepository.GetAll().FirstOrDefault(x => x.Name == Name);
+        //    //if (standardOfCertificate != null)
+        //    //{
+        //    //    yield return new ValidationResult("StandardOfCertificateName already exists!", new string[] { "StandardOfCertificateName" });
+        //    //}
+        //}
     }
 }

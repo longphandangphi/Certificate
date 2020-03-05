@@ -26,8 +26,6 @@ namespace Api.Core.DataAccess.Repository
 
         public DbSet<ExtracurricularActivity> ExtracurricularActivities { get; set; }
 
-        public DbSet<ExtracurricularPoint> ExtracurricularPoints { get; set; }
-
         public DbSet<Faculty> Faculties { get; set; }
 
         public DbSet<Major> Majors { get; set; }
@@ -58,15 +56,15 @@ namespace Api.Core.DataAccess.Repository
                 .WithMany(p => p.UserInRoles)
                 .HasForeignKey(pt => pt.RoleId);
 
-            modelBuilder.Entity<Extracurricular>().HasKey(t => new { t.ExtracurricularActivityId, t.ExtracurricularPointId });
+            modelBuilder.Entity<Extracurricular>().HasKey(t => new { t.ExtracurricularActivityId, t.StudentId });
             modelBuilder.Entity<Extracurricular>()
                 .HasOne(pt => pt.ExtracurricularActivity)
                 .WithMany(p => p.Extracurriculars)
                 .HasForeignKey(pt => pt.ExtracurricularActivityId);
             modelBuilder.Entity<Extracurricular>()
-                .HasOne(pt => pt.ExtracurricularPoint)
+                .HasOne(pt => pt.Student)
                 .WithMany(p => p.Extracurriculars)
-                .HasForeignKey(pt => pt.ExtracurricularPointId);
+                .HasForeignKey(pt => pt.StudentId);
         }
     }
 }

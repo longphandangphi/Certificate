@@ -1,4 +1,5 @@
 ﻿using Api.Core.Business.Models.Majors;
+using Api.Core.Business.Models.StandardOfCertificates;
 using Api.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Api.Core.Business.Models.Specialties
             Name = specialty.Name;
             Description = specialty.Description;
             Major = new MajorViewModel(specialty.Major);
+            StandardOfCertificate = new StandardOfCertificateViewModel(specialty.StandardOfCertificate);
         }
 
         public Guid Id { get; set; }
@@ -29,5 +31,7 @@ namespace Api.Core.Business.Models.Specialties
         public string Description { get; set; }
 
         public MajorViewModel Major { get; set; }
+
+        public StandardOfCertificateViewModel StandardOfCertificate { get; set; }
     }
 }

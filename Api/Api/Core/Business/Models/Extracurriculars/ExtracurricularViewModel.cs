@@ -15,12 +15,12 @@ namespace Api.Core.Business.Models.Extracurriculars
 
         public ExtracurricularViewModel(Extracurricular extracurricular) : this()
         {
-            if (extracurricular != null)
-            {
-                Id = extracurricular.Id;
-                ExtracurricularPointId = extracurricular.ExtracurricularPointId;
-                ExtracurricularActivityId = extracurricular.ExtracurricularActivityId;
-            }
+            //if (extracurricular != null)
+            //{
+            //    Id = extracurricular.Id;
+            //    ExtracurricularPointId = extracurricular.ExtracurricularPointId;
+            //    ExtracurricularActivityId = extracurricular.ExtracurricularActivityId;
+            //}
         }
 
         public Guid Id { get; set; }

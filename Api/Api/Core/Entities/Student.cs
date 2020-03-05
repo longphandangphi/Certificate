@@ -11,8 +11,7 @@ namespace Api.Core.Entities
     {
         public Student() : base()
         {
-            CertificateStatusId = Guid.NewGuid();
-            ExtracurricularPointId = Guid.NewGuid();
+
         }
 
         [Required]
@@ -45,8 +44,7 @@ namespace Api.Core.Entities
 
         public string Photo { get; set; }
 
-        [Required]
-        public Guid CertificateStatusId { get; set; }
+        public Guid? CertificateStatusId { get; set; }
 
         [Required]
         public Guid SpecialtyId { get; set; }
@@ -54,21 +52,18 @@ namespace Api.Core.Entities
         [Required]
         public Guid ClassId { get; set; }
 
-        [Required]
-        public Guid ExtracurricularPointId { get; set; }
-
         //[Required]
         //public Guid HighSchoolGraduationId { get; set; }
 
 
         public Class Class { get; set; }
 
-        public ExtracurricularPoint ExtracurricularPoint { get; set; }
-
         public Specialty Specialty { get; set; }
 
         public CertificateStatus CertificateStatus { get; set; }
 
         public virtual IList<Report> Reports { get; set; }
+
+        public virtual IList<Extracurricular> Extracurriculars { get; set; }
     }
 }

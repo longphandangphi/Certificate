@@ -43,7 +43,9 @@ namespace Api.Core.Business.Services
         #region private method
         private IQueryable<Specialty> GetAll()
         {
-            return _specialtyRepository.GetAll().Include(x => x.Major);
+            return _specialtyRepository.GetAll()
+                        .Include(x => x.Major)
+                        .Include(x => x.StandardOfCertificate);
         }
 
         private List<string> GetAllPropertyNameOfSpecialtyViewModel()
@@ -71,16 +73,6 @@ namespace Api.Core.Business.Services
 
             string matchedPropertyName = specialtyViewModelProperties.FirstOrDefault(x => x == requestPropertyName);
 
-            //foreach (var promotionViewModelProperty in promotionViewModelProperties)
-            //{
-            //    var lowerTypeViewModelProperty = promotionViewModelProperty.ToLower();
-            //    if (lowerTypeViewModelProperty.Equals(requestPropertyName))
-            //    {
-            //        matchedPropertyName = promotionViewModelProperty;
-            //        break;
-            //    }
-            //}
-
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
                 matchedPropertyName = "Name";
@@ -97,33 +89,31 @@ namespace Api.Core.Business.Services
 
         public async Task<SpecialtyViewModel> GetSpecialtyByIdAsync(Guid? id)
         {
-            var specialty = await _specialtyRepository.GetByIdAsync(id);
+            var specialty = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
             return new SpecialtyViewModel(specialty);
         }
 
         public async Task<ResponseModel> CreateSpecialtyAsync(SpecialtyManageModel specialtyManageModel)
         {
-            var specialty = await _specialtyRepository.FetchFirstAsync(x => x.Name == specialtyManageModel.Name);
-            if (specialty != null)
+            var checkName = await _specialtyRepository.GetAll().FirstOrDefaultAsync(x => x.Name == specialtyManageModel.Name);
+            if (checkName != null)
             {
-                return new ResponseModel()
+                return new ResponseModel
                 {
                     StatusCode = System.Net.HttpStatusCode.BadRequest,
-                    Message = "This Specialty's name is existttttttt!",
+                    Message = "This Specialty's name is exist!"
                 };
             }
-            else
-            {
-                specialty = _mapper.Map<Specialty>(specialtyManageModel);
 
-                await _specialtyRepository.InsertAsync(specialty);
-                specialty = await GetAll().FirstOrDefaultAsync(x => x.Id == specialty.Id);
-                return new ResponseModel()
-                {
-                    StatusCode = System.Net.HttpStatusCode.OK,
-                    Data = new SpecialtyViewModel(specialty)
-                };
-            }
+            var specialty = _mapper.Map<Specialty>(specialtyManageModel);
+
+            await _specialtyRepository.InsertAsync(specialty);
+            specialty = await GetAll().FirstOrDefaultAsync(x => x.Id == specialty.Id);
+            return new ResponseModel()
+            {
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Data = new SpecialtyViewModel(specialty)
+            };
         }
 
         public async Task<ResponseModel> UpdateSpecialtyAsync(Guid id, SpecialtyManageModel specialtyManageModel)
@@ -139,6 +129,16 @@ namespace Api.Core.Business.Services
             }
             else
             {
+                var checkName = await _specialtyRepository.GetAll().FirstOrDefaultAsync(x => x.Name == specialtyManageModel.Name && x.Id != id);
+                if (checkName != null)
+                {
+                    return new ResponseModel
+                    {
+                        StatusCode = System.Net.HttpStatusCode.NotFound,
+                        Message = "This Specialty's name is exist!"
+                    };
+                }
+
                 specialtyManageModel.GetSpecialtyFromModel(specialty);
                 return await _specialtyRepository.UpdateAsync(specialty);
             }

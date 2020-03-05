@@ -4,14 +4,16 @@ using Api.Core.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Api.Migrations
 {
     [DbContext(typeof(CertificateDbContext))]
-    partial class CertificateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200305092108_updateDb6th")]
+    partial class updateDb6th
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -554,8 +556,7 @@ namespace Api.Migrations
                     b.Property<int>("RecordOrder")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("StandardOfCertificateId")
-                        .IsRequired()
+                    b.Property<Guid>("StandardOfCertificateId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UpdatedBy")
@@ -665,7 +666,7 @@ namespace Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CertificateStatusId")
+                    b.Property<Guid>("CertificateStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ClassId")
@@ -744,8 +745,7 @@ namespace Api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CertificateStatusId")
-                        .IsUnique()
-                        .HasFilter("[CertificateStatusId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("ClassId");
 
@@ -933,7 +933,9 @@ namespace Api.Migrations
                 {
                     b.HasOne("Api.Core.Entities.CertificateStatus", "CertificateStatus")
                         .WithOne("Student")
-                        .HasForeignKey("Api.Core.Entities.Student", "CertificateStatusId");
+                        .HasForeignKey("Api.Core.Entities.Student", "CertificateStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Api.Core.Entities.Class", "Class")
                         .WithMany("Students")

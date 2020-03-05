@@ -18,17 +18,17 @@ namespace Api.Core.Business.Services
     {
         Task<PagedList<StudentViewModel>> ListStudentAsync(RequestListViewModel requestListViewModel);
 
-        Task<ResponseModel> RegisterAsync(StudentRegisterModel userRegisterModel);
+        Task<ResponseModel> RegisterAsync(StudentRegisterModel studentRegisterModel);
 
-        //Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel userUpdateProfileModel);
+       // Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel studentUpdateProfileModel);
 
-        //Task<ResponseModel> DeleteUserAsync(Guid id);
+        //Task<ResponseModel> DeleteStudentAsync(Guid id);
 
-        //Task<StudentViewDetailModel> GetUserByIdAsync(Guid? id);
+        Task<StudentViewDetailModel> GetStudentByIdAsync(Guid? id);
 
-        //Task<User> GetUserByEmailAsync(string email);
+        //Task<Student> GetStudentByEmailAsync(string email);
 
-        //Task<User> GetUserByUsernameAsync(string username);
+        //Task<Student> GetStudentByStudentnameAsync(string studentname);
 
         //Task<StudentProfileViewModel> GetProfileByIdAsync(Guid? id);
 
@@ -39,7 +39,6 @@ namespace Api.Core.Business.Services
         #region Fields
 
         private readonly IRepository<Student> _studentRepository;
-        private readonly IRepository<ExtracurricularPoint> _extracurricularPointRepository;
         private readonly IRepository<CertificateStatus> _certificateStatusRepository;
         private readonly IMapper _mapper;
 
@@ -48,11 +47,11 @@ namespace Api.Core.Business.Services
         #region Constructor
 
         public StudentService(IRepository<Student> studentRepository,
-            //IRepository<UserInRole> userInRoleRepository,
+            IRepository<CertificateStatus> certificateStatusRepository,
             IMapper mapper)
         {
             _studentRepository = studentRepository;
-            //_userInRoleRepository = userInRoleRepository;
+            _certificateStatusRepository = certificateStatusRepository;
             _mapper = mapper;
         }
 
@@ -67,12 +66,11 @@ namespace Api.Core.Business.Services
         private IQueryable<Student> GetAll()
         {
             return _studentRepository.GetAll()
-                        .Include(x => x.ExtracurricularPoint)
                         .Include(x => x.CertificateStatus)
                         .Include(x => x.Specialty)
                         .Include(x => x.Class);
-                        //.Include(x => x.UserInRoles)
-                            //.ThenInclude(user => user.Role);
+                        //.Include(x => x.StudentInRoles)
+                            //.ThenInclude(student => student.Role);
         }
 
         private List<string> GetAllPropertyNameOfStudentViewModel()
@@ -103,7 +101,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Username";
+                matchedPropertyName = "Studentname";
             }
 
             var type = typeof(StudentViewModel);
@@ -123,17 +121,22 @@ namespace Api.Core.Business.Services
 
             await _studentRepository.InsertAsync(student);
 
-            var userInRoles = new List<UserInRole>();
-            //foreach (var roleId in userRegisterModel.RoleIds)
+            var certificateStatus = new CertificateStatus();
+            _certificateStatusRepository.GetDbContext().CertificateStatuses.Add(certificateStatus);
+
+            await _certificateStatusRepository.GetDbContext().SaveChangesAsync();
+
+            //var studentInRoles = new List<StudentInRole>();
+            //foreach (var roleId in studentRegisterModel.RoleIds)
             //{
-            //    userInRoles.Add(new UserInRole()
+            //    studentInRoles.Add(new StudentInRole()
             //    {
-            //        UserId = student.Id,
+            //        StudentId = student.Id,
             //        RoleId = roleId
             //    });
             //}
-            //_userInRoleRepository.GetDbContext().UserInRoles.AddRange(userInRoles);
-            //await _userInRoleRepository.GetDbContext().SaveChangesAsync();
+            //_studentInRoleRepository.GetDbContext().StudentInRoles.AddRange(studentInRoles);
+            //await _studentInRoleRepository.GetDbContext().SaveChangesAsync();
 
             student = await GetAll().FirstOrDefaultAsync(x => x.Id == student.Id);
             return new ResponseModel()
@@ -145,90 +148,90 @@ namespace Api.Core.Business.Services
 
         //public async Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel studentUpdateProfileModel)
         //{
-        //    var user = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
-        //    if (user == null)
+        //    var student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+        //    if (student == null)
         //    {
         //        return new ResponseModel()
         //        {
         //            StatusCode = System.Net.HttpStatusCode.NotFound,
-        //            Message = "User is not exist. Please try again!"
+        //            Message = "Student is not exist. Please try again!"
         //        };
         //    }
         //    else
         //    {
-        //        await _userInRoleRepository.DeleteAsync(user.UserInRoles);
+        //        await _studentInRoleRepository.DeleteAsync(student.StudentInRoles);
 
-        //        var userInRoles = new List<UserInRole>();
-        //        foreach (var roleId in userUpdateProfileModel.RoleIds)
+        //        var studentInRoles = new List<StudentInRole>();
+        //        foreach (var roleId in studentUpdateProfileModel.RoleIds)
         //        {
-        //            userInRoles.Add(new UserInRole()
+        //            studentInRoles.Add(new StudentInRole()
         //            {
-        //                UserId = user.Id,
+        //                StudentId = student.Id,
         //                RoleId = roleId
         //            });
         //        }
 
-        //        _userInRoleRepository.GetDbContext().UserInRoles.AddRange(userInRoles);
-        //        await _userInRoleRepository.GetDbContext().SaveChangesAsync();
+        //        _studentInRoleRepository.GetDbContext().StudentInRoles.AddRange(studentInRoles);
+        //        await _studentInRoleRepository.GetDbContext().SaveChangesAsync();
 
-        //        userUpdateProfileModel.SetUserModel(user);
-        //        await _userRepository.UpdateAsync(user);
+        //        studentUpdateProfileModel.SetStudentModel(student);
+        //        await _studentRepository.UpdateAsync(student);
 
-        //        user = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+        //        student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
         //        return new ResponseModel
         //        {
         //            StatusCode = System.Net.HttpStatusCode.OK,
-        //            Data = new UserViewDetailModel(user)
+        //            Data = new StudentViewDetailModel(student)
         //        };
         //    }
         //}
 
-        //public async Task<ResponseModel> DeleteUserAsync(Guid id)
+        //public async Task<ResponseModel> DeleteStudentAsync(Guid id)
         //{
-        //    var user = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
-        //    if (user == null)
+        //    var student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+        //    if (student == null)
         //    {
         //        return new ResponseModel()
         //        {
         //            StatusCode = System.Net.HttpStatusCode.NotFound,
-        //            Message = "User is not exist. Please try again!"
+        //            Message = "Student is not exist. Please try again!"
         //        };
         //    }
         //    else
         //    {
-        //        await _userInRoleRepository.DeleteAsync(user.UserInRoles);
+        //        await _studentInRoleRepository.DeleteAsync(student.StudentInRoles);
 
-        //        return await _userRepository.DeleteAsync(id);
+        //        return await _studentRepository.DeleteAsync(id);
         //    }
         //}
 
-        //public async Task<UserViewDetailModel> GetUserByIdAsync(Guid? id)
-        //{
-        //    var user = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
-        //    return new UserViewDetailModel(user);
-        //}
+        public async Task<StudentViewDetailModel> GetStudentByIdAsync(Guid? id)
+        {
+            var student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            return new StudentViewDetailModel(student);
+        }
 
-        //public async Task<User> GetUserByEmailAsync(string email)
+        //public async Task<Student> GetStudentByEmailAsync(string email)
         //{
         //    return await GetAll().FirstOrDefaultAsync(x => x.Email == email);
         //}
 
-        //public async Task<User> GetUserByUsernameAsync(string username)
+        //public async Task<Student> GetStudentByStudentnameAsync(string studentname)
         //{
-        //    return await GetAll().FirstOrDefaultAsync(x => x.Username == username);
+        //    return await GetAll().FirstOrDefaultAsync(x => x.Studentname == studentname);
         //}
 
-        //public async Task<UserProfileViewModel> GetProfileByIdAsync(Guid? id)
+        //public async Task<StudentProfileViewModel> GetProfileByIdAsync(Guid? id)
         //{
-        //    var user = await GetAll()
+        //    var student = await GetAll()
         //        .FirstOrDefaultAsync(x => x.Id == id);
-        //    if (user == null)
+        //    if (student == null)
         //    {
         //        return null;
         //    }
         //    else
         //    {
-        //        return new UserProfileViewModel(user);
+        //        return new StudentProfileViewModel(student);
         //    }
         //}
 

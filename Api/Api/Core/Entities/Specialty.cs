@@ -21,7 +21,10 @@ namespace Api.Core.Entities
         [Required]
         public Guid MajorId { get; set; }
 
-        
+        [Required]
+        public Guid? StandardOfCertificateId { get; set; }
+
+
         public Major Major { get; set; }
         public StandardOfCertificate StandardOfCertificate { get; set; }
         public virtual IList<Student> Students { get; set; }

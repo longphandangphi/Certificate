@@ -23,13 +23,12 @@ namespace Api.Core.Business.Filters
                     if (models.Length == 2)
                     {
                         invalidModel.PropertyName = models[1];
-                        Console.WriteLine(invalidModel.PropertyName);
                     }
                     else if (models.Length == 1)
                     {
                         invalidModel.PropertyName = models[0];
-                        Console.WriteLine(invalidModel.PropertyName);
                     }
+
                     foreach (var error in state.Value.Errors)
                     {
                         if (!string.IsNullOrWhiteSpace(error.ErrorMessage))

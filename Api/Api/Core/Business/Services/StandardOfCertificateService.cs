@@ -92,6 +92,15 @@ namespace Api.Core.Business.Services
 
         public async Task<ResponseModel> CreateStandardOfCertificateAsync(StandardOfCertificateManageModel standardOfCertificateManageModel)
         {
+            var checkName = await _standardOfCertificateRepository.GetAll().FirstOrDefaultAsync(x => x.Name == standardOfCertificateManageModel.Name);
+            if (checkName != null)
+            {
+                return new ResponseModel
+                {
+                    Message = "StandardOfCertificate's name is exist!"
+                };
+            }
+
             var standardOfCertificate = await _standardOfCertificateRepository.FetchFirstAsync(x => x.Name == standardOfCertificateManageModel.Name);
 
             standardOfCertificate = _mapper.Map<StandardOfCertificate>(standardOfCertificateManageModel);
@@ -119,6 +128,15 @@ namespace Api.Core.Business.Services
             }
             else
             {
+                var checkName = await _standardOfCertificateRepository.GetAll().FirstOrDefaultAsync(x => x.Name == standardOfCertificateManageModel.Name);
+                if (checkName != null)
+                {
+                    return new ResponseModel
+                    {
+                        Message = "StandardOfCertificate's name is exist!"
+                    };
+                }
+
                 standardOfCertificateManageModel.GetStandardOfCertificateFromModel(standardOfCertificate);
                 return await _standardOfCertificateRepository.UpdateAsync(standardOfCertificate);
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Api.Core.Business.Models.ExtracurricularActivities
 {
-    public class ExtracurricularActivityManageModel
+    public class ExtracurricularActivityManageModel 
     {
         public string Name { get; set; }
 
