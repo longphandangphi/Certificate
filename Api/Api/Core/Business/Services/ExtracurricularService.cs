@@ -61,7 +61,7 @@ namespace Api.Core.Business.Services
             var list = await GetAll()
                 .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
-                    || (x.Id.ToString().Contains(requestListViewModel.Query)
+                    || (x.StudentId.ToString().Contains(requestListViewModel.Query)
                     )))
                 .Select(x => new ExtracurricularViewModel(x)).ToListAsync();
 
@@ -73,7 +73,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Id";
+                matchedPropertyName = "ExtracurricularActivityId";
             }
 
             var type = typeof(ExtracurricularViewModel);
@@ -93,7 +93,18 @@ namespace Api.Core.Business.Services
 
         public async Task<ResponseModel> CreateExtracurricularAsync(ExtracurricularManageModel extracurricularManageModel)
         {
-            var extracurricular = _mapper.Map<Extracurricular>(extracurricularManageModel);
+            var extracurricular = await _extracurricularRepository.FetchFirstAsync(x => x.StudentId == extracurricularManageModel.StudentId
+                                                            && x.ExtracurricularActivityId == extracurricularManageModel.ExtracurricularActivityId);
+            if (extracurricular != null)
+            {
+                return new ResponseModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Message = "Duplication occurred!"
+                };
+            }
+
+            extracurricular = _mapper.Map<Extracurricular>(extracurricularManageModel);
 
             await _extracurricularRepository.InsertAsync(extracurricular);
             extracurricular = await GetAll().FirstOrDefaultAsync(x => x.Id == extracurricular.Id);

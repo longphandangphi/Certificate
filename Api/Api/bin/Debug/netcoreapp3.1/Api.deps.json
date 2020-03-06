@@ -26,7 +26,7 @@
         "dependencies": {
           "AutoMapper": "9.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
-          "JWT": "6.1.0",
+          "JWT": "5.3.1",
           "Microsoft.AspNetCore.Cors": "2.2.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "3.1.2",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.2",
@@ -350,7 +350,7 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
-      "JWT/6.1.0": {
+      "JWT/5.3.1": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.2",
           "System.ComponentModel.Primitives": "4.3.0",
@@ -359,8 +359,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/JWT.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.0.0"
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
           }
         },
         "compile": {
@@ -4169,12 +4169,12 @@
       "path": "automapper.extensions.microsoft.dependencyinjection/7.0.0",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512"
     },
-    "JWT/6.1.0": {
+    "JWT/5.3.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-b54IxW7yKBrTzcmsTzSzJ+hiIPlgOlMQAGVHaWe2iR4JLYk6nIoyM6zcneARsJ8RlVmRrBHsPTlfXwM7xtADjw==",
-      "path": "jwt/6.1.0",
-      "hashPath": "jwt.6.1.0.nupkg.sha512"
+      "sha512": "sha512-0Uh/wuaBNvk0BW1fGL6hlU573YTLT1Q3BMKiNXJ2R/7UQHzGhgn03LAh4Pl1wtUiuVq1VA7F7O0e1HGcE96t9g==",
+      "path": "jwt/5.3.1",
+      "hashPath": "jwt.5.3.1.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Cors/2.2.0": {
       "type": "package",

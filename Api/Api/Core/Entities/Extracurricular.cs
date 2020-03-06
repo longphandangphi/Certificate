@@ -20,6 +20,7 @@ namespace Api.Core.Entities
 
         //public ExtracurricularPoint ExtracurricularPoint { get; set; }
 
+        [Required]
         public Guid StudentId { get; set; }
 
         public Student Student { get; set; }

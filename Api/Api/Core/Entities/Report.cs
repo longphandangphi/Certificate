@@ -12,7 +12,7 @@ namespace Api.Core.Entities
     {
         public Report() : base()
         {
-            IsChecked = false;
+            IsSolved = false;
         }
 
         [Required]
@@ -25,7 +25,7 @@ namespace Api.Core.Entities
         public Guid StudentId { get; set; }
 
         [Required]
-        public bool IsChecked { get; set; }
+        public bool IsSolved { get; set; }
 
 
         public Student Student { get; set; }

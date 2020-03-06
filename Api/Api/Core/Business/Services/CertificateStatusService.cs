@@ -83,7 +83,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Name";
+                matchedPropertyName = "Id";
             }
 
             var type = typeof(CertificateStatusViewModel);

@@ -53,7 +53,7 @@
             },
             "JWT": {
               "target": "Package",
-              "version": "[6.1.0, )"
+              "version": "[5.3.1, )"
             },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",

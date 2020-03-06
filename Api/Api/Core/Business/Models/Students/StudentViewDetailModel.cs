@@ -1,4 +1,7 @@
 ﻿using Api.Core.Business.IoC;
+using Api.Core.Business.Models.CertificateStatuses;
+using Api.Core.Business.Models.Classes;
+using Api.Core.Business.Models.Specialties;
 using Api.Core.DataAccess.Repository.Base;
 using Api.Core.Entities;
 using Api.Core.Entities.Enums;
@@ -28,6 +31,10 @@ namespace Api.Core.Business.Models.Students
                 Gender = student.Gender;
                 DateOfBirth = student.DateOfBirth;
                 ExtracurricularPoint = 0;
+
+                ClassViewModel = new ClassViewModel(student.Class);
+                SpecialtyViewModel = new SpecialtyViewModel(student.Specialty);
+                CertificateStatusViewModel = new CertificateStatusViewModel(student.CertificateStatus);
 
                 var extracurricularRepository = IoCHelper.GetInstance<IRepository<Extracurricular>>();
                 var extracurricularActivityRepository = IoCHelper.GetInstance<IRepository<ExtracurricularActivity>>();
@@ -60,6 +67,14 @@ namespace Api.Core.Business.Models.Students
         public DateTime? DateOfBirth { get; set; }
 
         public int ExtracurricularPoint { get; set; }
+
+        public ClassViewModel ClassViewModel { get; set; }
+
+        public SpecialtyViewModel SpecialtyViewModel { get; set; }
+
+        public CertificateStatusViewModel CertificateStatusViewModel { get; set; }
+
+
 
         //public RoleViewModel[] Roles { get; set; }
     }

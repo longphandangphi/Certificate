@@ -28,7 +28,7 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
-      "JWT/6.1.0": {
+      "JWT/5.3.1": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "9.0.1",
@@ -2995,14 +2995,15 @@
         "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.pdb"
       ]
     },
-    "JWT/6.1.0": {
-      "sha512": "b54IxW7yKBrTzcmsTzSzJ+hiIPlgOlMQAGVHaWe2iR4JLYk6nIoyM6zcneARsJ8RlVmRrBHsPTlfXwM7xtADjw==",
+    "JWT/5.3.1": {
+      "sha512": "0Uh/wuaBNvk0BW1fGL6hlU573YTLT1Q3BMKiNXJ2R/7UQHzGhgn03LAh4Pl1wtUiuVq1VA7F7O0e1HGcE96t9g==",
       "type": "package",
-      "path": "jwt/6.1.0",
+      "path": "jwt/5.3.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "jwt.6.1.0.nupkg.sha512",
+        "LICENSE/LICENSE.txt",
+        "jwt.5.3.1.nupkg.sha512",
         "jwt.nuspec",
         "lib/net46/JWT.dll",
         "lib/net46/JWT.pdb",
@@ -3010,9 +3011,6 @@
         "lib/net472/JWT.dll",
         "lib/net472/JWT.pdb",
         "lib/net472/JWT.xml",
-        "lib/net48/JWT.dll",
-        "lib/net48/JWT.pdb",
-        "lib/net48/JWT.xml",
         "lib/netstandard1.3/JWT.dll",
         "lib/netstandard1.3/JWT.pdb",
         "lib/netstandard1.3/JWT.xml",
@@ -9399,7 +9397,7 @@
     ".NETCoreApp,Version=v3.1": [
       "AutoMapper >= 9.0.0",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 7.0.0",
-      "JWT >= 6.1.0",
+      "JWT >= 5.3.1",
       "Microsoft.AspNetCore.Cors >= 2.2.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 3.1.2",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.2",
@@ -9471,7 +9469,7 @@
           },
           "JWT": {
             "target": "Package",
-            "version": "[6.1.0, )"
+            "version": "[5.3.1, )"
           },
           "Microsoft.AspNetCore.Cors": {
             "target": "Package",

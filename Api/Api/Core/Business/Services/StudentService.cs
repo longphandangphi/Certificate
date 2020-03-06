@@ -68,7 +68,11 @@ namespace Api.Core.Business.Services
             return _studentRepository.GetAll()
                         .Include(x => x.CertificateStatus)
                         .Include(x => x.Specialty)
-                        .Include(x => x.Class);
+                            .ThenInclude(x => x.Major)
+                        .Include(x => x.Specialty)
+                            .ThenInclude(x => x.StandardOfCertificate)
+                        .Include(x => x.Class)
+                            .ThenInclude(x => x.Faculty);
                         //.Include(x => x.StudentInRoles)
                             //.ThenInclude(student => student.Role);
         }
@@ -101,7 +105,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Studentname";
+                matchedPropertyName = "Id";
             }
 
             var type = typeof(StudentViewModel);
@@ -119,9 +123,13 @@ namespace Api.Core.Business.Services
             student.Password = hashPass;
             student.PasswordSalt = saltKey;
 
+            // tạo CertificateStatus cho student
+            var certificateStatus = new CertificateStatus();
+            // gán id cho student
+            student.CertificateStatusId = certificateStatus.Id;
+
             await _studentRepository.InsertAsync(student);
 
-            var certificateStatus = new CertificateStatus();
             _certificateStatusRepository.GetDbContext().CertificateStatuses.Add(certificateStatus);
 
             await _certificateStatusRepository.GetDbContext().SaveChangesAsync();

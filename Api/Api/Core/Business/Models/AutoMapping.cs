@@ -3,6 +3,7 @@ using Api.Core.Business.Models.ExtracurricularActivities;
 using Api.Core.Business.Models.Extracurriculars;
 using Api.Core.Business.Models.Faculties;
 using Api.Core.Business.Models.Majors;
+using Api.Core.Business.Models.Reports;
 using Api.Core.Business.Models.Roles;
 using Api.Core.Business.Models.Specialties;
 using Api.Core.Business.Models.StandardOfCertificates;
@@ -36,6 +37,7 @@ namespace Api.Core.Business.Models
             CreateMap<SpecialtyManageModel, Specialty>();
             CreateMap<StandardOfCertificateManageModel, StandardOfCertificate>();
             CreateMap<StudentRegisterModel, Student>();
+            CreateMap<ReportManageModel, Report>();
             //CreateMap<ItemManageModel, Item>();
             //CreateMap<ReviewManageModel, Review>();
             //CreateMap<ItemManageModel, Item>();

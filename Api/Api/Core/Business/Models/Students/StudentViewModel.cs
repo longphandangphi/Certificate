@@ -33,7 +33,7 @@ namespace Api.Core.Business.Models.Students
                 var extracurricularActivityRepository = IoCHelper.GetInstance<IRepository<ExtracurricularActivity>>();
 
                 var extracurricularActivityIdArray = extracurricularRepository.GetAll()
-                                                        .Where(x => x.Id == Id).Select(x => x.ExtracurricularActivityId).ToArray();
+                                                        .Where(x => x.StudentId == Id).Select(x => x.ExtracurricularActivityId).ToArray();
                 
                 foreach (var extracurricularActivityId in extracurricularActivityIdArray)
                 {

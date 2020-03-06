@@ -31,7 +31,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
-        //[CustomAuthorize]
+        [CustomAuthorize]
         public async Task<IActionResult> GetUserById(Guid id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -55,7 +55,7 @@ namespace Api.Controllers
         #region PUT
 
         [HttpPut("{id}")]
-        //[CustomAuthorize]
+        [CustomAuthorize]
         public async Task<IActionResult> Put(Guid id, [FromBody] UserUpdateProfileModel userUpdateProfileModel)
         {
             var responseModel = await _userService.UpdateProfileAsync(id, userUpdateProfileModel);
@@ -67,7 +67,7 @@ namespace Api.Controllers
         #region DELETE
 
         [HttpDelete("{id}")]
-        //[CustomAuthorize]
+        [CustomAuthorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             var responseModel = await _userService.DeleteUserAsync(id);
