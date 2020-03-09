@@ -56,13 +56,21 @@ namespace Api.Controllers
 
         #region PUT
 
-        //[HttpPut("{id}")]
-        ////[CustomAuthorize]
-        //public async Task<IActionResult> Put(Guid id, [FromBody] StudentUpdateProfileModel studentUpdateProfileModel)
-        //{
-        //    var responseModel = await _studentService.UpdateProfileAsync(id, studentUpdateProfileModel);
-        //    return new CustomActionResult(responseModel);
-        //}
+        [HttpPut("{id}")]
+        //[CustomAuthorize]
+        public async Task<IActionResult> Put(Guid id, [FromBody] StudentUpdateProfileModel studentUpdateProfileModel)
+        {
+            var responseModel = await _studentService.UpdateProfileAsync(id, studentUpdateProfileModel);
+            return new CustomActionResult(responseModel);
+        }
+
+        [HttpPut("changePassword")]
+        [CustomAuthorize]
+        public async Task<IActionResult> ChangePassword(Guid id, [FromBody] StudentChangePasswordModel studentChangePasswordModel)
+        {
+            var responseModel = await _studentService.ChangeStudentPasswordAsync(id, studentChangePasswordModel);
+            return new CustomActionResult(responseModel);
+        }
 
         #endregion
 

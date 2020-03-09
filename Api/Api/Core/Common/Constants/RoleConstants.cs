@@ -18,6 +18,8 @@ namespace Api.Core.Common.Constants
 
         public const string CF = "2BB61E38-CFD3-4A50-AE55-E3F6C9FDA0C7";
 
+        public const string ST = "d6f8610c-7437-4021-92eb-d1bd5b03cb1f";
+
         public static Guid SuperAdminId = new Guid(SA);
 
         public static Guid CashierId = new Guid(CA);
@@ -25,6 +27,8 @@ namespace Api.Core.Common.Constants
         public static Guid WaiterId = new Guid(WT);
 
         public static Guid ChefId = new Guid(CF);
+
+        public static Guid Student = new Guid(ST);
 
         public const string AllRole = SA;
     }

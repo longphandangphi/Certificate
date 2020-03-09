@@ -123,7 +123,10 @@ namespace Api
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "Certificate API", Version = "v1" });
                 x.DescribeAllParametersInCamelCase();
                 x.OperationFilter<AccessTokenHeaderParameterOperationFilter>();
+                x.CustomSchemaIds(i => i.FullName);
             });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -196,6 +199,10 @@ namespace Api
                 new Role {
                     Id = RoleConstants.ChefId,
                     Name = "Chef"
+                },
+                new Role {
+                    Id = RoleConstants.Student,
+                    Name = "Student"
                 }
             };
 

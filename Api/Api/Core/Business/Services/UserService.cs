@@ -22,6 +22,8 @@ namespace Api.Core.Business.Services
 
         Task<ResponseModel> UpdateProfileAsync(Guid id, UserUpdateProfileModel userUpdateProfileModel);
 
+        Task<ResponseModel> ChangeAdminPasswordAsync(Guid id, AdminChangePasswordModel adminChangePasswordModel);
+
         Task<ResponseModel> DeleteUserAsync(Guid id);
 
         Task<UserViewDetailModel> GetUserByIdAsync(Guid? id);
@@ -178,6 +180,57 @@ namespace Api.Core.Business.Services
                     StatusCode = System.Net.HttpStatusCode.OK,
                     Data = new UserViewDetailModel(user)
                 };
+            }
+        }
+
+        public async Task<ResponseModel> ChangeAdminPasswordAsync(Guid id, AdminChangePasswordModel adminChangePasswordModel)
+        {
+            var admin = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            if (admin == null)
+            {
+                return new ResponseModel()
+                {
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    Message = "Student is not exist. Please try again!"
+                };
+            }
+            else
+            {
+                var result = PasswordUtilities.ValidatePass(admin.Password, adminChangePasswordModel.CurrentPassword, admin.PasswordSalt);
+                if (result)
+                {
+                    if (adminChangePasswordModel.RepeatPassword.Equals(adminChangePasswordModel.NewPassword))
+                    {
+                        adminChangePasswordModel.NewPassword.GeneratePassword(out string saltKey, out string hashPass);
+                        admin.Password = hashPass;
+                        admin.PasswordSalt = saltKey;
+
+                        await _userRepository.UpdateAsync(admin);
+
+                        admin = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                        return new ResponseModel
+                        {
+                            StatusCode = System.Net.HttpStatusCode.OK,
+                            Data = new UserViewModel(admin)
+                        };
+                    }
+                    else
+                    {
+                        return new ResponseModel()
+                        {
+                            StatusCode = System.Net.HttpStatusCode.NotFound,
+                            Message = "RepeatPassword and NewPassword are not the same!"
+                        };
+                    }
+                }
+                else
+                {
+                    return new ResponseModel()
+                    {
+                        StatusCode = System.Net.HttpStatusCode.NotFound,
+                        Message = "Current password is not correct!"
+                    };
+                }
             }
         }
 

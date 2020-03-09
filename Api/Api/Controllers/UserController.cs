@@ -62,6 +62,14 @@ namespace Api.Controllers
             return new CustomActionResult(responseModel);
         }
 
+        [HttpPut("changePassword")]
+        [CustomAuthorize]
+        public async Task<IActionResult> ChangePassword(Guid id, [FromBody] AdminChangePasswordModel adminChangePasswordModel)
+        {
+            var responseModel = await _userService.ChangeAdminPasswordAsync(id, adminChangePasswordModel);
+            return new CustomActionResult(responseModel);
+        }
+
         #endregion
 
         #region DELETE

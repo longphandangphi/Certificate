@@ -1,4 +1,5 @@
 ﻿using Api.Core.Business.IoC;
+using Api.Core.Common.Utilities;
 using Api.Core.DataAccess.Repository.Base;
 using Api.Core.Entities;
 using Api.Core.Entities.Enums;
@@ -17,6 +18,8 @@ namespace Api.Core.Business.Models.Users
         [MaxLength(32)]
         public string FullName { get; set; }
 
+        public string Email { get; set; }
+
         public DateTime? DateOfBirth { get; set; }
 
         public UserEnums.Gender? Gender { get; set; }
@@ -29,6 +32,10 @@ namespace Api.Core.Business.Models.Users
             user.FullName = FullName;
             user.DateOfBirth = DateOfBirth;
             user.Gender = Gender;
+            if (RegexUtilities.IsValidEmail(Email))
+            {
+                user.Email = Email;
+            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

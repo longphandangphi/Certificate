@@ -25,8 +25,8 @@ namespace Api.Controllers
             _jwtHelper = jwtHelper;
         }
 
-        [HttpPost("adminUser")]
-        public async Task<IActionResult> Register([FromBody] UserRegisterModel userRegisterModel)
+        [HttpPost("admin")]
+        public async Task<IActionResult> RegisterAdmin([FromBody] UserRegisterModel userRegisterModel)
         {
             var responseModel = await _userService.RegisterAsync(userRegisterModel);
             return new CustomActionResult(responseModel);
@@ -39,10 +39,17 @@ namespace Api.Controllers
             return new CustomActionResult(responseModel);
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginModel userLoginModel)
+        [HttpPost("loginAdmin")]
+        public async Task<IActionResult> LoginAdmin([FromBody] UserLoginModel userLoginModel)
         {
-            var responseModel = await _ssoService.LoginAsync(userLoginModel);
+            var responseModel = await _ssoService.LoginAdminAsync(userLoginModel);
+            return new CustomActionResult(responseModel);
+        }
+
+        [HttpPost("loginStudent")]
+        public async Task<IActionResult> LoginStudent([FromBody] UserLoginModel userLoginModel)
+        {
+            var responseModel = await _ssoService.LoginStudentAsync(userLoginModel);
             return new CustomActionResult(responseModel);
         }
 

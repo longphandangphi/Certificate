@@ -20,11 +20,17 @@ namespace Api.Core.Business.Services
 
         Task<ResponseModel> RegisterAsync(StudentRegisterModel studentRegisterModel);
 
-       // Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel studentUpdateProfileModel);
+        // Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel studentUpdateProfileModel);
+
+        Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel studentUpdateProfileModel);
 
         //Task<ResponseModel> DeleteStudentAsync(Guid id);
 
         Task<StudentViewDetailModel> GetStudentByIdAsync(Guid? id);
+
+        Task<Student> GetStudentByUsernameAsync(string username);
+
+        Task<ResponseModel> ChangeStudentPasswordAsync(Guid id, StudentChangePasswordModel studentChangePasswordModel);
 
         //Task<Student> GetStudentByEmailAsync(string email);
 
@@ -127,12 +133,10 @@ namespace Api.Core.Business.Services
             var certificateStatus = new CertificateStatus();
             // gán id cho student
             student.CertificateStatusId = certificateStatus.Id;
+            _certificateStatusRepository.GetDbContext().CertificateStatuses.Add(certificateStatus);
+            await _certificateStatusRepository.GetDbContext().SaveChangesAsync();
 
             await _studentRepository.InsertAsync(student);
-
-            _certificateStatusRepository.GetDbContext().CertificateStatuses.Add(certificateStatus);
-
-            await _certificateStatusRepository.GetDbContext().SaveChangesAsync();
 
             //var studentInRoles = new List<StudentInRole>();
             //foreach (var roleId in studentRegisterModel.RoleIds)
@@ -152,6 +156,46 @@ namespace Api.Core.Business.Services
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Data = new StudentViewModel(student),
             };
+        }
+
+        public async Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel studentUpdateProfileModel)
+        {
+            var student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            if (student == null)
+            {
+                return new ResponseModel()
+                {
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    Message = "User is not exist. Please try again!"
+                };
+            }
+            else
+            {
+                //await _userInRoleRepository.DeleteAsync(user.UserInRoles);
+
+                //var userInRoles = new List<UserInRole>();
+                //foreach (var roleId in userUpdateProfileModel.RoleIds)
+                //{
+                //    userInRoles.Add(new UserInRole()
+                //    {
+                //        UserId = user.Id,
+                //        RoleId = roleId
+                //    });
+                //}
+
+                //_userInRoleRepository.GetDbContext().UserInRoles.AddRange(userInRoles);
+                //await _userInRoleRepository.GetDbContext().SaveChangesAsync();
+
+                studentUpdateProfileModel.SetUserModel(student);
+                await _studentRepository.UpdateAsync(student);
+
+                student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                return new ResponseModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.OK,
+                    Data = new StudentViewModel(student)
+                };
+            }
         }
 
         //public async Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel studentUpdateProfileModel)
@@ -224,10 +268,61 @@ namespace Api.Core.Business.Services
         //    return await GetAll().FirstOrDefaultAsync(x => x.Email == email);
         //}
 
-        //public async Task<Student> GetStudentByStudentnameAsync(string studentname)
-        //{
-        //    return await GetAll().FirstOrDefaultAsync(x => x.Studentname == studentname);
-        //}
+        public async Task<Student> GetStudentByUsernameAsync(string username)
+        {
+            return await GetAll().FirstOrDefaultAsync(x => x.Username == username);
+        }
+
+        public async Task<ResponseModel> ChangeStudentPasswordAsync(Guid id, StudentChangePasswordModel studentChangePasswordModel)
+        {
+            var student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            if (student == null)
+            {
+                return new ResponseModel()
+                {
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    Message = "Student is not exist. Please try again!"
+                };
+            }
+            else
+            {
+                var result = PasswordUtilities.ValidatePass(student.Password, studentChangePasswordModel.CurrentPassword, student.PasswordSalt);
+                if (result)
+                {
+                    if (studentChangePasswordModel.RepeatPassword.Equals(studentChangePasswordModel.NewPassword))
+                    {
+                        studentChangePasswordModel.NewPassword.GeneratePassword(out string saltKey, out string hashPass);
+                        student.Password = hashPass;
+                        student.PasswordSalt = saltKey;
+
+                        await _studentRepository.UpdateAsync(student);
+
+                        student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                        return new ResponseModel
+                        {
+                            StatusCode = System.Net.HttpStatusCode.OK,
+                            Data = new StudentViewModel(student)
+                        };
+                    }
+                    else
+                    {
+                        return new ResponseModel()
+                        {
+                            StatusCode = System.Net.HttpStatusCode.NotFound,
+                            Message = "RepeatPassword and NewPassword are not the same!"
+                        };
+                    }
+                }
+                else
+                {
+                    return new ResponseModel()
+                    {
+                        StatusCode = System.Net.HttpStatusCode.NotFound,
+                        Message = "Current password is not correct!"
+                    };
+                }
+            }
+        }
 
         //public async Task<StudentProfileViewModel> GetProfileByIdAsync(Guid? id)
         //{

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Api.Core.Business.Models.Students
 {
-    public class StudentUpdateProfileModel
+    public class StudentUpdateProfileModel 
     {
         //[Required]
         //[MinLength(2)]
@@ -19,8 +19,12 @@ namespace Api.Core.Business.Models.Students
 
         public StudentEnums.Gender? Gender { get; set; }
 
+        [Required]
         public string PlaceOfBirth { get; set; }
 
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get; set; }
 
 
@@ -31,6 +35,7 @@ namespace Api.Core.Business.Models.Students
         {
             //student.FullName = FullName;
             //student.DateOfBirth = DateOfBirth;
+            
             student.Gender = Gender;
             student.PlaceOfBirth = PlaceOfBirth;
             student.Email = Email;
