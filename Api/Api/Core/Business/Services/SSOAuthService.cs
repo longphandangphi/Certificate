@@ -29,7 +29,7 @@ namespace Api.Core.Business.Services
         }
         public async Task<ResponseModel> LoginAdminAsync(UserLoginModel userLoginModel)
         {
-            var user = await _userService.GetUserByUsernameAsync(userLoginModel.Username);
+            var user = await _userService.GetUserByEmailAsync(userLoginModel.Email);
             if (user != null)
             {
                 var result = PasswordUtilities.ValidatePass(user.Password, userLoginModel.Password, user.PasswordSalt);
@@ -61,7 +61,7 @@ namespace Api.Core.Business.Services
                     return new ResponseModel()
                     {
                         StatusCode = System.Net.HttpStatusCode.BadRequest,
-                        Message = "Username or password not match. Please try again!"// TODO: multi language
+                        Message = "Email or password not match!"// TODO: multi language
                     };
                 }
             }
@@ -70,14 +70,14 @@ namespace Api.Core.Business.Services
                 return new ResponseModel()
                 {
                     StatusCode = System.Net.HttpStatusCode.BadRequest,
-                    Message = "Username is not register!"// TODO: multi language
+                    Message = "Account is not register!"// TODO: multi language
                 };
             }
         }
 
         public async Task<ResponseModel> LoginStudentAsync(UserLoginModel userLoginModel)
         {
-            var user = await _studentService.GetStudentByUsernameAsync(userLoginModel.Username);
+            var user = await _studentService.GetStudentByUsernameAsync(userLoginModel.Email);
             if (user != null)
             {
                 var result = PasswordUtilities.ValidatePass(user.Password, userLoginModel.Password, user.PasswordSalt);
