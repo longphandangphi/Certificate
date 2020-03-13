@@ -1,0 +1,20 @@
+===========CREATE NEW============
+- actions:
+	entity.list.action.js
+- api:
+	api.entity.js
+- pages/admin/entity:
+	entity.list.page.js
+---------------------------------
+- reducers:
+	entity.list.reducer.js
+---------------------------------
+- sagas:
+	entity.list.saga.js
+
+
+===========CONFIG IN=============
+- routes.js
+- _nav.js
+- sagas: index.js
+- reducers: index.js
