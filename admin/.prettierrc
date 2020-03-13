@@ -1,8 +1,0 @@
-{
-  "editor.tabSize": 2,
-  "tabWidth": 2,
-  "useTabs": false,
-  "semi": true,
-  "printWidth": 120,
-  "eslintIntegration": true
-}
