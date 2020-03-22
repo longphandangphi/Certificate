@@ -20,7 +20,7 @@ namespace Api.Core.Business.Services
         Task<ResponseModel> CreateClassAsync(ClassManageModel classEntityManagerModel);
         Task<ResponseModel> UpdateClassAsync(Guid id, ClassManageModel classEntityManagerModel);
 
-        //Task<ResponseModel> DeleteItemAsync(Guid id);
+        Task<ResponseModel> DeleteClassAsync(Guid id);
     }
 
     public class ClassService : IClassService
@@ -140,6 +140,11 @@ namespace Api.Core.Business.Services
                 classManageModel.GetClassFromModel(classEntity);
                 return await _classRepository.UpdateAsync(classEntity);
             }
+        }
+
+        public async Task<ResponseModel> DeleteClassAsync(Guid id)
+        {
+            return await _classRepository.DeleteAsync(id);
         }
     }
 }

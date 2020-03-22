@@ -252,7 +252,7 @@ class RoleListPage extends Component {
                                                 <td>
                                                     <Button className='btn-sm' color='secondary' onClick={() => this.showUpdateModal(item)}>
                                                         Edit
-                                                    </Button>
+                                                    </Button>&nbsp;
                                                     <Button className='btn-sm' color='danger' onClick={() => this.showConfirmDelete(item.id)}>
                                                         Delete
                                                     </Button>

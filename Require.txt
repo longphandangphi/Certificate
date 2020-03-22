@@ -1,20 +1,24 @@
 ===========CREATE NEW============
 - actions:
-	entity.list.action.js
+(2)	entity.list.action.js
 - api:
-	api.entity.js
+(3)	api.entity.js
 - pages/admin/entity:
-	entity.list.page.js
+(4)	entity.list.page.js
 ---------------------------------
 - reducers:
-	entity.list.reducer.js
+(5)sau(2) entity.list.reducer.js
 ---------------------------------
 - sagas:
-	entity.list.saga.js
+(7) entity.list.saga.js
 
 
 ===========CONFIG IN=============
-- routes.js
-- _nav.js
-- sagas: index.js
-- reducers: index.js
+(9)- routes.js
+(1)- _nav.js
+(8)- sagas: index.js
+(6)- reducers: index.js
+
+=================================
+(10) config page//////////////
+Customer: create customer: name, gender, phone number, dateofbirth

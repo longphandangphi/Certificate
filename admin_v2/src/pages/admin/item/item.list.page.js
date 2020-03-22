@@ -243,7 +243,7 @@ class ItemListPage extends Component {
     const { isShowDeleteModal, isShowInfoModal, item, menus } = this.state;
     const { itemPagedList } = this.props.itemPagedListReducer;
     const { sources, pageIndex, totalPages } = itemPagedList;
-    const hasResults = itemPagedList.sources && itemPagedList.sources.length > 0;
+    const hasResults = sources && sources.length > 0;
     return (
       <div className="animated fadeIn">
         <ModalConfirm

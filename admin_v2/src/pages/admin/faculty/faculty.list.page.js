@@ -2,19 +2,17 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Button, FormGroup, Label, Input, Table } from 'reactstrap';
 import Form from 'react-validation/build/form';
-import Datetime from 'react-datetime';
-import moment from 'moment';
 import ModalConfirm from '../../../components/modal/modal-confirm';
 import Pagination from '../../../components/pagination/Pagination';
 import ModalInfo from '../../../components/modal/modal-info';
 import ValidationInput from '../../../components/common/validation-input';
 import { toastSuccess, toastError } from '../../../helpers/toast.helper';
 import lodash from 'lodash';
-import { getBookingList } from '../../../actions/booking.list.action';
-import ApiBooking from '../../../api/api.booking';
+import { getFacultyList } from '../../../actions/faculty.list.action';
+import ApiFaculty from '../../../api/api.faculty';
 import { pagination } from '../../../constant/app.constant';
 
-class BookingListPage extends Component {
+class FacultyListPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,13 +53,18 @@ class BookingListPage extends Component {
     };
 
     showAddNew = () => {
-        let title = 'Create Booking';
-        let booking = {
-            name: ''
+        let title = 'Create Faculty';
+        let faculty = {
+            name: '',
+            description: ''
         };
-        this.toggleModalInfo(booking, title);
+        this.toggleModalInfo(faculty, title);
     };
 
+    showUpdateModal = item => {
+        let title = 'Update Faculty';
+        this.toggleModalInfo(item, title);
+    };
 
     onModelChange = el => {
         let inputName = el.target.name;
@@ -81,7 +84,7 @@ class BookingListPage extends Component {
                 query: e.target.value
             },
             () => {
-                this.getBookingList();
+                this.getFacultyList();
             }
         );
     };
@@ -99,87 +102,86 @@ class BookingListPage extends Component {
                     skip: e.selected + 1
                 }
             },
-            () => this.getBookingList()
+            () => this.getFacultyList()
         );
     };
 
-    getBookingList = () => {
+    getFacultyList = () => {
         let params = Object.assign({}, this.state.params, {
             query: this.state.query
         });
-        this.props.getBookingList(params);
+        this.props.getFacultyList(params);
     };
 
-    addBooking = async () => {
+    addFaculty = async () => {
         console.log('state ==================');
         console.log(this.state);
-        const { name, startTime, finishTime } = this.state.item;
-        const booking = { name, startTime, finishTime };
+        const { name, description } = this.state.item;
+        const faculty = { name, description };
         try {
-            let response = await ApiBooking.postBooking(booking);
+            let response = await ApiFaculty.postFaculty(faculty);
             console.log('response');
             console.log(response);
             this.toggleModalInfo();
-            this.getBookingList();
-            toastSuccess('The booking has been created successfully');
+            this.getFacultyList();
+            toastSuccess('The faculty has been created successfully');
         } catch (err) {
             toastError(err + '');
         }
     };
 
-    updateBooking = async () => {
-        const { id, name, startTime, finishTime } = this.state.item;
-        const booking = { id, name, startTime, finishTime };
+    updateFaculty = async () => {
+        const { id, name, description } = this.state.item;
+        const faculty = { id, name, description };
         try {
-            await ApiBooking.updateBooking(booking);
+            await ApiFaculty.updateFaculty(faculty);
             this.toggleModalInfo();
-            this.getBookingList();
-            toastSuccess('The booking has been updated successfully');
+            this.getFacultyList();
+            toastSuccess('The faculty has been updated successfully');
         } catch (err) {
             toastError(err + '');
         }
     };
 
-    deleteBooking = async () => {
+    deleteFaculty = async () => {
         try {
-            await ApiBooking.deleteBooking(this.state.itemId);
+            await ApiFaculty.deleteFaculty(this.state.itemId);
             this.toggleDeleteModal();
-            this.getBookingList();
-            toastSuccess('The booking has been deleted successfully');
+            this.getFacultyList();
+            toastSuccess('The faculty has been deleted successfully');
         } catch (err) {
             toastError(err + '');
         }
     };
 
-    saveBooking = () => {
+    saveFaculty = () => {
         let { id } = this.state.item;
         if (id) {
-            this.updateBooking();
+            this.updateFaculty();
         } else {
-            this.addBooking();
+            this.addFaculty();
         }
     };
 
     onSubmit(e) {
         e.preventDefault();
         this.form.validateAll();
-        this.saveBooking();
+        this.saveFaculty();
     }
 
     componentDidMount() {
-        this.getBookingList();
+        this.getFacultyList();
     }
 
     render() {
         const { isShowDeleteModal, isShowInfoModal, item } = this.state;
-        const { bookingPagedList } = this.props.bookingPagedListReducer;
-        const { sources, pageIndex, totalPages } = bookingPagedList;
-        const hasResults = bookingPagedList.sources && bookingPagedList.sources.length > 0;
-        console.log(sources)
+        const { facultyPagedList } = this.props.facultyPagedListReducer;
+        const { sources, pageIndex, totalPages } = facultyPagedList;
+        const hasResults = sources && sources.length > 0;
         return (
             <div className='animated fadeIn'>
                 <ModalConfirm
-                    clickOk={this.deleteBooking}
+                    clickOk={this.deleteFaculty}
                     isShowModal={isShowDeleteModal}
                     toggleModal={this.toggleDeleteModal}
                 />
@@ -208,10 +210,25 @@ class BookingListPage extends Component {
                                     </Col>
                                 </Row>
 
+                                <Row>
+                                    <Col>
+                                        <FormGroup>
+                                            <ValidationInput
+                                                name='description'
+                                                title='Description'
+                                                type='text'
+                                                required={true}
+                                                value={item.description}
+                                                onChange={this.onModelChange}
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+
                                 <div className='text-center'>
                                     <Button color='danger' type='submit'>
                                         Confirm
-                                    </Button>
+                                    </Button>{' '}
                                     <Button color='secondary' onClick={this.toggleModalInfo}>
                                         Cancel
                                     </Button>
@@ -224,6 +241,9 @@ class BookingListPage extends Component {
                 <Row>
                     <Col xs='12'>
                         <div className='flex-container header-table'>
+                            <Button onClick={this.showAddNew} className='btn btn-pill btn-success btn-sm'>
+                                Create
+                            </Button>
                             <input
                                 onChange={this.onSearchChange}
                                 className='form-control form-control-sm'
@@ -234,12 +254,8 @@ class BookingListPage extends Component {
                             <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Pax</th>
-                                    <th>Checkin</th>
-                                    <th>Status</th>
-                                    <th>Note</th>
+                                    <th>Faculty name</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -250,12 +266,11 @@ class BookingListPage extends Component {
                                             <tr key={item.id}>
                                                 <td>{index + 1}</td>
                                                 <td>{item.name}</td>
-                                                <td>{item.phoneNumber}</td>
-                                                <td>{item.pax}</td>
-                                                <td>{item.timeCheckin}</td>
-                                                <td>{item.status}</td>
-                                                <td>{item.note}</td>
+                                                <td>{item.description}</td>
                                                 <td>
+                                                    <Button className='btn-sm' color='secondary' onClick={() => this.showUpdateModal(item)}>
+                                                        Edit
+                                                    </Button>&nbsp;
                                                     <Button className='btn-sm' color='danger' onClick={() => this.showConfirmDelete(item.id)}>
                                                         Delete
                                                     </Button>
@@ -283,9 +298,9 @@ class BookingListPage extends Component {
 
 export default connect(
     state => ({
-        bookingPagedListReducer: state.bookingPagedListReducer
+        facultyPagedListReducer: state.facultyPagedListReducer
     }),
     {
-        getBookingList
+        getFacultyList
     }
-)(BookingListPage);
+)(FacultyListPage);

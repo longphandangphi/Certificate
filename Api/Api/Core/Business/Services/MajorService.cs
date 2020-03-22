@@ -21,7 +21,7 @@ namespace Api.Core.Business.Services
         Task<ResponseModel> CreateMajorAsync(MajorManageModel majorManagerModel);
         Task<ResponseModel> UpdateMajorAsync(Guid id, MajorManageModel majorManagerModel);
 
-        //Task<ResponseModel> DeleteItemAsync(Guid id);
+        Task<ResponseModel> DeleteMajorAsync(Guid id);
 
     }
     public class MajorService : IMajorService
@@ -141,7 +141,7 @@ namespace Api.Core.Business.Services
             }
             else
             {
-                var existedMajor = await _majorRepository.FetchFirstAsync(x => x.Name == majorManageModel.Name);
+                var existedMajor = await _majorRepository.FetchFirstAsync(x => x.Name == majorManageModel.Name && x.Id != id);
                 if (existedMajor != null)
                 {
                     return new ResponseModel
@@ -156,6 +156,11 @@ namespace Api.Core.Business.Services
                     return await _majorRepository.UpdateAsync(major);
                 }
             }
+        }
+
+        public async Task<ResponseModel> DeleteMajorAsync(Guid id)
+        {
+            return await _majorRepository.DeleteAsync(id);
         }
     }
 }

@@ -19,9 +19,13 @@ const ReviewListPage = React.lazy(() => import("./pages/admin/review/review.list
 
 const RoleListPage = React.lazy(() => import("./pages/admin/role/role.list.page"));
 
-const BookingListPage = React.lazy(() => import("./pages/admin/booking/booking.list.page"));
-
 const ItemListPage = React.lazy(() => import("./pages/admin/item/item.list.page"));
+
+const FacultyListPage = React.lazy(() => import("./pages/admin/faculty/faculty.list.page"));
+
+const ClassListPage = React.lazy(() => import("./pages/admin/class/class.list.page"));
+
+const MajorListPage = React.lazy(() => import("./pages/admin/major/major.list.page"));
 
 const routes = [
   {
@@ -31,16 +35,18 @@ const routes = [
     component: DefaultLayout
   },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
-  { path: "/promotions", name: "Promotion", component: PromotionListPage },
-  { path: "/menus", name: "Menu", component: MenuListPage },
-  { path: "/items", name: "Item", component: ItemListPage },
-  { path: "/orders", name: "Order", component: OrderListPage },
-  { path: "/tables", name: "Table", component: TableListPage },
-  { path: "/customers", name: "Customer", component: CustomerListPage },
+  // { path: "/promotions", name: "Promotion", component: PromotionListPage },
+  // { path: "/menus", name: "Menu", component: MenuListPage },
+  // { path: "/items", name: "Item", component: ItemListPage },
+  // { path: "/orders", name: "Order", component: OrderListPage },
+  // { path: "/tables", name: "Table", component: TableListPage },
+  // { path: "/customers", name: "Customer", component: CustomerListPage },
   { path: "/roles", name: "Role", component: RoleListPage },
+  { path: "/classes", name: "Class", component: ClassListPage },
+  { path: "/majors", name: "Major", component: MajorListPage },
   { path: "/users", name: "User", component: UserListPage },
-  { path: "/reviews", name: "Review", component: ReviewListPage },
-  { patch: "/bookings", name: "Booking", component: BookingListPage }
+  // { path: "/reviews", name: "Review", component: ReviewListPage },
+  { path: "/faculties", name: "Faculty", component: FacultyListPage }
 ];
 
 export default routes;

@@ -20,8 +20,8 @@ namespace Api.Core.Business.Services
         Task<FacultyViewModel> GetFacultyByIdAsync(Guid? id);
         Task<ResponseModel> CreateFacultyAsync(FacultyManageModel facultyManagerModel);
         Task<ResponseModel> UpdateFacultyAsync(Guid id, FacultyManageModel facultyManagerModel);
-        
-        //Task<ResponseModel> DeleteItemAsync(Guid id);
+
+        Task<ResponseModel> DeleteFacultyAsync(Guid id);
 
     }
     public class FacultyService : IFacultyService
@@ -155,6 +155,23 @@ namespace Api.Core.Business.Services
                     facultyManageModel.GetFacultyFromModel(faculty);
                     return await _facultyRepository.UpdateAsync(faculty);
                 }
+            }
+        }
+
+        public async Task<ResponseModel> DeleteFacultyAsync(Guid id)
+        {
+            var faculty = await _facultyRepository.GetByIdAsync(id);
+            if (faculty == null)
+            {
+                return new ResponseModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    Message = "This Faculty is not exist!"
+                };
+            }
+            else
+            {
+                return await _facultyRepository.DeleteAsync(id);
             }
         }
     }

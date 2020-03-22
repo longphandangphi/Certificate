@@ -4,7 +4,7 @@ import RequestHelper from "../helpers/request.helper";
 export default class ApiRole {
 
     static getAllRole() {
-        return RequestHelper.get(appConfig.apiUrl + 'roles/all');
+        return RequestHelper.get(appConfig.apiUrl + 'roles');
     }
 
     static getRoleList(params) {

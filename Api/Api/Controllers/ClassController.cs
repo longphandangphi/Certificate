@@ -49,12 +49,12 @@ namespace Api.Controllers
             return new CustomActionResult(response);
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    var response = await _classService.DeleteClassAsync(id);
-        //    return new CustomActionResult(response);
-        //}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var response = await _classService.DeleteClassAsync(id);
+            return new CustomActionResult(response);
+        }
 
     }
 }
