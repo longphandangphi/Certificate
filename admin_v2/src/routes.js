@@ -25,7 +25,17 @@ const FacultyListPage = React.lazy(() => import("./pages/admin/faculty/faculty.l
 
 const ClassListPage = React.lazy(() => import("./pages/admin/class/class.list.page"));
 
+const ArticleListPage = React.lazy(() => import("./pages/admin/article/article.list.page"));
+
+const ReportListPage = React.lazy(() => import("./pages/admin/report/report.list.page"));
+
+const ExtracurricularActivityListPage = React.lazy(() =>
+  import("./pages/admin/extracurricularActivity/extracurricularActivity.list.page")
+);
+
 const MajorListPage = React.lazy(() => import("./pages/admin/major/major.list.page"));
+
+const ArticleCategoryListPage = React.lazy(() => import("./pages/admin/articleCategory/articleCategory.list.page"));
 
 const routes = [
   {
@@ -43,7 +53,11 @@ const routes = [
   // { path: "/customers", name: "Customer", component: CustomerListPage },
   { path: "/roles", name: "Role", component: RoleListPage },
   { path: "/classes", name: "Class", component: ClassListPage },
+  { path: "/articles", name: "Article", component: ArticleListPage },
+  { path: "/reports", name: "Report", component: ReportListPage },
+  { path: "/extracurricularActivities", name: "Extracurricular Activity", component: ExtracurricularActivityListPage },
   { path: "/majors", name: "Major", component: MajorListPage },
+  { path: "/articleCategories", name: "Article Category", component: ArticleCategoryListPage },
   { path: "/users", name: "User", component: UserListPage },
   // { path: "/reviews", name: "Review", component: ReviewListPage },
   { path: "/faculties", name: "Faculty", component: FacultyListPage }

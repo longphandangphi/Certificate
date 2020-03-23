@@ -7,6 +7,11 @@ namespace Api.Core.Entities
     [Table("Article")]
     public class Article : BaseEntity
     {
+        public Article() : base()
+        {
+
+        }
+
         [Required]
         public string Title { get; set; }
 
@@ -19,7 +24,7 @@ namespace Api.Core.Entities
         public string Picture { get; set; }
 
         [Required]
-        public Guid CategoryId { get; set; }
+        public Guid ArticleCategoryId { get; set; }
 
 
         public ArticleCategory ArticleCategory { get; set; }

@@ -20,9 +20,9 @@ namespace Api.Core.Business.Models.ExtracurricularActivities
                 Id = extracurricularActivity.Id;
                 Name = extracurricularActivity.Name;
                 Semester = extracurricularActivity.Semester;
-                OrgnizedTime = extracurricularActivity.OrgnizedTime;
+                OrganizedTime = extracurricularActivity.OrganizedTime;
                 ExpectedLocation = extracurricularActivity.ExpectedLocation;
-                OrgnizedUnit = extracurricularActivity.OrgnizedUnit;
+                OrganizedUnit = extracurricularActivity.OrganizedUnit;
                 Point = extracurricularActivity.Point;
             }
         }
@@ -33,11 +33,11 @@ namespace Api.Core.Business.Models.ExtracurricularActivities
 
         public string Semester { get; set; }
 
-        public string OrgnizedTime { get; set; }
+        public string OrganizedTime { get; set; }
 
         public string ExpectedLocation { get; set; }
 
-        public string OrgnizedUnit { get; set; }
+        public string OrganizedUnit { get; set; }
 
         public int Point { get; set; }
     }

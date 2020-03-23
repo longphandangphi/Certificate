@@ -1,4 +1,6 @@
-﻿using Api.Core.Business.Models.Classes;
+﻿using Api.Core.Business.Models.ArticleCategories;
+using Api.Core.Business.Models.Articles;
+using Api.Core.Business.Models.Classes;
 using Api.Core.Business.Models.ExtracurricularActivities;
 using Api.Core.Business.Models.Extracurriculars;
 using Api.Core.Business.Models.Faculties;
@@ -25,6 +27,8 @@ namespace Api.Core.Business.Models
             //CreateMap<TableManageModel, Table>();
             //CreateMap<OrderManageModel, Order>();
             //CreateMap<OrderDetailManageModel, Api.Core.Entities.OrderDetail>();
+            CreateMap<ArticleManageModel, Article>();
+            CreateMap<ArticleCategoryManageModel, ArticleCategory>();
             CreateMap<ClassManageModel, Class>();
             CreateMap<RoleManageModel, Role>();
             CreateMap<UserRegisterModel, User>();

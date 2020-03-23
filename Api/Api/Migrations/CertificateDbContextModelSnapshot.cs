@@ -25,10 +25,7 @@ namespace Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ArticleCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid>("ArticleCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
@@ -103,11 +100,11 @@ namespace Api.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Picture")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("RecordActive")
@@ -294,15 +291,19 @@ namespace Api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ExpectedLocation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrgnizedTime")
+                    b.Property<string>("OrganizedTime")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrgnizedUnit")
+                    b.Property<string>("OrganizedUnit")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Point")
@@ -318,6 +319,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Semester")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UpdatedBy")
@@ -328,7 +330,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExtracurricularActivities");
+                    b.ToTable("ExtracurricularActivity");
                 });
 
             modelBuilder.Entity("Api.Core.Entities.Faculty", b =>
@@ -442,6 +444,9 @@ namespace Api.Migrations
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsSolved")
                         .HasColumnType("bit");
@@ -874,7 +879,9 @@ namespace Api.Migrations
                 {
                     b.HasOne("Api.Core.Entities.ArticleCategory", "ArticleCategory")
                         .WithMany("Articles")
-                        .HasForeignKey("ArticleCategoryId");
+                        .HasForeignKey("ArticleCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Api.Core.Entities.User", null)
                         .WithMany("Articles")

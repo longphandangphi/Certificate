@@ -96,7 +96,7 @@ namespace Api.Core.Business.Services
                 return new ResponseModel
                 {
                     StatusCode = System.Net.HttpStatusCode.BadRequest,
-                    Message = "This Role is exist"
+                    Message = "This Role name is exist"
                 };
             }
             else
@@ -130,7 +130,7 @@ namespace Api.Core.Business.Services
                     return new ResponseModel()
                     {
                         StatusCode = System.Net.HttpStatusCode.BadRequest,
-                        Message = "Role " + roleManageModel.Name + " is exist on system. Please try again!",
+                        Message = "This Role name is exist. Please try again!",
                     };
                 }
                 else

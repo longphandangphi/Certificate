@@ -7,10 +7,15 @@ namespace Api.Core.Entities
     [Table("ArticleCategory")]
     public class ArticleCategory : BaseEntity
     {
+        public ArticleCategory() : base()
+        {
+            
+        }
+
         [Required]
         public string Name { get; set; }
 
-        public string Picture { get; set; }
+        public string Description { get; set; }
 
         public virtual IList<Article> Articles { get; set; }
     }

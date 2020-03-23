@@ -12,11 +12,11 @@ namespace Api.Core.Business.Models.ExtracurricularActivities
 
         public string Semester { get; set; }
 
-        public string OrgnizedTime { get; set; }
+        public string OrganizedTime { get; set; }
 
         public string ExpectedLocation { get; set; }
 
-        public string OrgnizedUnit { get; set; }
+        public string OrganizedUnit { get; set; }
 
         public int Point { get; set; }
 
@@ -24,9 +24,9 @@ namespace Api.Core.Business.Models.ExtracurricularActivities
         {
             extracurricularActivity.Name = Name;
             extracurricularActivity.Semester = Semester;
-            extracurricularActivity.OrgnizedTime = OrgnizedTime;
+            extracurricularActivity.OrganizedTime = OrganizedTime;
             extracurricularActivity.ExpectedLocation = ExpectedLocation;
-            extracurricularActivity.OrgnizedUnit = OrgnizedUnit;
+            extracurricularActivity.OrganizedUnit = OrganizedUnit;
             extracurricularActivity.Point = Point;
         }
         //validate

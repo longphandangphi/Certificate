@@ -9,6 +9,16 @@ export default {
         text: "NEW"
       }
     },
+    {
+      name: "Article",
+      url: "/articles",
+      icon: "fa fa-newspaper-o"
+    },
+    {
+      name: "ArticleCategory",
+      url: "/articleCategories",
+      icon: "fa fa-bars"
+    },
     // {
     //   name: "Promotion",
     //   url: "/promotions",
@@ -24,7 +34,7 @@ export default {
     {
       name: "Role",
       url: "/roles",
-      icon: "fa fa-list"
+      icon: "fa fa-superpowers"
     },
     // {
     //   name: "Order",
@@ -38,7 +48,7 @@ export default {
       // permissions: ["categories"],
       name: "User",
       url: "/users",
-      icon: "fa fa-list"
+      icon: "fa fa-address-book"
     },
     // {
     //   name: "Customer",
@@ -59,7 +69,7 @@ export default {
     {
       name: "Faculty",
       url: "/faculties",
-      icon: "fa fa-list"
+      icon: "fa fa-asterisk"
     },
     {
       name: "Class",
@@ -67,9 +77,19 @@ export default {
       icon: "fa fa-braille"
     },
     {
+      name: "Report",
+      url: "/reports",
+      icon: "fa fa-flag"
+    },
+    {
       name: "Major",
       url: "/majors",
-      icon: "fa fa-list"   
+      icon: "fa fa-graduation-cap"
+    },
+    {
+      name: "ExtracurricularActivity",
+      url: "/extracurricularActivities",
+      icon: "fa fa-blind"
     }
   ]
 };

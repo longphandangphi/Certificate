@@ -88,6 +88,8 @@ namespace Api
             //services.AddScoped<ITableService, TableService>();
             //services.AddScoped<IOrderService, OrderService>();
             //services.AddScoped<IOrderDetailService, OrderDetailService>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IArticleCategoryService, ArticleCategoryService>();
             services.AddScoped<ICertificateStatusService, CertificateStatusService>();
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<IEmailService, EmailService>();

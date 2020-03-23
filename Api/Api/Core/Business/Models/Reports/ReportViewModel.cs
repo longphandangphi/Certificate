@@ -20,6 +20,7 @@ namespace Api.Core.Business.Models.Reports
             Subject = report.Subject;
             Content = report.Content;
             IsSolved = report.IsSolved;
+            IsSeen = report.IsSeen;
             StudentViewModel = new StudentViewModel(report.Student);
         }
 
@@ -30,6 +31,8 @@ namespace Api.Core.Business.Models.Reports
         public string Content { get; set; }
 
         public bool IsSolved { get; set; }
+
+        public bool IsSeen { get; set; }
 
         public StudentViewModel StudentViewModel { get; set; }
     }

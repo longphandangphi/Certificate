@@ -20,7 +20,6 @@ namespace Api.Core.Business.Services
         Task<FacultyViewModel> GetFacultyByIdAsync(Guid? id);
         Task<ResponseModel> CreateFacultyAsync(FacultyManageModel facultyManagerModel);
         Task<ResponseModel> UpdateFacultyAsync(Guid id, FacultyManageModel facultyManagerModel);
-
         Task<ResponseModel> DeleteFacultyAsync(Guid id);
 
     }
@@ -141,7 +140,7 @@ namespace Api.Core.Business.Services
             }
             else
             {
-                var existedFaculty = await _facultyRepository.FetchFirstAsync(x => x.Name == facultyManageModel.Name);
+                var existedFaculty = await _facultyRepository.FetchFirstAsync(x => x.Name == facultyManageModel.Name && x.Id != id);
                 if (existedFaculty != null)
                 {
                     return new ResponseModel
