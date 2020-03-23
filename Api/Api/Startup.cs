@@ -60,7 +60,7 @@ namespace Api
                     .AllowAnyHeader());
             });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSingleton(Configuration);
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 

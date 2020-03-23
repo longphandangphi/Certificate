@@ -15,6 +15,12 @@ namespace Api.Core.Entities
 
         }
 
+        public Extracurricular(Guid studentId, Guid extracurricularActivityId) : base()
+        {
+            StudentId = studentId;
+            ExtracurricularActivityId = extracurricularActivityId;
+        }
+
         //[Required]
         //public Guid ExtracurricularPointId { get; set; }
 

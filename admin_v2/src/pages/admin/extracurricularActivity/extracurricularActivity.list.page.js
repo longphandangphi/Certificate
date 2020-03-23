@@ -57,10 +57,10 @@ class ExtracurricularActivityListPage extends Component {
     let extracurricularActivity = {
       name: "",
       semester: "",
-      organizeTime: "",
+      organizedTime: "",
       expectedLocation: "",
       organizedUnit: "",
-      point: 0
+      point: 0,
     };
     this.toggleModalInfo(extracurricularActivity, title);
   };
@@ -126,8 +126,8 @@ class ExtracurricularActivityListPage extends Component {
   addExtracurricularActivity = async () => {
     console.log("add: state ==================");
     console.log(this.state);
-    const { title, preview, detail, picture, extracurricularActivityCategoryId } = this.state.item;
-    const extracurricularActivity = { title, preview, detail, picture, extracurricularActivityCategoryId };
+    const { name, semester, organizedTime, expectedLocation, organizedUnit, point } = this.state.item;
+    const extracurricularActivity = { name, semester, organizedTime, expectedLocation, organizedUnit, point };
     try {
       let response = await ApiExtracurricularActivity.postExtracurricularActivity(extracurricularActivity);
       console.log("response");
@@ -143,8 +143,8 @@ class ExtracurricularActivityListPage extends Component {
   };
 
   updateExtracurricularActivity = async () => {
-    const { id, title, preview, detail, picture } = this.state.item;
-    const extracurricularActivity = { id, title, preview, detail, picture };
+    const { id, name, semester, organizedTime, expectedLocation, organizedUnit, point } = this.state.item;
+    const extracurricularActivity = { id, name, semester, organizedTime, expectedLocation, organizedUnit, point };
     try {
       await ApiExtracurricularActivity.updateExtracurricularActivity(extracurricularActivity);
       this.toggleModalInfo();
@@ -211,11 +211,11 @@ class ExtracurricularActivityListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="title"
-                        title="Title"
+                        name="name"
+                        title="Name"
                         type="text"
                         required={true}
-                        value={item.title}
+                        value={item.name}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -226,11 +226,11 @@ class ExtracurricularActivityListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="preview"
-                        title="Preview"
+                        name="semester"
+                        title="Semester"
                         type="text"
                         required={true}
-                        value={item.preview}
+                        value={item.semester}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -241,11 +241,11 @@ class ExtracurricularActivityListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="detail"
-                        title="Detail"
+                        name="organizedTime"
+                        title="Organized Time"
                         type="text"
                         required={true}
-                        value={item.detail}
+                        value={item.organizedTime}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -256,11 +256,42 @@ class ExtracurricularActivityListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="picture"
-                        title="Picture"
+                        name="expectedLocation"
+                        title="Expected Location"
                         type="text"
-                        required={false}
-                        value={item.picture}
+                        required={true}
+                        value={item.expectedLocation}
+                        onChange={this.onModelChange}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <ValidationInput
+                        name="organizedUnit"
+                        title="Organized Unit"
+                        type="text"
+                        required={true}
+                        value={item.organizedUnit}
+                        onChange={this.onModelChange}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <ValidationInput
+                        name="point"
+                        title="Point"
+                        type="number"
+                        min={1}
+                        required={true}
+                        value={item.point}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -297,7 +328,7 @@ class ExtracurricularActivityListPage extends Component {
               <thead>
                 <tr>
                   <th>STT</th>
-                  <th>Extracurricular Activity name</th>
+                  <th>Extracurricular activity name</th>
                   <th>Semester</th>
                   <th>OrganizedTime</th>
                   <th>ExpectedLocation</th>
@@ -319,13 +350,13 @@ class ExtracurricularActivityListPage extends Component {
                         <td>{item.organizedUnit}</td>
                         <td>{item.point}</td>
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
-                          &nbsp;
+                          {/* &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );

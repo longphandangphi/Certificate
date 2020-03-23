@@ -296,7 +296,7 @@ class UserListPage extends Component {
                                     <th>Name</th>
                                     <th>FullName</th>
                                     <th>Email</th>
-                                    <th>Role</th>
+                                    <th>Roles</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

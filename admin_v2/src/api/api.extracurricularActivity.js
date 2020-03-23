@@ -3,7 +3,7 @@ import RequestHelper from "../helpers/request.helper";
 
 export default class ApiExtracurricularActivity {
   static getAllExtracurricularActivity() {
-    return RequestHelper.get(appConfig.apiUrl + "extracurricularActivities/all");
+    return RequestHelper.get(appConfig.apiUrl + "extracurricularActivities");
   }
 
   static getExtracurricularActivityList(params) {
