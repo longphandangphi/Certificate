@@ -90,6 +90,11 @@ export default {
       name: "ExtracurricularActivity",
       url: "/extracurricularActivities",
       icon: "fa fa-blind"
+    },
+    {
+      name: "Extracurricular",
+      url: "/extracurriculars",
+      icon: "fa fa-star"
     }
   ]
 };

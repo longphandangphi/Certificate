@@ -9,19 +9,23 @@ import ValidationInput from "../../../components/common/validation-input";
 import SelectInput from "../../../components/common/select-input";
 import { toastSuccess, toastError } from "../../../helpers/toast.helper";
 import lodash from "lodash";
-import { getClassList } from "../../../actions/class.list.action";
-import ApiClass from "../../../api/api.class";
-import ApiFaculty from "../../../api/api.faculty";
+import { getExtracurricularList } from "../../../actions/extracurricular.list.action";
+import ApiExtracurricular from "../../../api/api.extracurricular";
+import ApiArticleCategory from "../../../api/api.articleCategory";
 import { pagination } from "../../../constant/app.constant";
+//import CKEditor from "@ckeditor/ckeditor5-react";
+//import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ReactHtmlParser from "react-html-parser";
+import CKEditorInput from "../../../components/common/ckeditor-input";
 
-class ClassListPage extends Component {
+class ExtracurricularListPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isShowDeleteModal: false,
       isShowInfoModal: false,
       item: {},
-      faculties: [],
+      extracurricularCategories: [],
       itemId: null,
       params: {
         skip: pagination.initialPage,
@@ -29,7 +33,7 @@ class ClassListPage extends Component {
       },
       query: ""
     };
-    this.delayedCallback = lodash.debounce(this.search, 1000);
+    this.delayedCallback = lodash.debounce(this.search, 1);
   }
 
   toggleDeleteModal = () => {
@@ -56,17 +60,20 @@ class ClassListPage extends Component {
   };
 
   showAddNew = () => {
-    let title = "Create Class";
-    let classObj = {
-      name: "",
-      description: ""
+    let title = "Create Extracurricular";
+    let extracurricular = {
+      title: "",
+      preview: "",
+      detail: "",
+      picture: ""
     };
-    this.toggleModalInfo(classObj, title);
+    this.toggleModalInfo(extracurricular, title);
   };
 
   showUpdateModal = item => {
-    let title = "Update Class";
-    item.facultyId = item.faculty.id;
+    console.log(item);
+    item.articleCategoryId = item.articleCategory.id;
+    let title = "Update Extracurricular";
     this.toggleModalInfo(item, title);
   };
 
@@ -76,11 +83,18 @@ class ClassListPage extends Component {
     let item = Object.assign({}, this.state.item);
     item[inputName] = inputValue;
     this.setState({ item });
+    console.log(this.state.item);
   };
 
-  onFacultyChange = value => {
+  onArticleCategoryChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.facultyId = value;
+    item.articleCategoryId = value;
+    this.setState({ item });
+  };
+
+  onDetailChange = e => {
+    let item = Object.assign({}, this.state.item);
+    item.detail = e.editor.getData();
     this.setState({ item });
   };
 
@@ -94,7 +108,7 @@ class ClassListPage extends Component {
         query: e.target.value
       },
       () => {
-        this.getClassList();
+        this.getExtracurricularList();
       }
     );
   };
@@ -112,94 +126,95 @@ class ClassListPage extends Component {
           skip: e.selected + 1
         }
       },
-      () => this.getClassList()
+      () => this.getExtracurricularList()
     );
   };
 
-  getClassList = () => {
+  getExtracurricularList = () => {
     let params = Object.assign({}, this.state.params, {
       query: this.state.query
     });
-    this.props.getClassList(params);
+    this.props.getExtracurricularList(params);
   };
 
-  getFacultyList = () => {
-    ApiFaculty.getAllFaculty().then(values => {
-      this.setState({ faculties: values.sources });
+  getArticleCategoryList = () => {
+    ApiArticleCategory.getAllArticleCategory().then(values => {
+      this.setState({ extracurricularCategories: values.sources });
     });
   };
 
-  addClass = async () => {
-    console.log("add: state ==================");
-    console.log(this.state);
-    const { name, facultyId, description } = this.state.item;
-    const classObj = { name, facultyId, description };
+  addExtracurricular = async () => {
+    const { title, preview, detail, picture, articleCategoryId } = this.state.item;
+    const extracurricular = { title, preview, detail, picture, articleCategoryId };
     try {
-      let response = await ApiClass.postClass(classObj);
-      console.log("response");
-      console.log(response);
+      let response = await ApiExtracurricular.postExtracurricular(extracurricular);
       this.toggleModalInfo();
-      this.getClassList();
-      toastSuccess("The class has been created successfully");
+      this.getExtracurricularList();
+      toastSuccess("The extracurricular has been created successfully");
     } catch (err) {
       console.log("err");
       console.log(err);
-      toastError("This Class name is exist! Try another one");
+      toastError("This Extracurricular title is exist! Try another oneeeeeeeee");
     }
   };
 
-  updateClass = async () => {
-    const { id, name, description, facultyId } = this.state.item;
-    const classObj = { id, name, description, facultyId };
+  updateExtracurricular = async () => {
+    const { id, title, preview, detail, picture, articleCategoryId } = this.state.item;
+    const extracurricular = { id, title, preview, detail, picture, articleCategoryId };
     try {
-      await ApiClass.updateClass(classObj);
+      await ApiExtracurricular.updateExtracurricular(extracurricular);
       this.toggleModalInfo();
-      this.getClassList();
-      toastSuccess("The class has been updated successfully");
+      this.getExtracurricularList();
+      toastSuccess("The extracurricular has been updated successfully");
     } catch (err) {
-      toastError("This Faculty name is exist! Try another one");
+      console.log(err);
+      toastError("This extracurricular title is exist! Try another one");
     }
   };
 
-  deleteClass = async () => {
+  deleteExtracurricular = async () => {
     try {
-      await ApiClass.deleteClass(this.state.itemId);
+      await ApiExtracurricular.deleteExtracurricular(this.state.itemId);
       this.toggleDeleteModal();
-      this.getClassList();
-      toastSuccess("The classObj has been deleted successfully");
+      this.getExtracurricularList();
+      toastSuccess("The extracurricular has been deleted successfully");
     } catch (err) {
       toastError(err + "");
     }
   };
 
-  saveClass = () => {
+  saveExtracurricular = () => {
     let { id } = this.state.item;
     if (id) {
-      this.updateClass();
+      this.updateExtracurricular();
     } else {
-      this.addClass();
+      this.addExtracurricular();
     }
   };
 
   onSubmit(e) {
     e.preventDefault();
     this.form.validateAll();
-    this.saveClass();
+    this.saveExtracurricular();
   }
 
   componentDidMount() {
-    this.getClassList();
-    this.getFacultyList();
+    this.getExtracurricularList();
+    this.getArticleCategoryList();
   }
 
   render() {
-    const { isShowDeleteModal, isShowInfoModal, item, faculties } = this.state;
-    const { classPagedList } = this.props.classPagedListReducer;
-    const { sources, pageIndex, totalPages } = classPagedList;
+    const { isShowDeleteModal, isShowInfoModal, item, extracurricularCategories } = this.state;
+    const { extracurricularPagedList } = this.props.extracurricularPagedListReducer;
+    const { sources, pageIndex, totalPages } = extracurricularPagedList;
     const hasResults = sources && sources.length > 0;
     return (
       <div className="animated fadeIn">
-        <ModalConfirm clickOk={this.deleteClass} isShowModal={isShowDeleteModal} toggleModal={this.toggleDeleteModal} />
+        <ModalConfirm
+          clickOk={this.deleteExtracurricular}
+          isShowModal={isShowDeleteModal}
+          toggleModal={this.toggleDeleteModal}
+        />
 
         <ModalInfo title={this.state.formTitle} isShowModal={isShowInfoModal} hiddenFooter>
           <div className="modal-wrapper">
@@ -214,11 +229,11 @@ class ClassListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="name"
-                        title="Name"
+                        name="title"
+                        title="Title"
                         type="text"
                         required={true}
-                        value={item.name}
+                        value={item.title}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -229,15 +244,15 @@ class ClassListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        placeholder="--Select Faculty--"
-                        name="faculty"
-                        title="Faculty"
-                        defaultValue={item.faculty ? item.faculty.id : undefined}
+                        placeholder="--Select ArticleCategory--"
+                        name="articleCategoryId"
+                        title="ArticleCategory"
+                        defaultValue={item.articleCategory ? item.articleCategory.id : undefined}
                         showSearch={true}
                         style={{ display: "block" }}
                         required={true}
-                        onChange={this.onFacultyChange}
-                        options={faculties}
+                        onChange={this.onArticleCategoryChange}
+                        options={extracurricularCategories}
                         valueField="id"
                         nameField="name"
                       />
@@ -249,11 +264,45 @@ class ClassListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="description"
-                        title="Description"
+                        name="preview"
+                        title="Preview"
                         type="text"
                         required={true}
-                        value={item.description}
+                        value={item.preview}
+                        onChange={this.onModelChange}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      {/* <ValidationInput
+                        name="detail"
+                        title="Detail"
+                        type="text"
+                        required={true}
+                        value={item.detail}
+                        onChange={this.onModelChange}
+                      />
+                    </FormGroup> */}
+
+                      {/* <CKEditor editor={ClassicEditor} onChange={this.onDetailChange} data={item.detail} /> */}
+                      <CKEditorInput title="Detail" name="detail" data={item.detail} onChange={this.onDetailChange} />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <ValidationInput
+                        name="picture"
+                        title="Picture"
+                        type="text"
+                        required={true}
+                        value={item.picture}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -263,7 +312,8 @@ class ClassListPage extends Component {
                 <div className="text-center">
                   <Button color="danger" type="submit">
                     Confirm
-                  </Button>{" "}
+                  </Button>
+                  &nbsp;
                   <Button color="secondary" onClick={this.toggleModalInfo}>
                     Cancel
                   </Button>
@@ -289,10 +339,13 @@ class ClassListPage extends Component {
               <thead>
                 <tr>
                   <th>STT</th>
-                  <th>Class name</th>
-                  <th>Faculty name</th>
-                  <th>Description</th>
-                  <th>Action</th>
+                  <th>Extracurricular title</th>
+                  <th>Create On</th>
+                  <th>Extracurricular category</th>
+                  <th>Preview</th>
+                  <th>Detail</th>
+                  <th>Picture</th>
+                  <th style={{ minWidth: 125 }}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -301,9 +354,12 @@ class ClassListPage extends Component {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
-                        <td>{item.name}</td>
-                        <td>{item.faculty.name}</td>
-                        <td>{item.description}</td>
+                        <td>{item.title}</td>
+                        <td>{item.createOn}</td>
+                        <td>{item.articleCategory.name}</td>
+                        <td>{item.preview}</td>
+                        <td>{ReactHtmlParser(item.detail)}</td>
+                        <td>{item.picture}</td>
                         <td>
                           <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
                             Edit
@@ -336,9 +392,9 @@ class ClassListPage extends Component {
 
 export default connect(
   state => ({
-    classPagedListReducer: state.classPagedListReducer
+    extracurricularPagedListReducer: state.extracurricularPagedListReducer
   }),
   {
-    getClassList
+    getExtracurricularList
   }
-)(ClassListPage);
+)(ExtracurricularListPage);

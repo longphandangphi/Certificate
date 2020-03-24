@@ -138,7 +138,7 @@ namespace Api.Core.Business.Services
             }
             else
             {
-                var existedArticle = await _articleRepository.FetchFirstAsync(x => x.Title == articleManageModel.Title);
+                var existedArticle = await _articleRepository.FetchFirstAsync(x => x.Title == articleManageModel.Title && x.Id != id);
                 if (existedArticle != null)
                 {
                     return new ResponseModel

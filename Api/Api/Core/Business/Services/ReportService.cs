@@ -81,7 +81,8 @@ namespace Api.Core.Business.Services
 
             var sortProperty = type.GetProperty(matchedPropertyName);
 
-            list = requestListViewModel.IsDesc ? list.OrderByDescending(x => sortProperty.GetValue(x, null)).ToList() : list.OrderBy(x => sortProperty.GetValue(x, null)).ToList();
+            // list = requestListViewModel.IsDesc ? list.OrderByDescending(x => sortProperty.GetValue(x, null)).ToList() : list.OrderBy(x => sortProperty.GetValue(x, null)).ToList();
+            list = list.OrderByDescending(x => sortProperty.GetValue(x, null)).ToList();
 
             return new PagedList<ReportViewModel>(list, requestListViewModel.Offset ?? CommonConstants.Config.DEFAULT_SKIP, requestListViewModel.Limit ?? CommonConstants.Config.DEFAULT_TAKE);
         }

@@ -24,6 +24,7 @@ namespace Api.Core.Business.Models.Articles
                 Detail = article.Detail;
                 Picture = article.Picture;
                 ArticleCategory = new ArticleCategoryViewModel(article.ArticleCategory);
+                CreateOn = article.CreatedOn.ToString("dd/MM/yyyy");
             }
         }
 
@@ -36,6 +37,8 @@ namespace Api.Core.Business.Models.Articles
         public string Detail { get; set; }
 
         public string Picture { get; set; }
+
+        public string CreateOn { get; set; }
 
         public ArticleCategoryViewModel ArticleCategory { get; set; }
     }

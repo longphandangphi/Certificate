@@ -12,6 +12,7 @@ import { watchProfileSagasAsync } from "./profile.saga";
 import { watchRoleListSagasAsync } from "./role.list.saga";
 import { watchClassListSagasAsync } from "./class.list.saga";
 import { watchArticleListSagasAsync } from "./article.list.saga";
+import { watchExtracurricularListSagasAsync } from "./extracurricular.list.saga";
 import { watchReportListSagasAsync } from "./report.list.saga";
 import { watchExtracurricularActivityListSagasAsync } from "./extracurricularActivity.list.saga";
 import { watchMajorListSagasAsync } from "./major.list.saga";
@@ -34,6 +35,7 @@ export default function* sagas() {
     fork(watchRoleListSagasAsync),
     fork(watchClassListSagasAsync),
     fork(watchArticleListSagasAsync),
+    fork(watchExtracurricularListSagasAsync),
     fork(watchReportListSagasAsync),
     fork(watchExtracurricularActivityListSagasAsync),
     fork(watchMajorListSagasAsync),

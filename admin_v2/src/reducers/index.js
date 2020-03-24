@@ -13,6 +13,7 @@ import { reviewListReducer } from "./review.list.reducer";
 import { bookingListReducer } from "./booking.list.reducer";
 import { classListReducer } from "./class.list.reducer";
 import { articleListReducer } from "./article.list.reducer";
+import { extracurricularListReducer } from "./extracurricular.list.reducer";
 import { reportListReducer } from "./report.list.reducer";
 import { extracurricularActivityListReducer } from "./extracurricularActivity.list.reducer";
 import { majorListReducer } from "./major.list.reducer";
@@ -32,6 +33,7 @@ export default combineReducers({
   customerPagedListReducer: customerListReducer,
   classPagedListReducer: classListReducer,
   articlePagedListReducer: articleListReducer,
+  extracurricularPagedListReducer: extracurricularListReducer,
   reportPagedListReducer: reportListReducer,
   extracurricularActivityPagedListReducer: extracurricularActivityListReducer,
   majorPagedListReducer: majorListReducer,

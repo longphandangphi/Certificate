@@ -25,7 +25,8 @@ namespace Api.Core.Entities
 
         public bool RecordActive { get; set; }
 
-        public DateTime? CreatedOn { get; set; }
+        // ko xài "?" để sau này còn fomat lại ngày 
+        public DateTime CreatedOn { get; set; }
 
         public Guid? CreatedBy { get; set; }
 

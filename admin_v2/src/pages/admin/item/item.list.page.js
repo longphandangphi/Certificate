@@ -320,7 +320,7 @@ class ItemListPage extends Component {
                       showSearch={true}
                       title="Menu"
                       name="menu"
-                      defaultValue={item.menu ? item.menu.id : ""}
+                      defaultValue={item.menu ? item.menu.id : undefined}
                       required={true}
                       onChange={this.onMenuChange}
                       options={menus}

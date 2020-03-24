@@ -13,6 +13,10 @@ import { getArticleList } from "../../../actions/article.list.action";
 import ApiArticle from "../../../api/api.article";
 import ApiArticleCategory from "../../../api/api.articleCategory";
 import { pagination } from "../../../constant/app.constant";
+//import CKEditor from "@ckeditor/ckeditor5-react";
+//import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ReactHtmlParser from "react-html-parser";
+import CKEditorInput from "../../../components/common/ckeditor-input";
 
 class ArticleListPage extends Component {
   constructor(props) {
@@ -29,7 +33,7 @@ class ArticleListPage extends Component {
       },
       query: ""
     };
-    this.delayedCallback = lodash.debounce(this.search, 1000);
+    this.delayedCallback = lodash.debounce(this.search, 1);
   }
 
   toggleDeleteModal = () => {
@@ -67,6 +71,8 @@ class ArticleListPage extends Component {
   };
 
   showUpdateModal = item => {
+    console.log(item);
+    item.articleCategoryId = item.articleCategory.id;
     let title = "Update Article";
     this.toggleModalInfo(item, title);
   };
@@ -77,11 +83,18 @@ class ArticleListPage extends Component {
     let item = Object.assign({}, this.state.item);
     item[inputName] = inputValue;
     this.setState({ item });
+    console.log(this.state.item);
   };
 
   onArticleCategoryChange = value => {
     let item = Object.assign({}, this.state.item);
     item.articleCategoryId = value;
+    this.setState({ item });
+  };
+
+  onDetailChange = e => {
+    let item = Object.assign({}, this.state.item);
+    item.detail = e.editor.getData();
     this.setState({ item });
   };
 
@@ -131,14 +144,10 @@ class ArticleListPage extends Component {
   };
 
   addArticle = async () => {
-    console.log("add: state ==================");
-    console.log(this.state);
     const { title, preview, detail, picture, articleCategoryId } = this.state.item;
     const article = { title, preview, detail, picture, articleCategoryId };
     try {
       let response = await ApiArticle.postArticle(article);
-      console.log("response");
-      console.log(response);
       this.toggleModalInfo();
       this.getArticleList();
       toastSuccess("The article has been created successfully");
@@ -150,15 +159,16 @@ class ArticleListPage extends Component {
   };
 
   updateArticle = async () => {
-    const { id, title, preview, detail, picture } = this.state.item;
-    const article = { id, title, preview, detail, picture };
+    const { id, title, preview, detail, picture, articleCategoryId } = this.state.item;
+    const article = { id, title, preview, detail, picture, articleCategoryId };
     try {
       await ApiArticle.updateArticle(article);
       this.toggleModalInfo();
       this.getArticleList();
       toastSuccess("The article has been updated successfully");
     } catch (err) {
-      toastError("This ArticleCategory title is exist! Try another one");
+      console.log(err);
+      toastError("This article title is exist! Try another one");
     }
   };
 
@@ -234,9 +244,10 @@ class ArticleListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
+                        placeholder="--Select ArticleCategory--"
                         name="articleCategoryId"
                         title="ArticleCategory"
-                        defaultValue={item.articleCategory ? item.articleCategory.id : "--Select ArticleCategory--"}
+                        defaultValue={item.articleCategory ? item.articleCategory.id : undefined}
                         showSearch={true}
                         style={{ display: "block" }}
                         required={true}
@@ -267,7 +278,7 @@ class ArticleListPage extends Component {
                 <Row>
                   <Col>
                     <FormGroup>
-                      <ValidationInput
+                      {/* <ValidationInput
                         name="detail"
                         title="Detail"
                         type="text"
@@ -275,6 +286,10 @@ class ArticleListPage extends Component {
                         value={item.detail}
                         onChange={this.onModelChange}
                       />
+                    </FormGroup> */}
+
+                      {/* <CKEditor editor={ClassicEditor} onChange={this.onDetailChange} data={item.detail} /> */}
+                      <CKEditorInput title="Detail" name="detail" data={item.detail} onChange={this.onDetailChange} />
                     </FormGroup>
                   </Col>
                 </Row>
@@ -286,7 +301,7 @@ class ArticleListPage extends Component {
                         name="picture"
                         title="Picture"
                         type="text"
-                        required={false}
+                        required={true}
                         value={item.picture}
                         onChange={this.onModelChange}
                       />
@@ -325,11 +340,12 @@ class ArticleListPage extends Component {
                 <tr>
                   <th>STT</th>
                   <th>Article title</th>
-                  <th>Article Category name</th>
+                  <th>Create On</th>
+                  <th>Article category</th>
                   <th>Preview</th>
                   <th>Detail</th>
                   <th>Picture</th>
-                  <th>Action</th>
+                  <th style={{ minWidth: 125 }}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -339,9 +355,10 @@ class ArticleListPage extends Component {
                       <tr key={item.id}>
                         <td>{index + 1}</td>
                         <td>{item.title}</td>
+                        <td>{item.createOn}</td>
                         <td>{item.articleCategory.name}</td>
                         <td>{item.preview}</td>
-                        <td>{item.detail}</td>
+                        <td>{ReactHtmlParser(item.detail)}</td>
                         <td>{item.picture}</td>
                         <td>
                           <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>

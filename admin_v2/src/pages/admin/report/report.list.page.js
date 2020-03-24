@@ -296,6 +296,7 @@ class ReportListPage extends Component {
               <thead>
                 <tr>
                   <th>STT</th>
+                  <th>Create On</th>
                   <th>Report subject</th>
                   <th>Content</th>
                   <th>Student ID</th>
@@ -311,6 +312,7 @@ class ReportListPage extends Component {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
+                        <td>{item.createOn}</td>
                         <td>{item.subject}</td>
                         <td>{item.content}</td>
                         <td>{item.studentViewModel.id}</td>

@@ -27,6 +27,8 @@ const ClassListPage = React.lazy(() => import("./pages/admin/class/class.list.pa
 
 const ArticleListPage = React.lazy(() => import("./pages/admin/article/article.list.page"));
 
+const ExtracurricularListPage = React.lazy(() => import("./pages/admin/extracurricular/extracurricular.list.page"));
+
 const ReportListPage = React.lazy(() => import("./pages/admin/report/report.list.page"));
 
 const ExtracurricularActivityListPage = React.lazy(() =>
@@ -54,6 +56,7 @@ const routes = [
   { path: "/roles", name: "Role", component: RoleListPage },
   { path: "/classes", name: "Class", component: ClassListPage },
   { path: "/articles", name: "Article", component: ArticleListPage },
+  { path: "/extracurriculars", name: "Extracurricular", component: ExtracurricularListPage },
   { path: "/reports", name: "Report", component: ReportListPage },
   { path: "/extracurricularActivities", name: "Extracurricular Activity", component: ExtracurricularActivityListPage },
   { path: "/majors", name: "Major", component: MajorListPage },
