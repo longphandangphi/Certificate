@@ -268,9 +268,9 @@ namespace Api.Core.Business.Services
         //    return await GetAll().FirstOrDefaultAsync(x => x.Email == email);
         //}
 
-        public async Task<Student> GetStudentByUsernameAsync(string username)
+        public async Task<Student> GetStudentByUsernameAsync(string email)
         {
-            return await GetAll().FirstOrDefaultAsync(x => x.Username == username);
+            return await GetAll().FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public async Task<ResponseModel> ChangeStudentPasswordAsync(Guid id, StudentChangePasswordModel studentChangePasswordModel)

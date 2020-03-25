@@ -1,4 +1,5 @@
-﻿using Api.Core.Entities;
+﻿using Api.Core.Business.Models.ExtracurricularActivities;
+using Api.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Api.Core.Business.Models.Extracurriculars
             {
                 Id = extracurricular.Id;
                 StudentId = extracurricular.StudentId;
-                ExtracurricularActivityId = extracurricular.ExtracurricularActivityId;
+                ExtracurricularActivity = new ExtracurricularActivityViewModel(extracurricular.ExtracurricularActivity);
             }
         }
 
@@ -27,6 +28,6 @@ namespace Api.Core.Business.Models.Extracurriculars
 
         public Guid StudentId { get; set; }
 
-        public Guid ExtracurricularActivityId { get; set; }
+        public ExtracurricularActivityViewModel ExtracurricularActivity { get; set; }
     }
 }

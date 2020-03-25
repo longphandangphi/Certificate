@@ -17,11 +17,12 @@ namespace Api.Core.Business.Services
     {
         //xem thêm sửa xóa
         Task<PagedList<ExtracurricularViewModel>> ListExtracurricularAsync(RequestListViewModel requestListViewModel);
+
+        Task<PagedList<ExtracurricularOfStudentViewModel>> ListExtracurricularByStudentIdAsync(Guid studentId, RequestListViewModel requestListViewModel);
         Task<ExtracurricularViewModel> GetExtracurricularByIdAsync(Guid? id);
         Task<ResponseModel> CreateExtracurricularAsync(ExtracurricularManageModel extracurricularManagerModel);
 
         //Task<ResponseModel> UpdateExtracurricularAsync(Guid id, ExtracurricularManageModel extracurricularManagerModel);
-
         Task<ResponseModel> DeleteExtracurricularAsync(Guid id);
 
     }
@@ -43,7 +44,7 @@ namespace Api.Core.Business.Services
         #region private method
         private IQueryable<Extracurricular> GetAll()
         {
-            return _extracurricularRepository.GetAll();
+            return _extracurricularRepository.GetAll().Include(x => x.ExtracurricularActivity);
         }
 
         private List<string> GetAllPropertyNameOfExtracurricularViewModel()
@@ -73,7 +74,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "ExtracurricularActivityId";
+                matchedPropertyName = "Id";
             }
 
             var type = typeof(ExtracurricularViewModel);
@@ -85,10 +86,51 @@ namespace Api.Core.Business.Services
             return new PagedList<ExtracurricularViewModel>(list, requestListViewModel.Offset ?? CommonConstants.Config.DEFAULT_SKIP, requestListViewModel.Limit ?? CommonConstants.Config.DEFAULT_TAKE);
         }
 
+
+
         public async Task<ExtracurricularViewModel> GetExtracurricularByIdAsync(Guid? id)
         {
             var extracurricular = await _extracurricularRepository.GetByIdAsync(id);
             return new ExtracurricularViewModel(extracurricular);
+        }
+
+        // ////////////////////////////
+        //public async Task<ExtracurricularViewModel> GetExtracurricularByStudentIdAsync(Guid? studentId)
+        //{
+        //    var extracurricularList = await GetAll().Select(x => new ExtracurricularViewModel(x)).ToListAsync();
+
+
+        //    return new ExtracurricularViewModel(extracurricularList);
+        //}
+
+        public async Task<PagedList<ExtracurricularOfStudentViewModel>> ListExtracurricularByStudentIdAsync(Guid studentId,  RequestListViewModel requestListViewModel)
+        {
+            var list = await GetAll()
+                .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
+                && (string.IsNullOrEmpty(requestListViewModel.Query)
+                    || (x.StudentId.ToString().Contains(requestListViewModel.Query)
+                    ))
+                && (x.StudentId == studentId))
+                .Select(x => new ExtracurricularOfStudentViewModel(x)).ToListAsync();
+
+            var extracurricularViewModelProperties = GetAllPropertyNameOfExtracurricularViewModel();
+
+            var requestPropertyName = !string.IsNullOrEmpty(requestListViewModel.SortName) ? requestListViewModel.SortName.ToLower() : string.Empty;
+
+            string matchedPropertyName = extracurricularViewModelProperties.FirstOrDefault(x => x == requestPropertyName);
+
+            if (string.IsNullOrEmpty(matchedPropertyName))
+            {
+                matchedPropertyName = "Id";
+            }
+
+            var type = typeof(ExtracurricularOfStudentViewModel);
+
+            var sortProperty = type.GetProperty(matchedPropertyName);
+
+            list = requestListViewModel.IsDesc ? list.OrderByDescending(x => sortProperty.GetValue(x, null)).ToList() : list.OrderBy(x => sortProperty.GetValue(x, null)).ToList();
+
+            return new PagedList<ExtracurricularOfStudentViewModel>(list, requestListViewModel.Offset ?? CommonConstants.Config.DEFAULT_SKIP, requestListViewModel.Limit ?? CommonConstants.Config.DEFAULT_TAKE);
         }
 
         public async Task<ResponseModel> CreateExtracurricularAsync(ExtracurricularManageModel extracurricularManageModel)

@@ -26,12 +26,26 @@ namespace Api.Controllers
             return Ok(extracurricular);
         }
 
+        [HttpGet("{studentId}/student")]
+        public async Task<IActionResult> GetAllByStudentId(Guid studentId, [FromQuery] RequestListViewModel requestListViewModel)
+        {
+            var extracurricular = await _extracurricularService.ListExtracurricularByStudentIdAsync(studentId, requestListViewModel);
+            return Ok(extracurricular);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetExtracurricularById(Guid id)
         {
             var extracurricular = await _extracurricularService.GetExtracurricularByIdAsync(id);
             return Ok(extracurricular);
         }
+
+        //[HttpGet("{studentId}")]
+        //public async Task<IActionResult> GetExtracurricularByStudentId(Guid studentId)
+        //{
+        //    var extracurricular = await _extracurricularService.GetExtracurricularByStudentIdAsync(studentId);
+        //    return Ok(extracurricular);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ExtracurricularManageModel extracurricularManageModel)
