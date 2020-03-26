@@ -253,7 +253,7 @@ class ReviewListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Email</th>
                   <th>Content</th>
                   <th>Item</th>

@@ -1,5 +1,5 @@
 export const pagination = {
-  defaultTake: 10,
+  defaultTake: 5,
   initialPage: 1
 };
 

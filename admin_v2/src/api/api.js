@@ -4,7 +4,7 @@ import { appConfig } from "../config/app.config";
 export default class Api {
   // sso
   static login(data) {
-    return RequestHelper.post(appConfig.apiUrl + "sso/loginStudent", data);
+    return RequestHelper.post(appConfig.apiUrl + "sso/loginAdmin", data);
   }
 
   // static getPermissons() {

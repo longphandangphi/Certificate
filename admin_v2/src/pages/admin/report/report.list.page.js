@@ -12,6 +12,7 @@ import lodash from "lodash";
 import { getReportList } from "../../../actions/report.list.action";
 import ApiReport from "../../../api/api.report";
 import { pagination } from "../../../constant/app.constant";
+import moment from "moment";
 
 class ReportListPage extends Component {
   constructor(props) {
@@ -295,7 +296,7 @@ class ReportListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Create On</th>
                   <th>Report subject</th>
                   <th>Content</th>
@@ -312,7 +313,11 @@ class ReportListPage extends Component {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
-                        <td>{item.createOn}</td>
+                        <td>
+                          {moment(item.createOn)
+                            .add(7, "h")
+                            .format("YYYY-MM-DD HH:mm")}
+                        </td>
                         <td>{item.subject}</td>
                         <td>{item.content}</td>
                         <td>{item.studentViewModel.id}</td>

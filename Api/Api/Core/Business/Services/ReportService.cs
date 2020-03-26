@@ -63,6 +63,7 @@ namespace Api.Core.Business.Services
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
                     || (x.Subject.Contains(requestListViewModel.Query))
                     || (x.Content.Contains(requestListViewModel.Query))
+                    || (x.CreatedOn.ToString().Contains(requestListViewModel.Query))
                     ))
                 .Select(x => new ReportViewModel(x)).ToListAsync();
 

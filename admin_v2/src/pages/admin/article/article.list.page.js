@@ -17,6 +17,7 @@ import { pagination } from "../../../constant/app.constant";
 //import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ReactHtmlParser from "react-html-parser";
 import CKEditorInput from "../../../components/common/ckeditor-input";
+import moment from "moment";
 
 class ArticleListPage extends Component {
   constructor(props) {
@@ -28,8 +29,8 @@ class ArticleListPage extends Component {
       articleCategories: [],
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultTake
       },
       query: ""
     };
@@ -103,7 +104,7 @@ class ArticleListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -123,7 +124,7 @@ class ArticleListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getArticleList()
@@ -338,9 +339,9 @@ class ArticleListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Article title</th>
-                  <th>Create On</th>
+                  <th style={{ minWidth: 135 }}>Create On</th>
                   <th>Article category</th>
                   <th>Preview</th>
                   <th>Detail</th>
@@ -355,7 +356,11 @@ class ArticleListPage extends Component {
                       <tr key={item.id}>
                         <td>{index + 1}</td>
                         <td>{item.title}</td>
-                        <td>{item.createOn}</td>
+                        <td>
+                          {moment(item.createOn)
+                            .add(7, "h")
+                            .format("YYYY-MM-DD HH:mm")}
+                        </td>
                         <td>{item.articleCategory.name}</td>
                         <td>{item.preview}</td>
                         <td>{ReactHtmlParser(item.detail)}</td>

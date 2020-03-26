@@ -306,7 +306,7 @@ class ExtracurricularListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Extracurricular Activity</th>
                   <th>Faculty</th>
                   <th>Activity ID</th>

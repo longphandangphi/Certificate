@@ -22,7 +22,7 @@ namespace Api.Core.Business.Models.Reports
             IsSolved = report.IsSolved;
             IsSeen = report.IsSeen;
             StudentViewModel = new StudentViewModel(report.Student);
-            CreateOn = report.CreatedOn.ToString("dd/MM/yyyy hh:mm tt");
+            CreateOn = report.CreatedOn;
         }
 
         public Guid Id { get; set; }
@@ -35,7 +35,7 @@ namespace Api.Core.Business.Models.Reports
 
         public bool IsSeen { get; set; }
 
-        public string CreateOn { get; set; }
+        public DateTime? CreateOn { get; set; }
 
         public StudentViewModel StudentViewModel { get; set; }
     }

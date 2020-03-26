@@ -29,9 +29,7 @@ const DefaultFooter = React.lazy(() => import("./DefaultLayout/DefaultFooter"));
 const DefaultHeader = React.lazy(() => import("./DefaultLayout/DefaultHeader"));
 
 class DefaultLayout extends Component {
-  loading = () => (
-    <div className="animated fadeIn pt-1 text-center">Đang tải...</div>
-  );
+  loading = () => <div className="animated fadeIn pt-1 text-center">Đang tải...</div>;
 
   signOut(e) {
     e.preventDefault();

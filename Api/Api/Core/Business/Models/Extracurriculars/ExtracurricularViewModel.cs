@@ -21,12 +21,15 @@ namespace Api.Core.Business.Models.Extracurriculars
                 Id = extracurricular.Id;
                 StudentId = extracurricular.StudentId;
                 ExtracurricularActivity = new ExtracurricularActivityViewModel(extracurricular.ExtracurricularActivity);
+                CreatedOn = extracurricular.CreatedOn;
             }
         }
 
         public Guid Id { get; set; }
 
         public Guid StudentId { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
 
         public ExtracurricularActivityViewModel ExtracurricularActivity { get; set; }
     }

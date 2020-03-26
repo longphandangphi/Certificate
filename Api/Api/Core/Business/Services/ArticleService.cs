@@ -60,6 +60,7 @@ namespace Api.Core.Business.Services
                 .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
                     || (x.Title.Contains(requestListViewModel.Query)
+                    || (x.CreatedOn.ToString().Contains(requestListViewModel.Query))
                     )))
                 .Select(x => new ArticleViewModel(x)).ToListAsync();
 

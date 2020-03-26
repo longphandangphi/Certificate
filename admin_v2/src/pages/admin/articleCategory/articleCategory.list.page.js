@@ -255,7 +255,7 @@ class ArticleCategoryListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Article Category name</th>
                   <th>Description</th>
                   <th>Action</th>

@@ -73,7 +73,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Name";
+                matchedPropertyName = "OrganizedTime";
             }
 
             var type = typeof(ExtracurricularActivityViewModel);

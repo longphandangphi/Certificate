@@ -287,7 +287,7 @@ class UserListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Name</th>
                   <th>FullName</th>
                   <th>Email</th>

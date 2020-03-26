@@ -250,7 +250,7 @@ class MajorListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Major name</th>
                   <th>Description</th>
                   <th>Action</th>

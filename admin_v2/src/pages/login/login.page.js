@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 import Loading from "../../components/common/LoadingIndicator";
 import Api from "../../api/api";
-import lodash from "lodash";
+//import lodash from "lodash";
 
 class Login extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class Login extends Component {
     let { user } = this.state;
     if (!user.email || !user.password)
       return this.setState({
-        error: "Username or password please!"
+        error: "Require both Username and password to login!"
       });
     try {
       this.setState({ loading: true, error: "" });

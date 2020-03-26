@@ -233,7 +233,7 @@ class RoleListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Name</th>
                   <th>Action</th>
                 </tr>

@@ -62,8 +62,11 @@ namespace Api.Core.Business.Services
             var list = await GetAll()
                 .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
-                    || (x.StudentId.ToString().Contains(requestListViewModel.Query)
-                    )))
+                    || 
+                    (x.StudentId.ToString().Contains(requestListViewModel.Query)
+                        || (x.ExtracurricularActivity.Id.ToString().Contains(requestListViewModel.Query))
+                    )
+                    ))
                 .Select(x => new ExtracurricularViewModel(x)).ToListAsync();
 
             var extracurricularViewModelProperties = GetAllPropertyNameOfExtracurricularViewModel();
@@ -74,7 +77,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Id";
+                matchedPropertyName = "CreatedOn";
             }
 
             var type = typeof(ExtracurricularViewModel);

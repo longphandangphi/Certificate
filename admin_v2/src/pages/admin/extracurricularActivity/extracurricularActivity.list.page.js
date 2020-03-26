@@ -327,8 +327,9 @@ class ExtracurricularActivityListPage extends Component {
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
-                  <th>STT</th>
+                  <th></th>
                   <th>Extracurricular activity name</th>
+                  <th>Activity ID</th>
                   <th>Semester</th>
                   <th>OrganizedTime</th>
                   <th>ExpectedLocation</th>
@@ -344,6 +345,7 @@ class ExtracurricularActivityListPage extends Component {
                       <tr key={item.id}>
                         <td>{index + 1}</td>
                         <td>{item.name}</td>
+                        <td>{item.id}</td>
                         <td>{item.semester}</td>
                         <td>{item.organizedTime}</td>
                         <td>{item.expectedLocation}</td>
