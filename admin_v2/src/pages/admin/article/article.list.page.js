@@ -2,17 +2,21 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, Col, Button, FormGroup, Table } from "reactstrap";
 import Form from "react-validation/build/form";
+import { appConfig } from "../../../config/app.config";
 import ModalConfirm from "../../../components/modal/modal-confirm";
 import Pagination from "../../../components/pagination/Pagination";
 import ModalInfo from "../../../components/modal/modal-info";
 import ValidationInput from "../../../components/common/validation-input";
 import SelectInput from "../../../components/common/select-input";
 import { toastSuccess, toastError } from "../../../helpers/toast.helper";
+import { uploadFile } from "../../../helpers/upload_file.helper";
 import lodash from "lodash";
 import { getArticleList } from "../../../actions/article.list.action";
 import ApiArticle from "../../../api/api.article";
 import ApiArticleCategory from "../../../api/api.articleCategory";
+import ApiMedia from "../../../api/api.media";
 import { pagination } from "../../../constant/app.constant";
+import { FILE } from "../../../constant/file.constant";
 //import CKEditor from "@ckeditor/ckeditor5-react";
 //import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ReactHtmlParser from "react-html-parser";
@@ -27,6 +31,7 @@ class ArticleListPage extends Component {
       isShowInfoModal: false,
       item: {},
       articleCategories: [],
+      picture: null,
       itemId: null,
       params: {
         offset: pagination.initialPage,
@@ -145,10 +150,14 @@ class ArticleListPage extends Component {
   };
 
   addArticle = async () => {
-    const { title, preview, detail, picture, articleCategoryId } = this.state.item;
-    const article = { title, preview, detail, picture, articleCategoryId };
+    const { title, preview, detail, articleCategoryId } = this.state.item;
+    const article = { title, preview, detail, articleCategoryId };
     try {
+      var res = await uploadFile(FILE.MEDIA_UPLOAD, this.state.picture);
+      article.picture = appConfig.apiUrlMedia + res;
+
       await ApiArticle.postArticle(article);
+
       this.toggleModalInfo();
       this.getArticleList();
       toastSuccess("The article has been created successfully");
@@ -163,6 +172,9 @@ class ArticleListPage extends Component {
     const { id, title, preview, detail, picture, articleCategoryId } = this.state.item;
     const article = { id, title, preview, detail, picture, articleCategoryId };
     try {
+      var res = await uploadFile(FILE.MEDIA_UPLOAD, this.state.picture);
+      article.picture = appConfig.apiUrlMedia + res;
+
       await ApiArticle.updateArticle(article);
       this.toggleModalInfo();
       this.getArticleList();
@@ -202,6 +214,14 @@ class ArticleListPage extends Component {
   componentDidMount() {
     this.getArticleList();
     this.getArticleCategoryList();
+  }
+
+  handleFile(e) {
+    let picture = e.target.files[0];
+    console.log("picture", picture);
+    this.setState({
+      picture: picture
+    });
   }
 
   render() {
@@ -295,7 +315,7 @@ class ArticleListPage extends Component {
                   </Col>
                 </Row>
 
-                <Row>
+                {/* <Row>
                   <Col>
                     <FormGroup>
                       <ValidationInput
@@ -307,6 +327,14 @@ class ArticleListPage extends Component {
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
+                  </Col>
+                </Row> */}
+
+                <Row>
+                  <Col>
+                    <label>Picture</label>
+                    <br></br>
+                    <input type="file" name="file" onChange={e => this.handleFile(e)} />
                   </Col>
                 </Row>
 
@@ -364,7 +392,9 @@ class ArticleListPage extends Component {
                         <td>{item.articleCategory.name}</td>
                         <td>{item.preview}</td>
                         <td>{ReactHtmlParser(item.detail)}</td>
-                        <td>{item.picture}</td>
+                        <td>
+                          <img style={{ height: 50 }} src={item.picture} />
+                        </td>
                         <td>
                           <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
                             Edit

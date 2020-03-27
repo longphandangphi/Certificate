@@ -12,6 +12,10 @@ export default {
     {
       name: "Article Manager",
       icon: "fa fa-newspaper-o",
+      attributes: {
+        replace: true,
+        activeStyle: { textTransform: "uppercase" }
+      },
       children: [
         {
           name: "Article",

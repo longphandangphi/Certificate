@@ -1,7 +1,7 @@
-import axios from 'axios';
-import qs from 'qs';
-import cookie from 'react-cookies';
-import { toastError } from '../helpers/toast.helper';
+import axios from "axios";
+import qs from "qs";
+import cookie from "react-cookies";
+import { toastError } from "../helpers/toast.helper";
 
 const instance = axios.create({
   timeout: 100000
@@ -13,26 +13,26 @@ const handleError = error => {
     const message = error.response && error.response.data && error.response.data.message;
     if (message) {
       // eslint-disable-next-line
-      console.log('message', message);
+      console.log("message", message);
       toastError(message);
     }
   } else if (error.request) {
     //eslint-disable-next-line
-    console.log('error.request', 'Network error!');
+    console.log("error.request", "Network error!");
     toastError(error.request);
   } else {
     //eslint-disable-next-line
-    console.log('An unknown error has occurred!');
-    toastError('An unknown error has occurred!');
+    console.log("An unknown error has occurred!");
+    toastError("An unknown error has occurred!");
   }
 };
 
 export default class RequestHelper {
   static async getHeader(config = {}) {
     return {
-      accept: 'application/json',
-      contentType: 'application/json',
-      'x-access-token': cookie.load('token'),
+      accept: "application/json",
+      contentType: "application/json",
+      "x-access-token": cookie.load("token"),
       ...config
     };
   }
@@ -44,7 +44,7 @@ export default class RequestHelper {
         headers: header,
         params,
         paramsSerializer: params => {
-          return qs.stringify(params, { arrayFormat: 'repeat' });
+          return qs.stringify(params, { arrayFormat: "repeat" });
         }
       })
       .then(data => {
@@ -57,7 +57,7 @@ export default class RequestHelper {
   }
   static async post(apiUrl, data, config) {
     return instance({
-      method: 'post',
+      method: "post",
       url: apiUrl,
       headers: await this.getHeader(config),
       data: data
@@ -72,7 +72,7 @@ export default class RequestHelper {
   }
   static async put(apiUrl, data) {
     return instance({
-      method: 'put',
+      method: "put",
       url: apiUrl,
       headers: await this.getHeader(),
       data: data
@@ -87,7 +87,7 @@ export default class RequestHelper {
   }
   static async delete(apiUrl) {
     return instance({
-      method: 'delete',
+      method: "delete",
       url: apiUrl,
       headers: await this.getHeader()
     })
@@ -102,14 +102,14 @@ export default class RequestHelper {
 
   static async postAndDownloadPDF(apiUrl, data) {
     return instance({
-      method: 'post',
+      method: "post",
       url: apiUrl,
       headers: {
-        accept: 'application/pdf',
-        contentType: 'application/json',
-        'Access-Token': cookie.load('token')
+        accept: "application/pdf",
+        contentType: "application/json",
+        "Access-Token": cookie.load("token")
       },
-      responseType: 'blob',
+      responseType: "blob",
       data: data
     })
       .then(data => {
