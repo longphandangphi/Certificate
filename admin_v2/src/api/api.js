@@ -7,11 +7,11 @@ export default class Api {
     return RequestHelper.post(appConfig.apiUrl + "sso/loginAdmin", data);
   }
 
-  // static getPermissons() {
+  // static getPermissions() {
   //   return RequestHelper.get(appConfig.apiUrl + "sso/permissions");
   // }
 
-  // static getProfile() {
-  //   return RequestHelper.get(appConfig.apiUrl + "sso/profile");
-  // }
+  static getProfile() {
+    return RequestHelper.get(appConfig.apiUrl + "sso/profile");
+  }
 }

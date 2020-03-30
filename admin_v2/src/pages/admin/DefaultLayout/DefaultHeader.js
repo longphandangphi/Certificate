@@ -12,12 +12,8 @@ import {
 } from "reactstrap";
 import PropTypes from "prop-types";
 
-import {
-  AppAsideToggler,
-  AppNavbarBrand,
-  AppSidebarToggler
-} from "@coreui/react";
-import logo from "../../../assets/img/brand/logo.svg";
+import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
+import logo from "../../../assets/img/brand/logo3.png";
 import sygnet from "../../../assets/img/brand/sygnet.svg";
 
 const propTypes = {
@@ -35,7 +31,7 @@ class DefaultHeader extends Component {
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
-          full={{ src: logo, width: 89, height: 25, alt: "CoreUI Logo" }}
+          full={{ src: logo, width: 150, height: 25, alt: "Logo" }} // 85-25
           minimized={{ src: sygnet, width: 30, height: 30, alt: "CoreUI Logo" }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
@@ -66,11 +62,7 @@ class DefaultHeader extends Component {
           </NavItem>
           <UncontrolledDropdown direction="down">
             <DropdownToggle nav>
-              <img
-                src={"../../assets/img/avatars/6.jpg"}
-                className="img-avatar"
-                alt="admin@bootstrapmaster.com"
-              />
+              <img src={"../../assets/img/avatars/6.jpg"} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: "auto" }}>
               <DropdownItem header tag="div" className="text-center">

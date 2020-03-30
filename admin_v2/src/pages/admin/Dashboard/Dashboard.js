@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Row } from 'reactstrap';
+import React, { Component } from "react";
+import { Row } from "reactstrap";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class Dashboard extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-          <span>Dashboad load here</span>
+          <span>Welcome to Admin Manager - DUE</span>
         </Row>
       </div>
     );

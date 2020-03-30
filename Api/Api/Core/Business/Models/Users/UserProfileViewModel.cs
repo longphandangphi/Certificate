@@ -1,4 +1,5 @@
-﻿using Api.Core.Entities;
+﻿using Api.Core.Business.Models.Roles;
+using Api.Core.Entities;
 using Api.Core.Entities.Enums;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace Api.Core.Business.Models.Users
                 DateOfBirth = user.DateOfBirth;
                 Email = user.Email;
                 Gender = user.Gender;
+                Roles = user.UserInRoles != null ? user.UserInRoles.Select(x => new RoleViewModel(x.Role)).ToArray() : null;
             }
         }
 
@@ -33,5 +35,6 @@ namespace Api.Core.Business.Models.Users
         public DateTime? DateOfBirth { get; set; }
         public string Email { get; set; }
         public UserEnums.Gender? Gender { get; set; }
+        public RoleViewModel[] Roles { get; set; }
     }
 }

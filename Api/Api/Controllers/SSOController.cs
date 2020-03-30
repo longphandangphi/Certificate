@@ -53,29 +53,29 @@ namespace Api.Controllers
             return new CustomActionResult(responseModel);
         }
 
-        //[HttpGet("profile")]
-        //public async Task<IActionResult> Profile()
-        //{
-        //    var accessToken = Request.Headers["x-access-token"].ToString();
-        //    var jwtPayload = _jwtHelper.ValidateToken(accessToken);
+        [HttpGet("profile")]
+        public async Task<IActionResult> Profile()
+        {
+            var accessToken = Request.Headers["x-access-token"].ToString();
+            var jwtPayload = _jwtHelper.ValidateToken(accessToken);
 
-        //    if (jwtPayload == null)
-        //    {
-        //        return Unauthorized();
-        //    }
-        //    else
-        //    {
-        //        var userViewModel = await _userService.GetProfileByIdAsync(jwtPayload.Id);
+            if (jwtPayload == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var userViewModel = await _userService.GetProfileByIdAsync(jwtPayload.Id);
 
-        //        if (userViewModel == null)
-        //        {
-        //            return NotFound("Tài khoản không tìm thấy trong hệ thống. Vui lòng kiểm tra lại!");
-        //        }
-        //        else
-        //        {
-        //            return Ok(userViewModel);
-        //        }
-        //    }
-        //}
+                if (userViewModel == null)
+                {
+                    return NotFound("Tài khoản không tìm thấy trong hệ thống. Vui lòng kiểm tra lại!");
+                }
+                else
+                {
+                    return Ok(userViewModel);
+                }
+            }
+        }
     }
 }

@@ -40,30 +40,45 @@ const MajorListPage = React.lazy(() => import("./pages/admin/major/major.list.pa
 const ArticleCategoryListPage = React.lazy(() => import("./pages/admin/articleCategory/articleCategory.list.page"));
 
 const routes = [
-  {
-    path: "/",
-    exact: true,
-    name: "Admin",
-    component: DefaultLayout
-  },
-  { path: "/dashboard", name: "Dashboard", component: Dashboard },
+  // {
+  //   path: "/",
+  //   exact: true,
+  //   name: "Admin",
+  //   component: DefaultLayout
+  // },
+  { path: "/dashboard", name: "Dashboard", component: Dashboard, permissions: [] },
   // { path: "/promotions", name: "Promotion", component: PromotionListPage },
   // { path: "/menus", name: "Menu", component: MenuListPage },
   // { path: "/items", name: "Item", component: ItemListPage },
   // { path: "/orders", name: "Order", component: OrderListPage },
   // { path: "/tables", name: "Table", component: TableListPage },
   // { path: "/customers", name: "Customer", component: CustomerListPage },
-  { path: "/roles", name: "Role", component: RoleListPage },
-  { path: "/classes", name: "Class", component: ClassListPage },
-  { path: "/articles", name: "Article", component: ArticleListPage },
-  { path: "/extracurriculars", name: "Extracurricular", component: ExtracurricularListPage },
-  { path: "/reports", name: "Report", component: ReportListPage },
-  { path: "/extracurricularActivities", name: "Extracurricular Activity", component: ExtracurricularActivityListPage },
-  { path: "/majors", name: "Major", component: MajorListPage },
-  { path: "/articleCategories", name: "Article Category", component: ArticleCategoryListPage },
-  { path: "/users", name: "User", component: UserListPage },
+  { path: "/roles", name: "Role", component: RoleListPage, permissions: [] },
+  { path: "/classes", name: "Class", component: ClassListPage, permissions: ["Waiter"] },
+  { path: "/articles", name: "Article", component: ArticleListPage, permissions: ["Cashier"] },
+  {
+    path: "/extracurriculars",
+    name: "Extracurricular",
+    component: ExtracurricularListPage,
+    permissions: ["Chef"]
+  },
+  { path: "/reports", name: "Report", component: ReportListPage, permissions: ["Student"] },
+  {
+    path: "/extracurricularActivities",
+    name: "Extracurricular Activity",
+    component: ExtracurricularActivityListPage,
+    permissions: ["Waiter"]
+  },
+  { path: "/majors", name: "Major", component: MajorListPage, permissions: ["Chef"] },
+  {
+    path: "/articleCategories",
+    name: "Article Category",
+    component: ArticleCategoryListPage,
+    permissions: ["Cashier"]
+  },
+  { path: "/users", name: "User", component: UserListPage, permissions: [] },
   // { path: "/reviews", name: "Review", component: ReviewListPage },
-  { path: "/faculties", name: "Faculty", component: FacultyListPage }
+  { path: "/faculties", name: "Faculty", component: FacultyListPage, permissions: [] }
 ];
 
 export default routes;

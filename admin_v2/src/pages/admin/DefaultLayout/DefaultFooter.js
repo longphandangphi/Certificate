@@ -15,11 +15,11 @@ class DefaultFooter extends Component {
     return (
       <React.Fragment>
         <span>
-          <a href="/">HR Tool for HR Admin</a> &copy; 2019.
+          <a href="/">Admin Manager - DUE </a> &copy; 2020.
         </span>
-        <span className="ml-auto">
+        {/* <span className="ml-auto">
           Powered by <a href="/">Orient Development Team</a>
-        </span>
+        </span> */}
       </React.Fragment>
     );
   }

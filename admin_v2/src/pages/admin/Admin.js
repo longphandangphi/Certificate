@@ -41,8 +41,60 @@ class DefaultLayout extends Component {
     this.props.getProfile();
   };
 
+  getEmployeeSidebar = () => {
+    const { profile } = this.props.profileReducer;
+    const roles = profile.roles || [];
+    const menus =
+      roles.filter(role => {
+        if (role.name === "Super Admin") {
+          return true;
+        }
+        return false;
+      }).length === 1
+        ? navigation.items
+        : this.checkPermissionsSideBar(roles);
+    return menus;
+  };
+
+  checkPermissionsSideBar = roles => {
+    var menus = [];
+    navigation.items.map(item =>
+      roles.map(role => {
+        item.permissions.map(permission => permission === role.name && menus.push(item));
+      })
+    );
+    return menus;
+  };
+
+  getEmployeeRoutes = () => {
+    const { profile } = this.props.profileReducer;
+    const roles = profile.roles || [];
+    const allowRoutes =
+      roles.filter(role => {
+        if (role.name === "Super Admin") {
+          return true;
+        }
+        return false;
+      }).length === 1
+        ? routes
+        : this.checkPermissionsRoutes(roles);
+    return allowRoutes;
+  };
+
+  checkPermissionsRoutes = roles => {
+    var allowRoutes = [];
+    routes.map(item =>
+      roles.map(role => {
+        item.permissions.map(permission => permission === role.name && allowRoutes.push(item));
+      })
+    );
+    return allowRoutes;
+  };
+
   render() {
-    const items = navigation.items;
+    //const items = navigation.items;
+    const items = this.getEmployeeSidebar();
+    const allowRoutes = this.getEmployeeRoutes();
 
     return (
       <>
@@ -70,7 +122,7 @@ class DefaultLayout extends Component {
               <Container fluid>
                 <Suspense fallback={this.loading()}>
                   <Switch>
-                    {routes.map((route, idx) => {
+                    {allowRoutes.map((route, idx) => {
                       return route.component ? (
                         <Route
                           key={idx}
@@ -107,7 +159,7 @@ class DefaultLayout extends Component {
 
 export default connect(
   state => ({
-    profile: state.profile
+    profileReducer: state.profileReducer
   }),
   { getProfile }
 )(DefaultLayout);

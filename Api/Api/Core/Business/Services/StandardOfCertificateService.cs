@@ -128,7 +128,7 @@ namespace Api.Core.Business.Services
             }
             else
             {
-                var checkName = await _standardOfCertificateRepository.GetAll().FirstOrDefaultAsync(x => x.Name == standardOfCertificateManageModel.Name);
+                var checkName = await _standardOfCertificateRepository.GetAll().FirstOrDefaultAsync(x => x.Name == standardOfCertificateManageModel.Name && x.Id != id);
                 if (checkName != null)
                 {
                     return new ResponseModel

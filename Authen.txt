@@ -1,0 +1,7 @@
+======CONFIG _nav=========
+permissions: ["Cashier", "Waiter"]
+- cfx profile reducer: nothing
+- cfx api getProfile
+- cfx profile saga:
+- cfix admin.js in pages
+- 

@@ -124,7 +124,7 @@ class UserListPage extends Component {
 
   getRoleList = () => {
     ApiRole.getAllRole().then(values => {
-      this.setState({ roles: values });
+      this.setState({ roles: values.sources });
     });
   };
 
@@ -132,6 +132,7 @@ class UserListPage extends Component {
     const { id, username, fullName, email, roleIds } = this.state.item;
     const user = { id, username, fullName, email, roleIds };
     try {
+      console.log(user, "USER");
       await ApiUser.updateUser(user);
       this.toggleModalInfo();
       this.getUserList();
@@ -246,17 +247,15 @@ class UserListPage extends Component {
                       <Select
                         mode="multiple"
                         style={{ display: "block" }}
-                        placeholder="Please select"
+                        placeholder="---Please select---"
                         onChange={this.onRoleChange}
-                        defaultValue={item.roles ? item.roles.map(role => role.id) : ""}
+                        defaultValue={item.roles ? item.roles.map(role => role.id) : undefined}
                       >
-                        {roles.length > 0
-                          ? roles.map((role, i) => (
-                              <Option key={i} value={role.id}>
-                                {role.name}
-                              </Option>
-                            ))
-                          : ""}
+                        {roles.map((role, i) => (
+                          <Option key={i} value={role.id}>
+                            {role.name}
+                          </Option>
+                        ))}
                       </Select>
                     </FormGroup>
                   </Col>

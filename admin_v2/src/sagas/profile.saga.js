@@ -1,9 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import {
-  GET_PROFILE,
-  getProfileSuccess,
-  getProfileFailed
-} from "../actions/profile.action";
+import { GET_PROFILE, getProfileSuccess, getProfileFailed } from "../actions/profile.action";
 import Api from "../api/api";
 
 function* getProfile() {

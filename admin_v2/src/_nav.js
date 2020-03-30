@@ -3,6 +3,7 @@ export default {
     {
       name: "Dashboard",
       url: "/dashboard",
+      permissions: [],
       icon: "icon-speedometer",
       badge: {
         variant: "info",
@@ -12,6 +13,7 @@ export default {
     {
       name: "Article Manager",
       icon: "fa fa-newspaper-o",
+      permissions: [],
       attributes: {
         replace: true,
         activeStyle: { textTransform: "uppercase" }
@@ -80,21 +82,25 @@ export default {
     {
       name: "Faculty",
       url: "/faculties",
+      permissions: [],
       icon: "fa fa-asterisk"
     },
     {
       name: "Class",
       url: "/classes",
+      permissions: [],
       icon: "fa fa-braille"
     },
     {
       name: "Major",
       url: "/majors",
+      permissions: [],
       icon: "fa fa-graduation-cap"
     },
     {
       name: "User Manager",
       icon: "fa fa-address-book",
+      permissions: [],
       children: [
         {
           name: "User",
@@ -111,6 +117,7 @@ export default {
     {
       name: "Extracurricular",
       icon: "fa fa-star",
+      permissions: [],
       children: [
         {
           name: "Extracurricular Activity",
@@ -122,6 +129,7 @@ export default {
     {
       name: "Student Manager",
       icon: "fa fa-graduation-cap",
+      permissions: ["Cashier"],
       children: [
         {
           name: "Extracurricular",
@@ -134,8 +142,8 @@ export default {
           icon: "fa fa-angle-right"
         },
         {
-          name: "Certificate Status",
-          url: "/extracurriculars",
+          name: "Standard Of Certificate",
+          url: "/standardOfCertificates",
           icon: "fa fa-angle-right"
         }
       ]

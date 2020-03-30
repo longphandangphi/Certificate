@@ -14,7 +14,7 @@ import lodash from "lodash";
 import { getArticleList } from "../../../actions/article.list.action";
 import ApiArticle from "../../../api/api.article";
 import ApiArticleCategory from "../../../api/api.articleCategory";
-import ApiMedia from "../../../api/api.media";
+//import ApiMedia from "../../../api/api.media";
 import { pagination } from "../../../constant/app.constant";
 import { FILE } from "../../../constant/file.constant";
 //import CKEditor from "@ckeditor/ckeditor5-react";
