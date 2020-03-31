@@ -11,11 +11,14 @@ import { watchCustomerListSagasAsync } from "./customer.list.saga";
 import { watchProfileSagasAsync } from "./profile.saga";
 import { watchRoleListSagasAsync } from "./role.list.saga";
 import { watchClassListSagasAsync } from "./class.list.saga";
+import { watchSpecialtyListSagasAsync } from "./specialty.list.saga";
 import { watchArticleListSagasAsync } from "./article.list.saga";
 import { watchExtracurricularListSagasAsync } from "./extracurricular.list.saga";
 import { watchReportListSagasAsync } from "./report.list.saga";
 import { watchExtracurricularActivityListSagasAsync } from "./extracurricularActivity.list.saga";
 import { watchMajorListSagasAsync } from "./major.list.saga";
+import { watchCertificateStatusListSagasAsync } from "./certificateStatus.list.saga";
+import { watchStandardCertificateListSagasAsync } from "./standardCertificate.list.saga";
 import { watchArticleCategoryListSagasAsync } from "./articleCategory.list.saga";
 import { watchReviewListSagasAsync } from "./review.list.saga";
 import { watchBookingListSagasAsync } from "./booking.list.saga";
@@ -34,11 +37,14 @@ export default function* sagas() {
     fork(watchTableListSagasAsync),
     fork(watchRoleListSagasAsync),
     fork(watchClassListSagasAsync),
+    fork(watchSpecialtyListSagasAsync),
     fork(watchArticleListSagasAsync),
     fork(watchExtracurricularListSagasAsync),
     fork(watchReportListSagasAsync),
     fork(watchExtracurricularActivityListSagasAsync),
     fork(watchMajorListSagasAsync),
+    fork(watchCertificateStatusListSagasAsync),
+    fork(watchStandardCertificateListSagasAsync),
     fork(watchArticleCategoryListSagasAsync),
     fork(watchReviewListSagasAsync),
     fork(watchBookingListSagasAsync),

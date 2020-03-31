@@ -86,6 +86,12 @@ export default {
       icon: "fa fa-asterisk"
     },
     {
+      name: "Specialty",
+      url: "/specialties",
+      permissions: [],
+      icon: "fa fa-graduation-cap"
+    },
+    {
       name: "Class",
       url: "/classes",
       permissions: [],
@@ -142,8 +148,13 @@ export default {
           icon: "fa fa-angle-right"
         },
         {
-          name: "Standard Of Certificate",
+          name: "Standard Certificate",
           url: "/standardOfCertificates",
+          icon: "fa fa-angle-right"
+        },
+        {
+          name: "Certificate Status",
+          url: "/certificateStatuses",
           icon: "fa fa-angle-right"
         }
       ]

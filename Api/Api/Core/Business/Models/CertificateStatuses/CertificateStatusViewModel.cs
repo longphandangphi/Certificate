@@ -1,4 +1,7 @@
-﻿using Api.Core.Entities;
+﻿using Api.Core.Business.IoC;
+using Api.Core.Business.Models.Students;
+using Api.Core.DataAccess.Repository.Base;
+using Api.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +25,12 @@ namespace Api.Core.Business.Models.CertificateStatuses
                 PhysicalEducationCertificateStatus = certificateStatus.PhysicalEducationCertificateStatus;
                 LanguageCertificateStatus = certificateStatus.LanguageCertificateStatus;
                 InformaticsCertificateStatus = certificateStatus.InformaticsCertificateStatus;
+
+                var studentRepository = IoCHelper.GetInstance<IRepository<Student>>();
+                //StudentId = studentRepository.GetAll().FirstOrDefault(x => x.CertificateStatusId == Id);
+                StudentViewModel = new StudentViewModel(studentRepository.GetAll().FirstOrDefault(x => x.CertificateStatusId == Id));
+
+                StudentId = StudentViewModel.Id;
             }
         }
 
@@ -34,5 +43,9 @@ namespace Api.Core.Business.Models.CertificateStatuses
         public bool LanguageCertificateStatus { get; set; }
 
         public bool InformaticsCertificateStatus { get; set; }
+
+        public StudentViewModel StudentViewModel { get; set; }
+
+        public Guid StudentId { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace Api.Core.Business.Services
         #region private method
         private IQueryable<CertificateStatus> GetAll()
         {
-            return _certificateStatusRepository.GetAll();
+            return _certificateStatusRepository.GetAll().Include(x => x.Student);
         }
 
         private List<string> GetAllPropertyNameOfCertificateStatusViewModel()
@@ -83,7 +83,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Id";
+                matchedPropertyName = "StudentId";
             }
 
             var type = typeof(CertificateStatusViewModel);

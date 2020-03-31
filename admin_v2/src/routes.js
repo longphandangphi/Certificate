@@ -25,6 +25,8 @@ const FacultyListPage = React.lazy(() => import("./pages/admin/faculty/faculty.l
 
 const ClassListPage = React.lazy(() => import("./pages/admin/class/class.list.page"));
 
+const SpecialtyListPage = React.lazy(() => import("./pages/admin/specialty/specialty.list.page"));
+
 const ArticleListPage = React.lazy(() => import("./pages/admin/article/article.list.page"));
 
 const ExtracurricularListPage = React.lazy(() => import("./pages/admin/extracurricular/extracurricular.list.page"));
@@ -36,6 +38,14 @@ const ExtracurricularActivityListPage = React.lazy(() =>
 );
 
 const MajorListPage = React.lazy(() => import("./pages/admin/major/major.list.page"));
+
+const StandardCertificateListPage = React.lazy(() =>
+  import("./pages/admin/standardCertificate/standardCertificate.list.page")
+);
+
+const CertificateStatusListPage = React.lazy(() =>
+  import("./pages/admin/certificateStatus/certificateStatus.list.page")
+);
 
 const ArticleCategoryListPage = React.lazy(() => import("./pages/admin/articleCategory/articleCategory.list.page"));
 
@@ -78,7 +88,25 @@ const routes = [
   },
   { path: "/users", name: "User", component: UserListPage, permissions: [] },
   // { path: "/reviews", name: "Review", component: ReviewListPage },
-  { path: "/faculties", name: "Faculty", component: FacultyListPage, permissions: [] }
+  { path: "/faculties", name: "Faculty", component: FacultyListPage, permissions: [] },
+  {
+    path: "/standardOfCertificates",
+    name: "Standard Certificate",
+    component: StandardCertificateListPage,
+    permissions: []
+  },
+  {
+    path: "/certificateStatuses",
+    name: "Certificate Status",
+    component: CertificateStatusListPage,
+    permissions: []
+  },
+  {
+    path: "/specialties",
+    name: "Specialty",
+    component: SpecialtyListPage,
+    permissions: []
+  }
 ];
 
 export default routes;

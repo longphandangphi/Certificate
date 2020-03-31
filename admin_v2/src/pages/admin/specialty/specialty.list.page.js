@@ -2,45 +2,36 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, Col, Button, FormGroup, Table } from "reactstrap";
 import Form from "react-validation/build/form";
-import { appConfig } from "../../../config/app.config";
 import ModalConfirm from "../../../components/modal/modal-confirm";
 import Pagination from "../../../components/pagination/Pagination";
 import ModalInfo from "../../../components/modal/modal-info";
 import ValidationInput from "../../../components/common/validation-input";
 import SelectInput from "../../../components/common/select-input";
 import { toastSuccess, toastError } from "../../../helpers/toast.helper";
-import { uploadFile } from "../../../helpers/upload_file.helper";
 import lodash from "lodash";
-import { getArticleList } from "../../../actions/article.list.action";
-import ApiArticle from "../../../api/api.article";
-import ApiArticleCategory from "../../../api/api.articleCategory";
-//import ApiMedia from "../../../api/api.media";
+import { getSpecialtyList } from "../../../actions/specialty.list.action";
+import ApiSpecialty from "../../../api/api.specialty";
+import ApiMajor from "../../../api/api.major";
+import ApiStandardCertificate from "../../../api/api.standardCertificate";
 import { pagination } from "../../../constant/app.constant";
-import { FILE } from "../../../constant/file.constant";
-//import CKEditor from "@ckeditor/ckeditor5-react";
-//import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import ReactHtmlParser from "react-html-parser";
-import CKEditorInput from "../../../components/common/ckeditor-input";
-import moment from "moment";
 
-class ArticleListPage extends Component {
+class SpecialtyListPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isShowDeleteModal: false,
       isShowInfoModal: false,
       item: {},
-      articleCategories: [],
-      picture: null,
+      majors: [],
+      standardOfCertificates: [],
       itemId: null,
       params: {
-        offset: pagination.initialPage,
-        limit: pagination.defaultTake,
-        isDesc: pagination.defaultSort
+        skip: pagination.initialPage,
+        take: pagination.defaultTake
       },
       query: ""
     };
-    this.delayedCallback = lodash.debounce(this.search, 1);
+    this.delayedCallback = lodash.debounce(this.search, 1000);
   }
 
   toggleDeleteModal = () => {
@@ -67,20 +58,18 @@ class ArticleListPage extends Component {
   };
 
   showAddNew = () => {
-    let title = "Create Article";
-    let article = {
-      title: "",
-      preview: "",
-      detail: "",
-      picture: ""
+    let title = "Create Specialty";
+    let specialty = {
+      name: "",
+      description: ""
     };
-    this.toggleModalInfo(article, title);
+    this.toggleModalInfo(specialty, title);
   };
 
   showUpdateModal = item => {
-    console.log(item);
-    item.articleCategoryId = item.articleCategory.id;
-    let title = "Update Article";
+    let title = "Update Specialty";
+    item.majorId = item.major.id;
+    item.standardOfCertificateId = item.standardOfCertificate.id;
     this.toggleModalInfo(item, title);
   };
 
@@ -90,18 +79,17 @@ class ArticleListPage extends Component {
     let item = Object.assign({}, this.state.item);
     item[inputName] = inputValue;
     this.setState({ item });
-    console.log(this.state.item);
   };
 
-  onArticleCategoryChange = value => {
+  onMajorChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.articleCategoryId = value;
+    item.majorId = value;
     this.setState({ item });
   };
 
-  onDetailChange = e => {
+  onStandardCertificateChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.detail = e.editor.getData();
+    item.standardOfCertificateId = value;
     this.setState({ item });
   };
 
@@ -110,12 +98,12 @@ class ArticleListPage extends Component {
       {
         params: {
           ...this.state.params,
-          offset: 1
+          skip: 1
         },
         query: e.target.value
       },
       () => {
-        this.getArticleList();
+        this.getSpecialtyList();
       }
     );
   };
@@ -130,110 +118,105 @@ class ArticleListPage extends Component {
       {
         params: {
           ...this.state.params,
-          offset: e.selected + 1
+          skip: e.selected + 1
         }
       },
-      () => this.getArticleList()
+      () => this.getSpecialtyList()
     );
   };
 
-  getArticleList = () => {
+  getSpecialtyList = () => {
     let params = Object.assign({}, this.state.params, {
       query: this.state.query
     });
-    this.props.getArticleList(params);
+    this.props.getSpecialtyList(params);
   };
 
-  getArticleCategoryList = () => {
-    ApiArticleCategory.getAllArticleCategory().then(values => {
-      this.setState({ articleCategories: values.sources });
+  getMajorList = () => {
+    ApiMajor.getAllMajor().then(values => {
+      this.setState({ majors: values.sources });
     });
   };
 
-  addArticle = async () => {
-    const { title, preview, detail, articleCategoryId } = this.state.item;
-    const article = { title, preview, detail, articleCategoryId };
+  getStandardCertificateList = () => {
+    ApiStandardCertificate.getAllStandardCertificate().then(values => {
+      this.setState({ standardOfCertificates: values.sources });
+    });
+  };
+
+  addSpecialty = async () => {
+    console.log("add: state ==================");
+    console.log(this.state);
+    const { name, majorId, standardOfCertificateId, description } = this.state.item;
+    const specialty = { name, majorId, standardOfCertificateId, description };
     try {
-      var res = await uploadFile(FILE.MEDIA_UPLOAD, this.state.picture);
-      article.picture = appConfig.apiUrlMedia + res;
-
-      await ApiArticle.postArticle(article);
-
+      let response = await ApiSpecialty.postSpecialty(specialty);
+      console.log("response");
+      console.log(response);
       this.toggleModalInfo();
-      this.getArticleList();
-      toastSuccess("The article has been created successfully");
+      this.getSpecialtyList();
+      toastSuccess("The specialty has been created successfully");
     } catch (err) {
       console.log("err");
       console.log(err);
-      toastError("This Article title is exist! Try another one");
+      toastError("This Specialty name is exist! Try another one");
     }
   };
 
-  updateArticle = async () => {
-    const { id, title, preview, detail, picture, articleCategoryId } = this.state.item;
-    const article = { id, title, preview, detail, picture, articleCategoryId };
+  updateSpecialty = async () => {
+    const { id, name, description, majorId, standardOfCertificateId } = this.state.item;
+    const specialty = { id, name, description, majorId, standardOfCertificateId };
     try {
-      var res = await uploadFile(FILE.MEDIA_UPLOAD, this.state.picture);
-      article.picture = appConfig.apiUrlMedia + res;
-
-      await ApiArticle.updateArticle(article);
+      await ApiSpecialty.updateSpecialty(specialty);
       this.toggleModalInfo();
-      this.getArticleList();
-      toastSuccess("The article has been updated successfully");
+      this.getSpecialtyList();
+      toastSuccess("The specialty has been updated successfully");
     } catch (err) {
-      console.log(err);
-      toastError("This article title is exist! Try another one");
+      toastError("This Major name is exist! Try another one");
     }
   };
 
-  deleteArticle = async () => {
+  deleteSpecialty = async () => {
     try {
-      await ApiArticle.deleteArticle(this.state.itemId);
+      await ApiSpecialty.deleteSpecialty(this.state.itemId);
       this.toggleDeleteModal();
-      this.getArticleList();
-      toastSuccess("The article has been deleted successfully");
+      this.getSpecialtyList();
+      toastSuccess("The specialty has been deleted successfully");
     } catch (err) {
       toastError(err + "");
     }
   };
 
-  saveArticle = () => {
+  saveSpecialty = () => {
     let { id } = this.state.item;
     if (id) {
-      this.updateArticle();
+      this.updateSpecialty();
     } else {
-      this.addArticle();
+      this.addSpecialty();
     }
   };
 
   onSubmit(e) {
     e.preventDefault();
     this.form.validateAll();
-    this.saveArticle();
+    this.saveSpecialty();
   }
 
   componentDidMount() {
-    this.getArticleList();
-    this.getArticleCategoryList();
-  }
-
-  handleFile(e) {
-    let picture = e.target.files[0];
-    console.log("picture", picture);
-    this.setState({
-      picture: picture
-    });
+    this.getSpecialtyList();
+    this.getMajorList();
+    this.getStandardCertificateList();
   }
 
   render() {
-    const { isShowDeleteModal, isShowInfoModal, item, articleCategories } = this.state;
-    const { articlePagedList } = this.props.articlePagedListReducer;
-    const { sources, pageIndex, totalPages } = articlePagedList;
+    const { isShowDeleteModal, isShowInfoModal, item, majors, standardOfCertificates } = this.state;
+    const { specialtyPagedList } = this.props.specialtyPagedListReducer;
+    const { sources, pageIndex, totalPages } = specialtyPagedList;
     const hasResults = sources && sources.length > 0;
     return (
       <div className="animated fadeIn">
         <ModalConfirm
-          clickOk={this.deleteArticle}
+          clickOk={this.deleteSpecialty}
           isShowModal={isShowDeleteModal}
           toggleModal={this.toggleDeleteModal}
         />
@@ -251,11 +234,11 @@ class ArticleListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="title"
-                        title="Title"
+                        name="name"
+                        title="Name"
                         type="text"
                         required={true}
-                        value={item.title}
+                        value={item.name}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -266,15 +249,35 @@ class ArticleListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        placeholder="--Select ArticleCategory--"
-                        name="articleCategoryId"
-                        title="ArticleCategory"
-                        defaultValue={item.articleCategory ? item.articleCategory.id : undefined}
+                        placeholder="--Select Major--"
+                        name="major"
+                        title="Major"
+                        defaultValue={item.major ? item.major.id : undefined}
                         showSearch={true}
                         style={{ display: "block" }}
                         required={true}
-                        onChange={this.onArticleCategoryChange}
-                        options={articleCategories}
+                        onChange={this.onMajorChange}
+                        options={majors}
+                        valueField="id"
+                        nameField="name"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <SelectInput
+                        placeholder="--Select Standard Certificate--"
+                        name="standardOfCertificate"
+                        title="Standard Certificate"
+                        defaultValue={item.standardOfCertificate ? item.standardOfCertificate.id : undefined}
+                        showSearch={true}
+                        style={{ display: "block" }}
+                        required={true}
+                        onChange={this.onStandardCertificateChange}
+                        options={standardOfCertificates}
                         valueField="id"
                         nameField="name"
                       />
@@ -286,64 +289,21 @@ class ArticleListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="preview"
-                        title="Preview"
+                        name="description"
+                        title="Description"
                         type="text"
                         required={true}
-                        value={item.preview}
+                        value={item.description}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
-                    <FormGroup>
-                      {/* <ValidationInput
-                        name="detail"
-                        title="Detail"
-                        type="text"
-                        required={true}
-                        value={item.detail}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup> */}
-
-                      {/* <CKEditor editor={ClassicEditor} onChange={this.onDetailChange} data={item.detail} /> */}
-                      <CKEditorInput title="Detail" name="detail" data={item.detail} onChange={this.onDetailChange} />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                {/* <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="picture"
-                        title="Picture"
-                        type="text"
-                        required={true}
-                        value={item.picture}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row> */}
-
-                <Row>
-                  <Col>
-                    <label>Picture</label>
-                    <br></br>
-                    <input type="file" name="file" onChange={e => this.handleFile(e)} />
                   </Col>
                 </Row>
 
                 <div className="text-center">
                   <Button color="danger" type="submit">
                     Confirm
-                  </Button>
-                  &nbsp;
+                  </Button>{" "}
                   <Button color="secondary" onClick={this.toggleModalInfo}>
                     Cancel
                   </Button>
@@ -362,20 +322,17 @@ class ArticleListPage extends Component {
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Searching..."
+                placeholder="Searching by Specialty..."
               />
             </div>
             <Table className="admin-table" responsive bordered>
               <thead>
                 <tr>
                   <th></th>
-                  <th>Article title</th>
-                  <th style={{ minWidth: 135 }}>Create On</th>
-                  <th>Article category</th>
-                  <th>Preview</th>
-                  <th>Detail</th>
-                  <th>Picture</th>
-                  <th style={{ minWidth: 125 }}>Action</th>
+                  <th>Specialty name</th>
+                  <th>Major name</th>
+                  <th>Description</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -384,26 +341,17 @@ class ArticleListPage extends Component {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
-                        <td>{item.title}</td>
+                        <td>{item.name}</td>
+                        <td>{item.major.name}</td>
+                        <td>{item.description}</td>
                         <td>
-                          {moment(item.createOn)
-                            .add(7, "h")
-                            .format("YYYY-MM-DD HH:mm")}
-                        </td>
-                        <td>{item.articleCategory.name}</td>
-                        <td>{item.preview}</td>
-                        <td>{ReactHtmlParser(item.detail)}</td>
-                        <td>
-                          <img style={{ height: 50 }} src={item.picture} />
-                        </td>
-                        <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
-                          &nbsp;
+                          {/* &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );
@@ -428,9 +376,9 @@ class ArticleListPage extends Component {
 
 export default connect(
   state => ({
-    articlePagedListReducer: state.articlePagedListReducer
+    specialtyPagedListReducer: state.specialtyPagedListReducer
   }),
   {
-    getArticleList
+    getSpecialtyList
   }
-)(ArticleListPage);
+)(SpecialtyListPage);
