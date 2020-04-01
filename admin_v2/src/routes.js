@@ -56,53 +56,53 @@ const routes = [
   //   name: "Admin",
   //   component: DefaultLayout
   // },
-  { path: "/dashboard", name: "Dashboard", component: Dashboard, permissions: [] },
+  { path: "/admin/dashboard", name: "Dashboard", component: Dashboard, permissions: [] },
   // { path: "/promotions", name: "Promotion", component: PromotionListPage },
   // { path: "/menus", name: "Menu", component: MenuListPage },
   // { path: "/items", name: "Item", component: ItemListPage },
   // { path: "/orders", name: "Order", component: OrderListPage },
   // { path: "/tables", name: "Table", component: TableListPage },
   // { path: "/customers", name: "Customer", component: CustomerListPage },
-  { path: "/roles", name: "Role", component: RoleListPage, permissions: [] },
-  { path: "/classes", name: "Class", component: ClassListPage, permissions: ["Waiter"] },
-  { path: "/articles", name: "Article", component: ArticleListPage, permissions: ["Cashier"] },
+  { path: "/admin/roles", name: "Role", component: RoleListPage, permissions: [] },
+  { path: "/admin/classes", name: "Class", component: ClassListPage, permissions: ["Waiter"] },
+  { path: "/admin/articles", name: "Article", component: ArticleListPage, permissions: ["Cashier"] },
   {
-    path: "/extracurriculars",
+    path: "/admin/extracurriculars",
     name: "Extracurricular",
     component: ExtracurricularListPage,
     permissions: ["Chef"]
   },
-  { path: "/reports", name: "Report", component: ReportListPage, permissions: ["Student"] },
+  { path: "/admin/reports", name: "Report", component: ReportListPage, permissions: ["Student"] },
   {
-    path: "/extracurricularActivities",
+    path: "/admin/extracurricularActivities",
     name: "Extracurricular Activity",
     component: ExtracurricularActivityListPage,
     permissions: ["Waiter"]
   },
-  { path: "/majors", name: "Major", component: MajorListPage, permissions: ["Chef"] },
+  { path: "/admin/majors", name: "Major", component: MajorListPage, permissions: ["Chef"] },
   {
-    path: "/articleCategories",
+    path: "/admin/articleCategories",
     name: "Article Category",
     component: ArticleCategoryListPage,
     permissions: ["Cashier"]
   },
-  { path: "/users", name: "User", component: UserListPage, permissions: [] },
+  { path: "/admin/users", name: "User", component: UserListPage, permissions: [] },
   // { path: "/reviews", name: "Review", component: ReviewListPage },
-  { path: "/faculties", name: "Faculty", component: FacultyListPage, permissions: [] },
+  { path: "/admin/faculties", name: "Faculty", component: FacultyListPage, permissions: [] },
   {
-    path: "/standardOfCertificates",
+    path: "/admin/standardOfCertificates",
     name: "Standard Certificate",
     component: StandardCertificateListPage,
     permissions: []
   },
   {
-    path: "/certificateStatuses",
+    path: "/admin/certificateStatuses",
     name: "Certificate Status",
     component: CertificateStatusListPage,
     permissions: []
   },
   {
-    path: "/specialties",
+    path: "/admin/specialties",
     name: "Specialty",
     component: SpecialtyListPage,
     permissions: []

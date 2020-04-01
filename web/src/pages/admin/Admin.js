@@ -4,6 +4,8 @@ import { Container } from "reactstrap";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import cookie from "react-cookies";
+import { itemPlus } from "../../constant/app.constant";
+import { useRouteMatch } from "react-router-dom";
 
 import {
   AppAside,
@@ -29,22 +31,71 @@ const DefaultFooter = React.lazy(() => import("./DefaultLayout/DefaultFooter"));
 const DefaultHeader = React.lazy(() => import("./DefaultLayout/DefaultHeader"));
 
 class DefaultLayout extends Component {
-  loading = () => (
-    <div className="animated fadeIn pt-1 text-center">Đang tải...</div>
-  );
+  loading = () => <div className="animated fadeIn pt-1 text-center">Đang tải...</div>;
 
   signOut(e) {
     e.preventDefault();
+    cookie.remove("userLogin");
     cookie.remove("token", { path: "/" });
+
     this.props.history.push("/login");
   }
 
   componentDidMount = () => {
     this.props.getProfile();
+    // const match = this.BlogPost();
+    // console.log(match, "MATCHHHHHHHHH");
+  };
+
+  // blogPost = () => {
+  //   let match = useRouteMatch({
+  //     path: "/articles/:name/:age",
+  //     strict: true,
+  //     sensitive: true
+  //   });
+  //   return match;
+  // };
+
+  getEmployeeSidebar = () => {
+    const userLogin = cookie.load("userLogin") || false;
+    const listBar = navigation.items;
+    if (userLogin) {
+      const fullList = listBar.concat(itemPlus);
+      console.log(fullList, "fullList");
+      return fullList;
+    } else {
+      console.log("ko có userLogin");
+      return listBar;
+    }
+
+    const { profile } = this.props.profileReducer;
+    const roles = profile.roles || [];
+    const menus =
+      roles.filter(role => {
+        if (role.name === "Super Admin") {
+          return true;
+        }
+        return false;
+      }).length === 1
+        ? navigation.items
+        : this.checkPermissionsSideBar(roles);
+    return menus;
+  };
+
+  checkPermissionsSideBar = roles => {
+    var menus = [];
+    navigation.items.map(item =>
+      roles.map(role => {
+        item.permissions.map(permission => permission === role.name && menus.push(item));
+      })
+    );
+    return menus;
   };
 
   render() {
-    const items = navigation.items;
+    console.log(this.props);
+    //const items = navigation.items;
+    const items = this.getEmployeeSidebar();
 
     return (
       <>
@@ -105,6 +156,13 @@ class DefaultLayout extends Component {
       </>
     );
   }
+}
+
+function BlogPost() {
+  let match = useRouteMatch("/articles/:id_doctor/:id_clinic");
+
+  // Do whatever you want with the match...
+  return <div />;
 }
 
 export default connect(

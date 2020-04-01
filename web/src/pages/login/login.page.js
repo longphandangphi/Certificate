@@ -39,7 +39,9 @@ class Login extends Component {
       this.setState({ loading: true, error: "" });
       const data = await Api.login(user);
       const token = data.token;
+      const jwtPayload = data.jwtPayload;
       cookie.save("token", token);
+      cookie.save("userLogin", jwtPayload);
       this.setState({ loading: false });
       this.props.history.push("/");
     } catch (err) {

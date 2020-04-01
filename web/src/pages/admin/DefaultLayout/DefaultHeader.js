@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import cookie from "react-cookies";
 // import { Link } from 'react-router-dom'
 import {
   Badge,
@@ -12,11 +13,7 @@ import {
 } from "reactstrap";
 import PropTypes from "prop-types";
 
-import {
-  AppAsideToggler,
-  AppNavbarBrand,
-  AppSidebarToggler
-} from "@coreui/react";
+import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
 import logo from "../../../assets/img/brand/logo.svg";
 import sygnet from "../../../assets/img/brand/sygnet.svg";
 
@@ -30,6 +27,9 @@ class DefaultHeader extends Component {
   render() {
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
+    let an = 1;
+    const userLogin = cookie.load("userLogin");
+    console.log(userLogin, "aaaaaaaaaaaaa");
 
     return (
       <React.Fragment>
@@ -64,23 +64,38 @@ class DefaultHeader extends Component {
               <i className="icon-location-pin" />
             </NavLink>
           </NavItem>
-          <UncontrolledDropdown direction="down">
-            <DropdownToggle nav>
-              <img
-                src={"../../assets/img/avatars/6.jpg"}
-                className="img-avatar"
-                alt="admin@bootstrapmaster.com"
-              />
-            </DropdownToggle>
-            <DropdownMenu right style={{ right: "auto" }}>
-              <DropdownItem header tag="div" className="text-center">
-                <strong>Account</strong>
-              </DropdownItem>
-              <DropdownItem onClick={e => this.props.onLogout(e)}>
-                <i className="fa fa-lock" /> Logout
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+          {userLogin ? (
+            <UncontrolledDropdown direction="down">
+              <DropdownToggle nav>
+                <img src={"../../assets/img/avatars/6.jpg"} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              </DropdownToggle>
+              <DropdownMenu right style={{ right: "auto" }}>
+                <DropdownItem header tag="div" className="text-center">
+                  <strong>Account</strong>
+                </DropdownItem>
+                <DropdownItem onClick={e => this.props.onLogout(e)}>
+                  <i className="fa fa-lock" /> EEE
+                </DropdownItem>
+                <DropdownItem onClick={e => this.props.onLogout(e)}>
+                  <i className="fa fa-lock" /> EEE
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          ) : (
+            <UncontrolledDropdown direction="down">
+              <DropdownToggle nav>
+                <img src={"../../assets/img/avatars/6.jpg"} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              </DropdownToggle>
+              <DropdownMenu right style={{ right: "auto" }}>
+                <DropdownItem header tag="div" className="text-center">
+                  <strong>Account</strong>
+                </DropdownItem>
+                <DropdownItem onClick={e => this.props.onLogout(e)}>
+                  <i className="fa fa-lock" /> Logout
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          )}
         </Nav>
         <AppAsideToggler className="d-md-down-none" />
         <AppAsideToggler className="d-lg-none" mobile />

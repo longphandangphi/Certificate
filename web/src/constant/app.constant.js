@@ -3,6 +3,19 @@ export const pagination = {
   initialPage: 1
 };
 
+export const itemPlus = [
+  {
+    name: "User",
+    url: "/users",
+    icon: "fa fa-address-book"
+  },
+  {
+    name: "Extracurricular",
+    url: "/extracurriculars",
+    icon: "fa fa-star"
+  }
+];
+
 export const permissions = [
   { key: "sales", name: "Bán hàng" },
   { key: "bill-management", name: "Quản lý hoá đơn" },

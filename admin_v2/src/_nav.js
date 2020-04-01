@@ -1,8 +1,13 @@
+// import cookie from "react-cookies";
+
+//console.log(cookie.load("userLogin"));
+// const userLogin = cookie.load("userLogin");
+
 export default {
   items: [
     {
       name: "Dashboard",
-      url: "/dashboard",
+      url: "/admin/dashboard",
       permissions: [],
       icon: "icon-speedometer",
       badge: {
@@ -21,12 +26,12 @@ export default {
       children: [
         {
           name: "Article",
-          url: "/articles",
+          url: "/admin/articles",
           icon: "fa fa-angle-right"
         },
         {
           name: "Article Category",
-          url: "/articleCategories",
+          url: "/admin/articleCategories",
           icon: "fa fa-angle-right"
         }
       ]
@@ -81,25 +86,25 @@ export default {
     // },
     {
       name: "Faculty",
-      url: "/faculties",
+      url: "/admin/faculties",
       permissions: [],
       icon: "fa fa-asterisk"
     },
     {
       name: "Specialty",
-      url: "/specialties",
+      url: "/admin/specialties",
       permissions: [],
       icon: "fa fa-graduation-cap"
     },
     {
       name: "Class",
-      url: "/classes",
+      url: "/admin/classes",
       permissions: [],
       icon: "fa fa-braille"
     },
     {
       name: "Major",
-      url: "/majors",
+      url: "/admin/majors",
       permissions: [],
       icon: "fa fa-graduation-cap"
     },
@@ -110,12 +115,12 @@ export default {
       children: [
         {
           name: "User",
-          url: "/users",
+          url: "/admin/users",
           icon: "fa fa-angle-right"
         },
         {
           name: "Role",
-          url: "/roles",
+          url: "/admin/roles",
           icon: "fa fa-angle-right"
         }
       ]
@@ -127,7 +132,7 @@ export default {
       children: [
         {
           name: "Extracurricular Activity",
-          url: "/extracurricularActivities",
+          url: "/admin/extracurricularActivities",
           icon: "fa fa-angle-right"
         }
       ]
@@ -139,22 +144,22 @@ export default {
       children: [
         {
           name: "Extracurricular",
-          url: "/extracurriculars",
+          url: "/admin/extracurriculars",
           icon: "fa fa-angle-right"
         },
         {
           name: "Report",
-          url: "/reports",
+          url: "/admin/reports",
           icon: "fa fa-angle-right"
         },
         {
           name: "Standard Certificate",
-          url: "/standardOfCertificates",
+          url: "/admin/standardOfCertificates",
           icon: "fa fa-angle-right"
         },
         {
           name: "Certificate Status",
-          url: "/certificateStatuses",
+          url: "/admin/certificateStatuses",
           icon: "fa fa-angle-right"
         }
       ]

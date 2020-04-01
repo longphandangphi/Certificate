@@ -359,7 +359,9 @@ class ArticleListPage extends Component {
                         <td>{item.articleCategory.name}</td>
                         <td>{item.preview}</td>
                         <td>{ReactHtmlParser(item.detail)}</td>
-                        <td>{item.picture}</td>
+                        <td>
+                          <img src={item.picture} alt="" style={{ maxHeight: 50, minWidth: 50 }} />
+                        </td>
                         <td>
                           <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
                             Edit
