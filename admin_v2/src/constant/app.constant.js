@@ -1,5 +1,5 @@
 export const pagination = {
-  defaultTake: 5,
+  defaultTake: 4,
   initialPage: 1,
   defaultSort: true
 };
@@ -7,6 +7,16 @@ export const pagination = {
 export const IS_REQUIRE = [
   { name: "Require", id: true },
   { name: "Not Require", id: false }
+];
+
+export const IS_COMPLETE = [
+  { name: "Completed", id: true },
+  { name: "Not yet", id: false }
+];
+
+export const IS_DESC = [
+  { name: "Oldest", id: false },
+  { name: "Lastest", id: true }
 ];
 
 // export const permissions = [

@@ -15,7 +15,7 @@ import { getArticleList } from "../../../actions/article.list.action";
 import ApiArticle from "../../../api/api.article";
 import ApiArticleCategory from "../../../api/api.articleCategory";
 //import ApiMedia from "../../../api/api.media";
-import { pagination } from "../../../constant/app.constant";
+import { pagination, IS_DESC } from "../../../constant/app.constant";
 import { FILE } from "../../../constant/file.constant";
 //import CKEditor from "@ckeditor/ckeditor5-react";
 //import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -40,7 +40,8 @@ class ArticleListPage extends Component {
       },
       query: ""
     };
-    this.delayedCallback = lodash.debounce(this.search, 1);
+    this.delayedCallback = lodash.debounce(this.search, 100);
+    this.delayedCallback2 = lodash.debounce(this.sort, 100);
   }
 
   toggleDeleteModal = () => {
@@ -104,6 +105,27 @@ class ArticleListPage extends Component {
     item.detail = e.editor.getData();
     this.setState({ item });
   };
+
+  onSortChange = e => {
+    // e.persist();
+    this.delayedCallback2(e);
+  }
+
+  sort = e => {
+    this.setState(
+      {
+        params: {
+          ...this.state.params,
+          offset: 1,
+          isDesc: e
+        }
+      },
+      () => {
+        this.getArticleList();
+        console.log(e);
+      }
+    );
+  }
 
   search = e => {
     this.setState(
@@ -353,12 +375,28 @@ class ArticleListPage extends Component {
           </div>
         </ModalInfo>
 
+
+
         <Row>
           <Col xs="12">
             <div className="flex-container header-table">
               <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
-                Create
+                Create article
               </Button>
+
+              <SelectInput
+                        placeholder="Order by"
+                        name="orderBy"
+                        //title="OrderBy"
+                        defaultValue={IS_DESC ? IS_DESC.id : undefined}
+                        // showSearch={true}
+                        style={{ display: "block" }}
+                        //required={true}
+                        onChange={this.onSortChange}
+                        options={IS_DESC}
+                        valueField="id"
+                        nameField="name"
+                      />
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
@@ -373,7 +411,6 @@ class ArticleListPage extends Component {
                   <th style={{ minWidth: 135 }}>Create On</th>
                   <th>Article category</th>
                   <th>Preview</th>
-                  <th>Detail</th>
                   <th>Picture</th>
                   <th style={{ minWidth: 125 }}>Action</th>
                 </tr>
@@ -392,13 +429,13 @@ class ArticleListPage extends Component {
                         </td>
                         <td>{item.articleCategory.name}</td>
                         <td>{item.preview}</td>
-                        <td>{ReactHtmlParser(item.detail)}</td>
+                        {/* <td>{ReactHtmlParser(item.detail)}</td> */}
                         <td>
                           <img style={{ height: 50 }} src={item.picture} />
                         </td>
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
-                            Edit
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
+                            Edit 
                           </Button>
                           &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>

@@ -61,7 +61,7 @@ namespace Api.Core.Business.Services
             var list = await GetAll()
                 .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
-                    || (x.LanguageCertificateStatus.ToString().Contains(requestListViewModel.Query)
+                    || (x.Student.Id.ToString().Contains(requestListViewModel.Query)
                     )))
                 .Select(x => new CertificateStatusViewModel(x)).ToListAsync();
 

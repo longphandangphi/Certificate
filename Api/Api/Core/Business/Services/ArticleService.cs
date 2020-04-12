@@ -82,7 +82,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Title";
+                matchedPropertyName = "CreateOn";
             }
 
             var type = typeof(ArticleViewModel);

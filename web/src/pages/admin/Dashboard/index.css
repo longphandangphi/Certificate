@@ -1,0 +1,22 @@
+/* For demo */
+.ant-carousel .slick-slide {
+    text-align: center;
+    height: 300px;
+    line-height: 160px;
+    background: #364d79;
+    overflow: hidden;
+  }
+  
+  .ant-carousel .slick-slide h3 {
+    color: #fff;
+  }
+
+  .ant-carousel .slick-dots {
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .slick-dots li button:before{
+      font-size: 0px; 
+      width: 10px;
+  }

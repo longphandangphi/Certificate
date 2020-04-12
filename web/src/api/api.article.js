@@ -3,7 +3,7 @@ import RequestHelper from "../helpers/request.helper";
 
 export default class ApiArticle {
   static getAllArticle() {
-    return RequestHelper.get(appConfig.apiUrl + "articles/all");
+    return RequestHelper.get(appConfig.apiUrl + "articles");
   }
 
   static getArticleList(params) {

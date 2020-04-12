@@ -12,6 +12,7 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtJTwBBdaIJ9MZVpP1nhj3Yj-U7__YHCQ&libraries=places"></script>
@@ -82,5 +83,11 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- Thư viện jquery đã nén phục vụ cho bootstrap.min.js  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Thư viện popper đã nén phục vụ cho bootstrap.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <!-- Bản js đã nén của bootstrap 4, đặt dưới cùng trước thẻ đóng body-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
   </body>
 </html>

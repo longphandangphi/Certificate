@@ -11,7 +11,8 @@ import lodash from "lodash";
 import { getCertificateStatusList } from "../../../actions/certificateStatus.list.action";
 import ApiCertificateStatus from "../../../api/api.certificateStatus";
 import ApiStudent from "../../../api/api.student";
-import { pagination } from "../../../constant/app.constant";
+import { pagination, IS_COMPLETE } from "../../../constant/app.constant";
+import SelectInput from "../../../components/common/select-input";
 
 class CertificateStatusListPage extends Component {
   constructor(props) {
@@ -22,8 +23,8 @@ class CertificateStatusListPage extends Component {
       item: {},
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultTake
       },
       query: ""
     };
@@ -63,16 +64,8 @@ class CertificateStatusListPage extends Component {
   };
 
   showUpdateModal = item => {
-    let title = "Update CertificateStatus";
+    let title = "Update Certificate Status";
     this.toggleModalInfo(item, title);
-  };
-
-  onModelChange = el => {
-    let inputName = el.target.name;
-    let inputValue = el.target.value;
-    let item = Object.assign({}, this.state.item);
-    item[inputName] = inputValue;
-    this.setState({ item });
   };
 
   search = e => {
@@ -80,7 +73,7 @@ class CertificateStatusListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -95,12 +88,36 @@ class CertificateStatusListPage extends Component {
     this.delayedCallback(e);
   };
 
+  onNationalDefenseAndSecurityChange = value => {
+    let item = Object.assign({}, this.state.item);
+    item.nationalDefenseAndSecurityCertificateStatus = value;
+    this.setState({ item });
+  };
+
+  onPhysicalEducationChange  = value => {
+    let item = Object.assign({}, this.state.item);
+    item.physicalEducationCertificateStatus = value;
+    this.setState({ item });
+  };
+
+  onLanguageChange = value => {
+    let item = Object.assign({}, this.state.item);
+    item.languageCertificateStatus = value;
+    this.setState({ item });
+  };
+
+  onInformaticsChange = value => {
+    let item = Object.assign({}, this.state.item);
+    item.informaticsCertificateStatus = value;
+    this.setState({ item });
+  };
+
   handlePageClick = e => {
     this.setState(
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getCertificateStatusList()
@@ -133,8 +150,18 @@ class CertificateStatusListPage extends Component {
   };
 
   updateCertificateStatus = async () => {
-    const { id, name, description } = this.state.item;
-    const certificateStatus = { id, name, description };
+    const { id, nationalDefenseAndSecurityCertificateStatus, 
+      physicalEducationCertificateStatus, 
+      languageCertificateStatus, 
+      informaticsCertificateStatus 
+    } = this.state.item;
+
+    const certificateStatus = { id, 
+      nationalDefenseAndSecurityCertificateStatus, 
+      physicalEducationCertificateStatus, 
+      languageCertificateStatus, 
+      informaticsCertificateStatus 
+    };
     try {
       await ApiCertificateStatus.updateCertificateStatus(certificateStatus);
       this.toggleModalInfo();
@@ -200,13 +227,21 @@ class CertificateStatusListPage extends Component {
                 <Row>
                   <Col>
                     <FormGroup>
-                      <ValidationInput
-                        name="name"
-                        title="Name"
-                        type="text"
+                      <SelectInput
+                        name="nationalDefenseAndSecurityCertificateStatus"
+                        title="National Defense And Security Status"
+                        defaultValue={IS_COMPLETE.filter(comp => {
+                          if (comp.id === item.nationalDefenseAndSecurityCertificateStatus) {
+                            return true; 
+                          }
+                          return false;
+                        }).map(comp => comp.id)}
+                        style={{ display: "block" }}
                         required={true}
-                        value={item.name}
-                        onChange={this.onModelChange}
+                        onChange={this.onNationalDefenseAndSecurityChange}
+                        options={IS_COMPLETE}
+                        valueField="id"
+                        nameField="name"
                       />
                     </FormGroup>
                   </Col>
@@ -215,13 +250,67 @@ class CertificateStatusListPage extends Component {
                 <Row>
                   <Col>
                     <FormGroup>
-                      <ValidationInput
-                        name="description"
-                        title="Description"
-                        type="text"
+                      <SelectInput
+                        name="physicalEducationCertificateStatus"
+                        title="Physical Education Certificate Status"
+                        defaultValue={IS_COMPLETE.filter(comp => {
+                          if (comp.id === item.physicalEducationCertificateStatus) {
+                            return true; 
+                          }
+                          return false;
+                        }).map(comp => comp.id)}
+                        style={{ display: "block" }}
                         required={true}
-                        value={item.description}
-                        onChange={this.onModelChange}
+                        onChange={this.onPhysicalEducationChange}
+                        options={IS_COMPLETE}
+                        valueField="id"
+                        nameField="name"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <SelectInput
+                        name="languageCertificateStatus"
+                        title="Language Certificate Status"
+                        defaultValue={IS_COMPLETE.filter(comp => {
+                          if (comp.id === item.languageCertificateStatus) {
+                            return true; 
+                          }
+                          return false;
+                        }).map(comp => comp.id)}
+                        style={{ display: "block" }}
+                        required={true}
+                        onChange={this.onLanguageChange}
+                        options={IS_COMPLETE}
+                        valueField="id"
+                        nameField="name"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <SelectInput
+                        name="informaticsCertificateStatus"
+                        title="Informatics Certificate Status"
+                        defaultValue={IS_COMPLETE.filter(comp => {
+                          if (comp.id === item.informaticsCertificateStatus) {
+                            return true; 
+                          }
+                          return false;
+                        }).map(comp => comp.id)}
+                        style={{ display: "block" }}
+                        required={true}
+                        onChange={this.onInformaticsChange}
+                        options={IS_COMPLETE}
+                        valueField="id"
+                        nameField="name"
                       />
                     </FormGroup>
                   </Col>
@@ -243,9 +332,9 @@ class CertificateStatusListPage extends Component {
         <Row>
           <Col xs="12">
             <div className="flex-container header-table">
-              <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
+              {/* <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
                 Create
-              </Button>
+              </Button> */}
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
@@ -272,21 +361,29 @@ class CertificateStatusListPage extends Component {
                       <tr key={item.id}>
                         <td>{index + 1}</td>
                         <td>{item.studentViewModel.id}</td>
-                        <td>{item.studentViewModel.lastName + " " + item.studentViewModel.firstName}</td>
-                        <td>
-                          {item.nationalDefenseAndSecurityCertificateStatus ? "Đã hoàn thành" : "Chưa hoàn thành"}
+                        <td>{item.studentViewModel.firstName + " " + item.studentViewModel.lastName}</td>
+
+                        <td className={item.nationalDefenseAndSecurityCertificateStatus ? "text-success" : "text-danger"}>
+                          {item.nationalDefenseAndSecurityCertificateStatus ? "Completed" : "Not yet"}
                         </td>
-                        <td>{item.physicalEducationCertificateStatus ? "Đã hoàn thành" : "Chưa hoàn thành"}</td>
-                        <td>{item.languageCertificateStatus ? "Đã hoàn thành" : "Chưa hoàn thành"}</td>
-                        <td>{item.informaticsCertificateStatus ? "Đã hoàn thành" : "Chưa hoàn thành"}</td>
+                        <td className={item.physicalEducationCertificateStatus ? "text-success" : "text-danger"}>
+                          {item.physicalEducationCertificateStatus ? "Completed" : "Not yet"}
+                        </td>
+                        <td className={item.languageCertificateStatus ? "text-success" : "text-danger"}>
+                          {item.languageCertificateStatus ? "Completed" : "Not yet"}
+                        </td>
+                        <td className={item.informaticsCertificateStatus ? "text-success" : "text-danger"}>
+                          {item.informaticsCertificateStatus ? "Completed" : "Not yet"}
+                        </td>
+
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
-                            Edit
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
+                            Change Status
                           </Button>
-                          &nbsp;
+                          {/* &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );

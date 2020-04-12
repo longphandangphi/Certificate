@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import ApiArticle from "../../../api/api.article";
+import moment from "moment";
 import {
   Nav,
   NavItem,
@@ -25,7 +27,8 @@ class DefaultAside extends Component {
 
     this.toggle = this.toggle.bind(this)
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
+      articles: [],
     }
   }
 
@@ -37,10 +40,17 @@ class DefaultAside extends Component {
     }
   }
 
+  componentDidMount (){
+    ApiArticle.getAllArticle().then(values => {
+      this.setState({ articles: values.sources });
+    });
+    console.log(this.state.articles, "RES");
+  };
+
   render() {
     // eslint-disable-next-line
     const { children, ...attributes } = this.props
-
+    const { articles } = this.state;
     return (
       <React.Fragment>
         <Nav tabs>
@@ -51,10 +61,10 @@ class DefaultAside extends Component {
                 this.toggle('1')
               }}
             >
-              <i className="icon-list" />
+              <i className="icon-list" /> &nbsp; Lastest news
             </NavLink>
           </NavItem>
-          <NavItem>
+          {/* <NavItem>
             <NavLink
               className={classNames({ active: this.state.activeTab === '2' })}
               onClick={() => {
@@ -63,8 +73,8 @@ class DefaultAside extends Component {
             >
               <i className="icon-speech" />
             </NavLink>
-          </NavItem>
-          <NavItem>
+          </NavItem> */}
+          {/* <NavItem>
             <NavLink
               className={classNames({ active: this.state.activeTab === '3' })}
               onClick={() => {
@@ -73,38 +83,34 @@ class DefaultAside extends Component {
             >
               <i className="icon-settings" />
             </NavLink>
-          </NavItem>
+          </NavItem> */}
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             <ListGroup className="list-group-accent" tag={'div'}>
-              <ListGroupItem className="list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+              {/* <ListGroupItem className="list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
                 Today
-              </ListGroupItem>
-              <ListGroupItem
-                action
-                tag="a"
-                href="#"
-                className="list-group-item-accent-warning list-group-item-divider"
-              >
-                <div className="avatar float-right">
-                  <img
-                    className="img-avatar"
-                    src="assets/img/avatars/7.jpg"
-                    alt="admin@bootstrapmaster.com"
-                  />
-                </div>
-                <div>
-                  Meeting with <strong>Lucas</strong>{' '}
-                </div>
-                <small className="text-muted mr-3">
-                  <i className="icon-calendar" />
-                  &nbsp; 1 - 3pm
-                </small>
-                <small className="text-muted">
-                  <i className="icon-location-pin" /> Palo Alto, CA
-                </small>
-              </ListGroupItem>
+              </ListGroupItem> */}
+              {articles.map((item, index) => {
+                    return (
+                      <ListGroupItem
+                        action
+                        tag="a"
+                        href="#"
+                        className="list-group-item-accent-warning list-group-item-divider"
+                      >
+                        <div>
+                          {item.name}
+                        </div>
+                        <small className="text-muted mr-3">
+                          <i className="icon-calendar" />
+                          &nbsp; {moment(item.createOn)
+                            .add(7, "h")
+                            .format("YYYY-MM-DD HH:mm")}
+                        </small>
+                      </ListGroupItem>
+                    );
+                })}
               <ListGroupItem
                 action
                 tag="a"
@@ -129,9 +135,9 @@ class DefaultAside extends Component {
                   <i className="icon-social-skype" /> On-line
                 </small>
               </ListGroupItem>
-              <ListGroupItem className="list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+              {/* <ListGroupItem className="list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
                 Tomorrow
-              </ListGroupItem>
+              </ListGroupItem> */}
               <ListGroupItem
                 action
                 tag="a"

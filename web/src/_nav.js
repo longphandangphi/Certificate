@@ -1,13 +1,13 @@
 export default {
   items: [
     {
-      name: "Dashboard",
-      url: "/dashboard",
+      name: "Home",
+      url: "/home",
       icon: "icon-speedometer",
-      badge: {
-        variant: "info",
-        text: "NEW"
-      }
+      // badge: {
+      //   variant: "info",
+      //   text: "NEW"
+      // }
     },
     {
       name: "Article",

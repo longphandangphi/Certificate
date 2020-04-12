@@ -268,10 +268,10 @@ class MajorListPage extends Component {
                           <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
-                          &nbsp;
+                          {/* &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );

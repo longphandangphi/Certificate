@@ -55,10 +55,21 @@ class StandardCertificateListPage extends Component {
   };
 
   showAddNew = () => {
-    let title = "Create StandardCertificate";
+    let title = "Create Standard of Certificate";
     let standardCertificate = {
       name: "",
-      description: ""
+
+      physicalEducationCertificateMinimumRating: "",
+      physicalEducationCertificateReferenceContent: "",
+
+      nationalDefenseAndSecurityCertificateMinimumRating: "",
+      nationalDefenseAndSecurityCertificateReferenceContent: "",
+
+      informaticsCertificateMinimumRating: "",
+      informaticsCertificateReferenceContent: "",
+
+      languageCertificateMinimumRating: "",
+      languageCertificateReferenceContent: ""
     };
     this.toggleModalInfo(standardCertificate, title);
   };
@@ -120,19 +131,42 @@ class StandardCertificateListPage extends Component {
     console.log(this.state);
     const {
       name,
-      description,
+
       isRequirePhysicalEducationCertificate,
+      physicalEducationCertificateMinimumRating,
+      physicalEducationCertificateReferenceContent,
+
       isRequireNationalDefenseAndSecurityCertificate,
+      nationalDefenseAndSecurityCertificateMinimumRating,
+      nationalDefenseAndSecurityCertificateReferenceContent,
+
       isRequireInformaticsCertificate,
-      isRequireLanguageCertificate
+      informaticsCertificateMinimumRating,
+      informaticsCertificateReferenceContent,
+
+      isRequireLanguageCertificate,
+      languageCertificateMinimumRating,
+      languageCertificateReferenceContent
     } = this.state.item;
+    
     const standardCertificate = {
       name,
-      description,
+
       isRequirePhysicalEducationCertificate,
+      physicalEducationCertificateMinimumRating,
+      physicalEducationCertificateReferenceContent,
+
       isRequireNationalDefenseAndSecurityCertificate,
+      nationalDefenseAndSecurityCertificateMinimumRating,
+      nationalDefenseAndSecurityCertificateReferenceContent,
+
       isRequireInformaticsCertificate,
-      isRequireLanguageCertificate
+      informaticsCertificateMinimumRating,
+      informaticsCertificateReferenceContent,
+
+      isRequireLanguageCertificate,
+      languageCertificateMinimumRating,
+      languageCertificateReferenceContent
     };
     try {
       let response = await ApiStandardCertificate.postStandardCertificate(standardCertificate);
@@ -148,8 +182,48 @@ class StandardCertificateListPage extends Component {
   };
 
   updateStandardCertificate = async () => {
-    const { id, name, description } = this.state.item;
-    const standardCertificate = { id, name, description };
+    const { 
+      id, 
+      name,
+
+      isRequirePhysicalEducationCertificate,
+      physicalEducationCertificateMinimumRating,
+      physicalEducationCertificateReferenceContent,
+
+      isRequireNationalDefenseAndSecurityCertificate,
+      nationalDefenseAndSecurityCertificateMinimumRating,
+      nationalDefenseAndSecurityCertificateReferenceContent,
+
+      isRequireInformaticsCertificate,
+      informaticsCertificateMinimumRating,
+      informaticsCertificateReferenceContent,
+
+      isRequireLanguageCertificate,
+      languageCertificateMinimumRating,
+      languageCertificateReferenceContent 
+
+    } = this.state.item;
+
+    const standardCertificate = { id, 
+      name,
+
+      isRequirePhysicalEducationCertificate,
+      physicalEducationCertificateMinimumRating,
+      physicalEducationCertificateReferenceContent,
+
+      isRequireNationalDefenseAndSecurityCertificate,
+      nationalDefenseAndSecurityCertificateMinimumRating,
+      nationalDefenseAndSecurityCertificateReferenceContent,
+
+      isRequireInformaticsCertificate,
+      informaticsCertificateMinimumRating,
+      informaticsCertificateReferenceContent,
+
+      isRequireLanguageCertificate,
+      languageCertificateMinimumRating,
+      languageCertificateReferenceContent 
+    };
+
     try {
       await ApiStandardCertificate.updateStandardCertificate(standardCertificate);
       this.toggleModalInfo();
@@ -262,22 +336,6 @@ class StandardCertificateListPage extends Component {
                 </Row>
                 <ColoredLine color="#CEF6F5" />
                 {/* THỂ CHÂT */}
-
-                {/* <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="isRequirePhysicalEducationCertificate"
-                        title="Is Require Physical Education Certificate"
-                        type="text"
-                        required={true}
-                        value={item.isRequirePhysicalEducationCertificate}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row> */}
-
                 <Row>
                   <Col>
                     <FormGroup>
@@ -308,7 +366,8 @@ class StandardCertificateListPage extends Component {
                         name="physicalEducationCertificateMinimumRating"
                         title="Physical Education Certificate Minimum Rating"
                         type="text"
-                        required={true}
+                        required={item.isRequirePhysicalEducationCertificate}
+                        disabled={!item.isRequirePhysicalEducationCertificate}
                         value={item.physicalEducationCertificateMinimumRating}
                         onChange={this.onModelChange}
                       />
@@ -323,7 +382,8 @@ class StandardCertificateListPage extends Component {
                         name="physicalEducationCertificateReferenceContent"
                         title="Physical Education Certificate Reference Content"
                         type="text"
-                        required={true}
+                        required={item.isRequirePhysicalEducationCertificate}
+                        disabled={!item.isRequirePhysicalEducationCertificate}
                         value={item.physicalEducationCertificateReferenceContent}
                         onChange={this.onModelChange}
                       />
@@ -332,22 +392,6 @@ class StandardCertificateListPage extends Component {
                 </Row>
                 <ColoredLine color="#CEF6F5" />
                 {/* Giáo dục quốc phòng */}
-
-                {/* <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="isRequireNationalDefenseAndSecurityCertificate"
-                        title="Is Require National Defense And Security Certificate"
-                        type="text"
-                        required={true}
-                        value={item.isRequireNationalDefenseAndSecurityCertificate}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row> */}
-
                 <Row>
                   <Col>
                     <FormGroup>
@@ -378,7 +422,8 @@ class StandardCertificateListPage extends Component {
                         name="nationalDefenseAndSecurityCertificateMinimumRating"
                         title="national Defense And Security Certificate Minimum Rating"
                         type="text"
-                        required={true}
+                        required={item.isRequireNationalDefenseAndSecurityCertificate}
+                        disabled={!item.isRequireNationalDefenseAndSecurityCertificate}
                         value={item.nationalDefenseAndSecurityCertificateMinimumRating}
                         onChange={this.onModelChange}
                       />
@@ -393,7 +438,8 @@ class StandardCertificateListPage extends Component {
                         name="nationalDefenseAndSecurityCertificateReferenceContent"
                         title="National Defense And Security Certificate Reference Content"
                         type="text"
-                        required={true}
+                        required={item.isRequireNationalDefenseAndSecurityCertificate}
+                        disabled={!item.isRequireNationalDefenseAndSecurityCertificate}
                         value={item.nationalDefenseAndSecurityCertificateReferenceContent}
                         onChange={this.onModelChange}
                       />
@@ -404,21 +450,6 @@ class StandardCertificateListPage extends Component {
                 {/* End GDQP */}
                 <ColoredLine color="#CEF6F5" />
                 {/* TIN HỌC  */}
-
-                {/* <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="isRequireInformaticsCertificate"
-                        title="Is Require Informatics Certificate"
-                        type="text"
-                        required={true}
-                        value={item.isRequireInformaticsCertificate}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row> */}
 
                 <Row>
                   <Col>
@@ -450,7 +481,8 @@ class StandardCertificateListPage extends Component {
                         name="informaticsCertificateMinimumRating"
                         title="Informatics Certificate Minimum Rating"
                         type="text"
-                        required={true}
+                        required={item.isRequireInformaticsCertificate}
+                        disabled={!item.isRequireInformaticsCertificate}
                         value={item.informaticsCertificateMinimumRating}
                         onChange={this.onModelChange}
                       />
@@ -465,7 +497,8 @@ class StandardCertificateListPage extends Component {
                         name="informaticsCertificateReferenceContent"
                         title="Informatics Certificate Reference Content"
                         type="text"
-                        required={true}
+                        required={item.isRequireInformaticsCertificate}
+                        disabled={!item.isRequireInformaticsCertificate}
                         value={item.informaticsCertificateReferenceContent}
                         onChange={this.onModelChange}
                       />
@@ -476,21 +509,6 @@ class StandardCertificateListPage extends Component {
                 {/* End TIN HỌC */}
                 <ColoredLine color="#CEF6F5" />
                 {/* TIN HỌC  */}
-
-                {/* <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="isRequireLanguageCertificate"
-                        title="Is Require Language Certificate"
-                        type="text"
-                        required={true}
-                        value={item.isRequireLanguageCertificate}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row> */}
 
                 <Row>
                   <Col>
@@ -522,7 +540,8 @@ class StandardCertificateListPage extends Component {
                         name="languageCertificateMinimumRating"
                         title="Language Certificate Minimum Rating"
                         type="text"
-                        required={true}
+                        required={item.isRequireLanguageCertificate}
+                        disabled={!item.isRequireLanguageCertificate}
                         value={item.languageCertificateMinimumRating}
                         onChange={this.onModelChange}
                       />
@@ -537,7 +556,8 @@ class StandardCertificateListPage extends Component {
                         name="languageCertificateReferenceContent"
                         title="Language Certificate Reference Content"
                         type="text"
-                        required={true}
+                        required={item.isRequireLanguageCertificate}
+                        disabled={!item.isRequireLanguageCertificate}
                         value={item.languageCertificateReferenceContent}
                         onChange={this.onModelChange}
                       />
@@ -636,7 +656,7 @@ class StandardCertificateListPage extends Component {
                         <td style={{ backgroundColor: "#F8EFFB" }}>{item.languageCertificateReferenceContent}</td>
 
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
                           &nbsp;

@@ -43,10 +43,10 @@ const routes = [
   {
     path: "/",
     exact: true,
-    name: "Admin",
+    name: "DUE",
     component: DefaultLayout
   },
-  { path: "/dashboard", name: "Dashboard", component: Dashboard },
+  { path: "/home", name: "Home", component: Dashboard },
   // { path: "/promotions", name: "Promotion", component: PromotionListPage },
   // { path: "/menus", name: "Menu", component: MenuListPage },
   // { path: "/items", name: "Item", component: ItemListPage },
