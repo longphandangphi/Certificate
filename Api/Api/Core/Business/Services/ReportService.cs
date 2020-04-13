@@ -20,7 +20,7 @@ namespace Api.Core.Business.Services
         Task<ReportViewModel> GetReportByIdAsync(Guid? id);
         Task<ResponseModel> CreateReportAsync(ReportManageModel reportManagerModel);
 
-        //Task<ResponseModel> UpdateReportAsync(Guid id, ReportManageModel reportManagerModel);
+        Task<ResponseModel> ResponseReportAsync(Guid id, ReportManageModel reportManagerModel);
 
         Task<ResponseModel> DeleteReportAsync(Guid id);
 
@@ -107,35 +107,23 @@ namespace Api.Core.Business.Services
             };
         }
 
-        //public async Task<ResponseModel> UpdateReportAsync(Guid id, ReportManageModel reportManageModel)
-        //{
-        //    var report = await _reportRepository.GetByIdAsync(id);
-        //    if (report == null)
-        //    {
-        //        return new ResponseModel
-        //        {
-        //            StatusCode = System.Net.HttpStatusCode.NotFound,
-        //            Message = "This Report is not exist!"
-        //        };
-        //    }
-        //    else
-        //    {
-        //        var existedReport = await _reportRepository.FetchFirstAsync(x => x.Name == reportManageModel.Name);
-        //        if (existedReport != null)
-        //        {
-        //            return new ResponseModel
-        //            {
-        //                StatusCode = System.Net.HttpStatusCode.BadRequest,
-        //                Message = "This Report's name is exist!"
-        //            };
-        //        }
-        //        else
-        //        {
-        //            reportManageModel.GetReportFromModel(report);
-        //            return await _reportRepository.UpdateAsync(report);
-        //        }
-        //    }
-        //}
+        public async Task<ResponseModel> ResponseReportAsync(Guid id, ReportManageModel reportManageModel)
+        {
+            var report = await _reportRepository.GetByIdAsync(id);
+            if (report == null)
+            {
+                return new ResponseModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    Message = "This Report is not exist!"
+                };
+            }
+            else
+            {
+                reportManageModel.GetReportFromModel(report);
+                return await _reportRepository.UpdateAsync(report);
+            }
+        }
 
         public async Task<ResponseModel> DeleteReportAsync(Guid id)
         {

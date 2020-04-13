@@ -18,12 +18,18 @@ namespace Api.Core.Business.Models.Reports
         public string Content { get; set; }
 
         [Required]
+        public string Response { get; set; }
+
+        [Required]
         public Guid StudentId { get; set; }
+
+        
 
         public void GetReportFromModel(Report report)
         {
             report.Subject = Subject;
             report.Content = Content;
+            report.Response = Response;
             report.StudentId = StudentId;
         }
 

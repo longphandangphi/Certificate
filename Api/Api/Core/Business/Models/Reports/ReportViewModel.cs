@@ -19,8 +19,7 @@ namespace Api.Core.Business.Models.Reports
             Id = report.Id;
             Subject = report.Subject;
             Content = report.Content;
-            IsSolved = report.IsSolved;
-            IsSeen = report.IsSeen;
+            Response = report.Response;
             StudentViewModel = new StudentViewModel(report.Student);
             CreateOn = report.CreatedOn;
         }
@@ -31,9 +30,7 @@ namespace Api.Core.Business.Models.Reports
 
         public string Content { get; set; }
 
-        public bool IsSolved { get; set; }
-
-        public bool IsSeen { get; set; }
+        public string Response { get; set; }
 
         public DateTime? CreateOn { get; set; }
 

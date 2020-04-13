@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, Button, FormGroup, Table } from "reactstrap";
+import { Row, Col, Button, FormGroup, Table, Label } from "reactstrap";
 import Form from "react-validation/build/form";
 import ModalConfirm from "../../../components/modal/modal-confirm";
 import Pagination from "../../../components/pagination/Pagination";
@@ -11,8 +11,9 @@ import { toastSuccess, toastError } from "../../../helpers/toast.helper";
 import lodash from "lodash";
 import { getReportList } from "../../../actions/report.list.action";
 import ApiReport from "../../../api/api.report";
-import { pagination } from "../../../constant/app.constant";
+import { pagination,  } from "../../../constant/app.constant";
 import moment from "moment";
+import ReactHtmlParser from "react-html-parser";
 
 class ReportListPage extends Component {
   constructor(props) {
@@ -23,8 +24,9 @@ class ReportListPage extends Component {
       item: {},
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultTake,
+        isDesc: pagination.defaultSort
       },
       query: ""
     };
@@ -66,7 +68,7 @@ class ReportListPage extends Component {
   };
 
   showUpdateModal = item => {
-    let title = "Update Report";
+    let title = "Report detail";
     this.toggleModalInfo(item, title);
   };
 
@@ -78,18 +80,18 @@ class ReportListPage extends Component {
     this.setState({ item });
   };
 
-  onReportCategoryChange = value => {
-    let item = Object.assign({}, this.state.item);
-    item.reportCategoryId = value;
-    this.setState({ item });
-  };
+  // onReportCategoryChange = value => {
+  //   let item = Object.assign({}, this.state.item);
+  //   item.reportCategoryId = value;
+  //   this.setState({ item });
+  // };
 
   search = e => {
     this.setState(
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -109,7 +111,7 @@ class ReportListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getReportList()
@@ -123,35 +125,36 @@ class ReportListPage extends Component {
     this.props.getReportList(params);
   };
 
-  addReport = async () => {
-    console.log("add: state ==================");
-    console.log(this.state);
-    const { title, preview, detail, picture, reportCategoryId } = this.state.item;
-    const report = { title, preview, detail, picture, reportCategoryId };
-    try {
-      let response = await ApiReport.postReport(report);
-      console.log("response");
-      console.log(response);
-      this.toggleModalInfo();
-      this.getReportList();
-      toastSuccess("The report has been created successfully");
-    } catch (err) {
-      console.log("err");
-      console.log(err);
-      toastError("This Report title is exist! Try another one");
-    }
-  };
+  // addReport = async () => {
+  //   console.log("add: state ==================");
+  //   console.log(this.state);
+  //   const { title, preview, detail, picture, reportCategoryId } = this.state.item;
+  //   const report = { title, preview, detail, picture, reportCategoryId };
+  //   try {
+  //     let response = await ApiReport.postReport(report);
+  //     console.log("response");
+  //     console.log(response);
+  //     this.toggleModalInfo();
+  //     this.getReportList();
+  //     toastSuccess("The report has been created successfully");
+  //   } catch (err) {
+  //     console.log("err");
+  //     console.log(err);
+  //     toastError("This Report title is exist! Try another one");
+  //   }
+  // };
 
   updateReport = async () => {
-    const { id, title, preview, detail, picture } = this.state.item;
-    const report = { id, title, preview, detail, picture };
+    const { id, studentViewModel, subject, content, response } = this.state.item;
+    var studentId = studentViewModel.id;
+    const report = { id, studentId, subject, content, response };
     try {
       await ApiReport.updateReport(report);
       this.toggleModalInfo();
       this.getReportList();
       toastSuccess("The report has been updated successfully");
     } catch (err) {
-      toastError("This ReportCategory title is exist! Try another one");
+      toastError("Invalid response!");
     }
   };
 
@@ -201,6 +204,13 @@ class ReportListPage extends Component {
         <ModalInfo title={this.state.formTitle} isShowModal={isShowInfoModal} hiddenFooter>
           <div className="modal-wrapper">
             <div className="form-wrapper">
+              <Row>
+                <Col>
+                  {/* <label>{item.studentViewModel.id}</label> */}
+                </Col>
+              </Row>
+            {/* <label>Student ID: {item.studentViewModel.id}</label>
+            <label>Student : {item.studentViewModel.firstName+item.studentViewModel.lastName}</label> */}
               <Form
                 onSubmit={e => this.onSubmit(e)}
                 ref={c => {
@@ -209,58 +219,47 @@ class ReportListPage extends Component {
               >
                 <Row>
                   <Col>
-                    <FormGroup>
+                    {/* <FormGroup>
                       <ValidationInput
-                        name="title"
-                        title="Title"
+                        name="subject"
+                        title="Stubject"
                         type="text"
                         required={true}
-                        value={item.title}
+                        value={item.subject}
                         onChange={this.onModelChange}
                       />
-                    </FormGroup>
+                    </FormGroup> */}
+                    <h5>Subject:</h5>
+                    {item.subject}
                   </Col>
                 </Row>
-
+                    <br></br>
+                <Row>
+                  <Col>
+                    {/* <FormGroup>
+                      <ValidationInput
+                        name="content"
+                        title="Report content "
+                        type="text"
+                        required={true}
+                        value={item.content}
+                        onChange={this.onModelChange}
+                      />
+                    </FormGroup> */}
+                    <h5>Report content:</h5>
+                    {ReactHtmlParser(item.content)}
+                  </Col>
+                </Row>
+                <br></br>
                 <Row>
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="preview"
-                        title="Preview"
+                        name="response"
+                        title="Response"
                         type="text"
-                        required={true}
-                        value={item.preview}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="detail"
-                        title="Detail"
-                        type="text"
-                        required={true}
-                        value={item.detail}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="picture"
-                        title="Picture"
-                        type="text"
-                        required={false}
-                        value={item.picture}
+                        //required={true}
+                        value={item.response}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -268,12 +267,12 @@ class ReportListPage extends Component {
                 </Row>
 
                 <div className="text-center">
-                  <Button color="danger" type="submit">
-                    Confirm
+                  <Button color="success" type="submit">
+                    Confirm response
                   </Button>
                   &nbsp;
                   <Button color="secondary" onClick={this.toggleModalInfo}>
-                    Cancel
+                    Back
                   </Button>
                 </div>
               </Form>
@@ -299,11 +298,10 @@ class ReportListPage extends Component {
                   <th></th>
                   <th>Create On</th>
                   <th>Report subject</th>
-                  <th>Content</th>
+                  {/* <th>Content</th> */}
                   <th>Student ID</th>
                   <th>Student's Name</th>
-                  <th>Is Seen</th>
-                  <th>Is Solved</th>
+                  <th>Response content</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -319,14 +317,13 @@ class ReportListPage extends Component {
                             .format("YYYY-MM-DD HH:mm")}
                         </td>
                         <td>{item.subject}</td>
-                        <td>{item.content}</td>
+                        {/* <td>{item.content}</td> */}
                         <td>{item.studentViewModel.id}</td>
                         <td>{item.studentViewModel.lastName + " " + item.studentViewModel.firstName}</td>
-                        <td>{item.isSeen ? "Seen" : "Unseen yet"}</td>
-                        <td>{item.isSolved ? "Solved" : item.isSeen ? "Solving" : "Waiting"}</td>
+                        <td className={item.response == "" ? "text-danger" : "text-success"}>{item.response == "" ? "Not yet" : item.response}</td>
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
-                            Edit
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
+                            View detail
                           </Button>
                           &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>

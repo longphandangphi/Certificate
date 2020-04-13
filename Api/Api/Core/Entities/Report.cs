@@ -12,8 +12,6 @@ namespace Api.Core.Entities
     {
         public Report() : base()
         {
-            IsSeen = false;
-            IsSolved = false;
         }
 
         [Required]
@@ -26,10 +24,7 @@ namespace Api.Core.Entities
         public Guid StudentId { get; set; }
 
         [Required]
-        public bool IsSeen { get; set; }
-
-        [Required]
-        public bool IsSolved { get; set; }
+        public string Response { get; set; }
 
 
         public Student Student { get; set; }

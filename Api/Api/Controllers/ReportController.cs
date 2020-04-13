@@ -42,12 +42,12 @@ namespace Api.Controllers
             return new CustomActionResult(response);
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> Update(Guid id, [FromBody] ReportManageModel reportManageModel)
-        //{
-        //    var response = await _reportService.UpdateReportAsync(id, reportManageModel);
-        //    return new CustomActionResult(response);
-        //}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ResponseReport(Guid id, [FromBody] ReportManageModel reportManageModel)
+        {
+            var response = await _reportService.ResponseReportAsync(id, reportManageModel);
+            return new CustomActionResult(response);
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
