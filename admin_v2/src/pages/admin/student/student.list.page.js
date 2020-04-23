@@ -24,6 +24,8 @@ class StudentListPage extends Component {
       item: {},
       classes: [],
       specialties: [],
+      sortByClass: [],
+      sortBelowPoint: 50,
       itemId: null,
       params: {
         offset: pagination.initialPage,
@@ -31,7 +33,7 @@ class StudentListPage extends Component {
       },
       query: ""
     };
-    this.delayedCallback = lodash.debounce(this.search, 1000);
+    this.delayedCallback = lodash.debounce(this.search, 500);
   }
 
   toggleDeleteModal = () => {
@@ -87,6 +89,7 @@ class StudentListPage extends Component {
     item[inputName] = inputValue;
     this.setState({ item });
   };
+  
 
   onClassChange = value => {
     let item = Object.assign({}, this.state.item);
@@ -120,6 +123,16 @@ class StudentListPage extends Component {
     this.delayedCallback(e);
   };
 
+  onSortByClassChange = (e) => {
+    console.log(e,"Sort By Class");
+    this.setState({ sortByClass : e});
+  }
+
+  onSortBelow = (e) => {
+    console.log(e.target.value,"SORT BELOW");
+    this.setState({ sortBelowPoint : e.target.value});
+  }
+
   handlePageClick = e => {
     this.setState(
       {
@@ -141,7 +154,9 @@ class StudentListPage extends Component {
 
   getClassList = () => {
     ApiClass.getAllClass().then(values => {
-      this.setState({ classes: values.sources });
+      this.setState({ 
+        classes: values.sources
+       });
     });
   };
 
@@ -216,9 +231,10 @@ class StudentListPage extends Component {
   }
 
   render() {
-    const { isShowDeleteModal, isShowInfoModal, item, classes, specialties } = this.state;
+    const { isShowDeleteModal, isShowInfoModal, item, classes, specialties, sortByClass, sortBelowPoint } = this.state;
     const { studentPagedList } = this.props.studentPagedListReducer;
     const { sources, pageIndex, totalPages } = studentPagedList;
+    console.log(sources,"SOURCE");
     const hasResults = sources && sources.length > 0;
     return (
       <div className="animated fadeIn">
@@ -336,9 +352,9 @@ class StudentListPage extends Component {
                         title="Class"
                         defaultValue={item.class ? item.class.id : undefined}
                         showSearch={true}
-                        style={{ display: "block" }}
+                        style={{display: "block"}}
                         required={true}
-                        onChange={this.onClassChange}
+                        onChange={this.onsClassChange}
                         options={classes}
                         valueField="id"
                         nameField="name"
@@ -386,11 +402,45 @@ class StudentListPage extends Component {
               <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
                 Create
               </Button>
+
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Searching by Student..."
+                placeholder="Name or email.."
               />
+
+              <SelectInput
+                placeholder="--Class--"
+                name="sortByClass"
+                //title="OrderBy"
+                defaultValue={classes ? classes.id : undefined}
+                showSearch={true}
+                style={{ display: "block" }}
+                //required={true}
+                onChange={this.onSortByClassChange}
+                options={classes}
+                valueField="id"
+                nameField="name"
+              />
+
+              {/* <div>
+              <Input
+                type="number"
+                defaultValue="1000"
+                onChange={this.onSortBelow}
+                className="form-control form-control-sm"
+                placeholder="--Below--"
+              />
+              </div> */}
+              <input
+                onChange={this.onSortBelow}
+                defaultValue= "50"
+                className="form-control form-control-sm"
+                placeholder="Below Point.."
+                type="number"
+              />
+
+              
             </div>
             <Table className="admin-table" responsive bordered>
               <thead>
@@ -405,8 +455,19 @@ class StudentListPage extends Component {
                 </tr>
               </thead>
               <tbody>
-                {hasResults &&
-                  sources.map((item, index) => {
+                {hasResults && sortByClass && sortBelowPoint &&
+                  sources
+                  .filter(student => {
+                    if( student.class.id.includes(sortByClass) && student.extracurricularPoint < sortBelowPoint){
+                      console.log("TRUE");
+                      return true;
+                    }
+                    else {
+                      console.log("False");
+                      return false;
+                    }
+                  }) 
+                  .map((item, index) => {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>

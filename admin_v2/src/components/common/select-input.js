@@ -14,7 +14,7 @@ const SelectInput = ({
   inputClass,
   required,
   valueField,
-  nameField
+  nameField,
 }) => {
   return (
     <FormGroup>
@@ -25,7 +25,7 @@ const SelectInput = ({
       <Select
         showSearch={showSearch}
         placeholder={placeholder}
-        style={{ display: "block" }}
+        style={{ display: "block", minWidth : 100 }}
         optionFilterProp="children"
         onChange={onChange}
         className={`custom-form-coltrol ${inputClass}`}
