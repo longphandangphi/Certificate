@@ -3,7 +3,7 @@ import RequestHelper from "../helpers/request.helper";
 
 export default class ApiClass {
   static getAllClass() {
-    return RequestHelper.get(appConfig.apiUrl + "classes/all");
+    return RequestHelper.get(appConfig.apiUrl + "classes");
   }
 
   static getClassList(params) {

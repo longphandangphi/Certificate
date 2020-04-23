@@ -1,5 +1,5 @@
 import React from "react";
-import DefaultLayout from "./pages/admin/Admin";
+//import DefaultLayout from "./pages/admin/Admin";
 
 const Dashboard = React.lazy(() => import("./pages/admin/Dashboard/Dashboard"));
 
@@ -29,7 +29,7 @@ const SpecialtyListPage = React.lazy(() => import("./pages/admin/specialty/speci
 
 const ArticleListPage = React.lazy(() => import("./pages/admin/article/article.list.page"));
 
-const ExtracurricularListPage = React.lazy(() => import("./pages/admin/extracurricular/extracurricular.list.page"));
+const ExtracurricularListPage = React.lazy(() => import("./pages/admin/extracurricular/extracurricularActivity.list.page"));
 
 const ReportListPage = React.lazy(() => import("./pages/admin/report/report.list.page"));
 
@@ -49,6 +49,8 @@ const CertificateStatusListPage = React.lazy(() =>
 
 const ArticleCategoryListPage = React.lazy(() => import("./pages/admin/articleCategory/articleCategory.list.page"));
 
+const StudentListPage = React.lazy(() => import("./pages/admin/student/student.list.page"));
+
 const routes = [
   // {
   //   path: "/",
@@ -63,37 +65,36 @@ const routes = [
   // { path: "/orders", name: "Order", component: OrderListPage },
   // { path: "/tables", name: "Table", component: TableListPage },
   // { path: "/customers", name: "Customer", component: CustomerListPage },
-  { path: "/admin/roles", name: "Role", component: RoleListPage, permissions: [] },
-  { path: "/admin/classes", name: "Class", component: ClassListPage, permissions: ["Waiter"] },
-  { path: "/admin/articles", name: "Article", component: ArticleListPage, permissions: ["Cashier"] },
+  { path: "/admin/roles", name: "Role", component: RoleListPage, permissions: ["User Manager"] },
+  { path: "/admin/classes", name: "Class", component: ClassListPage, permissions: ["Structure Manager"] },
+  { path: "/admin/articles", name: "Article", component: ArticleListPage, permissions: ["Article Manager"] },
   {
     path: "/admin/extracurriculars",
     name: "Extracurricular",
     component: ExtracurricularListPage,
-    permissions: ["Chef"]
+    permissions: ["Extracurricular Manager"]
   },
-  { path: "/admin/reports", name: "Report", component: ReportListPage, permissions: ["Student"] },
+  { path: "/admin/reports", name: "Report", component: ReportListPage, permissions: ["Student Manager", "Structure Manager", "Extracurricular Manager", "Article Manager"] },
   {
     path: "/admin/extracurricularActivities",
     name: "Extracurricular Activity",
     component: ExtracurricularActivityListPage,
-    permissions: ["Waiter"]
+    permissions: ["Extracurricular Manager"]
   },
-  { path: "/admin/majors", name: "Major", component: MajorListPage, permissions: ["Chef"] },
+  { path: "/admin/majors", name: "Major", component: MajorListPage, permissions: ["Structure Manager"] },
   {
     path: "/admin/articleCategories",
     name: "Article Category",
     component: ArticleCategoryListPage,
-    permissions: ["Cashier"]
+    permissions: ["Article Manager"]
   },
-  { path: "/admin/users", name: "User", component: UserListPage, permissions: [] },
-  // { path: "/reviews", name: "Review", component: ReviewListPage },
-  { path: "/admin/faculties", name: "Faculty", component: FacultyListPage, permissions: [] },
+  { path: "/admin/users", name: "User", component: UserListPage, permissions: ["User Manager"] },
+  { path: "/admin/faculties", name: "Faculty", component: FacultyListPage, permissions: ["Structure Manager"] },
   {
     path: "/admin/standardOfCertificates",
     name: "Standard Certificate",
     component: StandardCertificateListPage,
-    permissions: []
+    permissions: ["Structure Manager"]
   },
   {
     path: "/admin/certificateStatuses",
@@ -105,7 +106,13 @@ const routes = [
     path: "/admin/specialties",
     name: "Specialty",
     component: SpecialtyListPage,
-    permissions: []
+    permissions: ["Structure Manager"]
+  },
+  {
+    path: "/admin/students",
+    name: "Student",
+    component: StudentListPage,
+    permissions: ["User Manager"]
   }
 ];
 

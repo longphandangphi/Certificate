@@ -18,18 +18,16 @@ namespace Api.Core.Business.Models.StandardOfCertificates
             {
                 Id = standardOfCertificate.Id;
                 Name = standardOfCertificate.Name;
-                IsRequirePhysicalEducationCertificate = standardOfCertificate.IsRequirePhysicalEducationCertificate;
-                PhysicalEducationCertificateMinimumRating = standardOfCertificate.PhysicalEducationCertificateMinimumRating;
-                PhysicalEducationCertificateReferenceContent = standardOfCertificate.PhysicalEducationCertificateReferenceContent;
-                IsRequireNationalDefenseAndSecurityCertificate = standardOfCertificate.IsRequireNationalDefenseAndSecurityCertificate;
-                NationalDefenseAndSecurityCertificateMinimumRating = standardOfCertificate.NationalDefenseAndSecurityCertificateMinimumRating;
-                NationalDefenseAndSecurityCertificateReferenceContent = standardOfCertificate.NationalDefenseAndSecurityCertificateReferenceContent;
-                IsRequireInformaticsCertificate = standardOfCertificate.IsRequireInformaticsCertificate;
-                InformaticsCertificateMinimumRating = standardOfCertificate.InformaticsCertificateMinimumRating;
-                InformaticsCertificateReferenceContent = standardOfCertificate.InformaticsCertificateReferenceContent;
-                IsRequireLanguageCertificate = standardOfCertificate.IsRequireLanguageCertificate;
-                LanguageCertificateMinimumRating = standardOfCertificate.LanguageCertificateMinimumRating;
-                LanguageCertificateReferenceContent = standardOfCertificate.LanguageCertificateReferenceContent;
+                IsRequirePhysicalEducation = standardOfCertificate.IsRequirePhysicalEducation;
+                PhysicalEducationReference = standardOfCertificate.PhysicalEducationReference;
+                IsRequireNationalDefenseAndSecurity = standardOfCertificate.IsRequireNationalDefenseAndSecurity;
+                NationalDefenseAndSecurityReference = standardOfCertificate.NationalDefenseAndSecurityReference;
+                IsRequireInformatics = standardOfCertificate.IsRequireInformatics;
+                InformaticsReference = standardOfCertificate.InformaticsReference;
+                IsRequireLanguage = standardOfCertificate.IsRequireLanguage;
+                LanguageReference = standardOfCertificate.LanguageReference;
+                IsRequireExtracurricularPoint = standardOfCertificate.IsRequireExtracurricularPoint;
+                ExtracurricularPointReference = standardOfCertificate.ExtracurricularPointReference;
             }
         }
 
@@ -37,28 +35,24 @@ namespace Api.Core.Business.Models.StandardOfCertificates
 
         public string Name { get; set; }
 
-        public bool IsRequirePhysicalEducationCertificate { get; set; }
+        public bool IsRequirePhysicalEducation { get; set; }
 
-        public string PhysicalEducationCertificateMinimumRating { get; set; }
+        public string PhysicalEducationReference { get; set; }
 
-        public string PhysicalEducationCertificateReferenceContent { get; set; }
+        public bool IsRequireNationalDefenseAndSecurity { get; set; }
 
-        public bool IsRequireNationalDefenseAndSecurityCertificate { get; set; }
+        public string NationalDefenseAndSecurityReference { get; set; }
 
-        public string NationalDefenseAndSecurityCertificateMinimumRating { get; set; }
+        public bool IsRequireInformatics { get; set; }
 
-        public string NationalDefenseAndSecurityCertificateReferenceContent { get; set; }
+        public string InformaticsReference { get; set; }
 
-        public bool IsRequireInformaticsCertificate { get; set; }
+        public bool IsRequireLanguage { get; set; }
 
-        public string InformaticsCertificateMinimumRating { get; set; }
+        public string LanguageReference { get; set; }
 
-        public string InformaticsCertificateReferenceContent { get; set; }
+        public bool IsRequireExtracurricularPoint { get; set; }
 
-        public bool IsRequireLanguageCertificate { get; set; }
-
-        public string LanguageCertificateMinimumRating { get; set; }
-
-        public string LanguageCertificateReferenceContent { get; set; }
+        public string ExtracurricularPointReference { get; set; }
     }
 }

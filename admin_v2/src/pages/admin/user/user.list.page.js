@@ -277,6 +277,10 @@ class UserListPage extends Component {
         <Row>
           <Col xs="12">
             <div className="flex-container header-table">
+              <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
+                Create article
+              </Button>
+
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"

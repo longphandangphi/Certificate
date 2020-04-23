@@ -33,7 +33,7 @@ class DefaultLayout extends Component {
 
   signOut(e) {
     e.preventDefault();
-    cookie.remove("token", { path: "/" });
+    cookie.remove("token");
     this.props.history.push("/login");
   }
 
@@ -58,11 +58,27 @@ class DefaultLayout extends Component {
 
   checkPermissionsSideBar = roles => {
     var menus = [];
+    
     navigation.items.map(item =>
-      roles.map(role => {
-        item.permissions.map(permission => permission === role.name && menus.push(item));
-      })
+      item.permissions.some(permission => 
+        {
+          for (let i = 0; i < roles.length; i++) {
+            const element = roles[i];
+            if (element.name === permission) {
+              menus.push(item);
+              return true;
+            }
+          }
+          // warning
+          return null;
+        }
+      )
     );
+    // navigation.items.map(item =>
+    //   roles.some(role => {
+    //     item.permissions.map(permission => permission === role.name && menus.push(item));
+    //   })
+    // );
     return menus;
   };
 
@@ -86,6 +102,8 @@ class DefaultLayout extends Component {
     routes.map(item =>
       roles.map(role => {
         item.permissions.map(permission => permission === role.name && allowRoutes.push(item));
+        // return for the warning
+        return null;
       })
     );
     return allowRoutes;
@@ -133,7 +151,7 @@ class DefaultLayout extends Component {
                         />
                       ) : null;
                     })}
-                    <Redirect from="/" to="/admin/dashboard" />
+                    <Redirect exact from="/" to="/admin/dashboard" />
                   </Switch>
                 </Suspense>
               </Container>

@@ -31,8 +31,8 @@ namespace Api.Core.Business.Models.Extracurriculars
                 yield return new ValidationResult("Student is not found!", new string[] { "StudentId" });
             }
 
-            var extracurricularActivityRepository = IoCHelper.GetInstance<IRepository<Student>>();
-            var extracurricularActivity = extracurricularActivityRepository.GetAll().FirstOrDefault(x => x.Id == StudentId);
+            var extracurricularActivityRepository = IoCHelper.GetInstance<IRepository<ExtracurricularActivity>>();
+            var extracurricularActivity = extracurricularActivityRepository.GetAll().FirstOrDefault(x => x.Id == ExtracurricularActivityId);
             if (extracurricularActivity == null)
             {
                 yield return new ValidationResult("ExtracurricularActivity is not found!", new string[] { "ExtracurricularActivityId" });

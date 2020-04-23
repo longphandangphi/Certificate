@@ -594,31 +594,30 @@ namespace Api.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("InformaticsCertificateMinimumRating")
+                    b.Property<string>("ExtracurricularPointReference")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("InformaticsCertificateReferenceContent")
+                    b.Property<string>("InformaticsReference")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsRequireInformaticsCertificate")
+                    b.Property<bool>("IsRequireExtracurricularPoint")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRequireLanguageCertificate")
+                    b.Property<bool>("IsRequireInformatics")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRequireNationalDefenseAndSecurityCertificate")
+                    b.Property<bool>("IsRequireLanguage")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRequirePhysicalEducationCertificate")
+                    b.Property<bool>("IsRequireNationalDefenseAndSecurity")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LanguageCertificateMinimumRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsRequirePhysicalEducation")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("LanguageCertificateReferenceContent")
+                    b.Property<string>("LanguageReference")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -626,19 +625,11 @@ namespace Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NationalDefenseAndSecurityCertificateMinimumRating")
+                    b.Property<string>("NationalDefenseAndSecurityReference")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NationalDefenseAndSecurityCertificateReferenceContent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalEducationCertificateMinimumRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalEducationCertificateReferenceContent")
+                    b.Property<string>("PhysicalEducationReference")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -10,6 +10,7 @@ import { toastSuccess, toastError } from "../../../helpers/toast.helper";
 import lodash from "lodash";
 import { getExtracurricularActivityList } from "../../../actions/extracurricularActivity.list.action";
 import ApiExtracurricularActivity from "../../../api/api.extracurricularActivity";
+import ApiExtracurricular from "../../../api/api.extracurricular";
 import { pagination } from "../../../constant/app.constant";
 
 class ExtracurricularActivityListPage extends Component {
@@ -18,7 +19,8 @@ class ExtracurricularActivityListPage extends Component {
     this.state = {
       isShowDeleteModal: false,
       isShowInfoModal: false,
-      item: {},
+      isShowAssignModal: false, 
+      item: {}, 
       itemId: null,
       params: {
         skip: pagination.initialPage,
@@ -42,6 +44,15 @@ class ExtracurricularActivityListPage extends Component {
       formTitle: title
     }));
   };
+
+  toggleAssignModal = (item, title) => {
+    this.setState(prevState => ({
+      isShowAssignModal: !prevState.isShowAssignModal,
+      item: item || {},
+      formTitle: title
+
+    }));
+  }; 
 
   showConfirmDelete = itemId => {
     this.setState(
@@ -68,6 +79,13 @@ class ExtracurricularActivityListPage extends Component {
   showUpdateModal = item => {
     let title = "Update ExtracurricularActivity";
     this.toggleModalInfo(item, title);
+  };
+
+  showAssignModal = item => {
+    let title = "Assign Student";
+    item.studentId = "";
+    this.toggleAssignModal(item, title);
+    console.log(item, "Item when show update");
   };
 
   onModelChange = el => {
@@ -149,9 +167,25 @@ class ExtracurricularActivityListPage extends Component {
       await ApiExtracurricularActivity.updateExtracurricularActivity(extracurricularActivity);
       this.toggleModalInfo();
       this.getExtracurricularActivityList();
-      toastSuccess("The extracurricularActivity has been updated successfully");
+      toastSuccess("The extracurricularActivity has been updated successfully1111");
     } catch (err) {
       toastError("This ExtracurricularActivityCategory title is exist! Try another one");
+    }
+  };
+
+  // Assign Student
+  addExtracurricular = async () => {
+    const { id, studentId } = this.state.item;
+    var extracurricularActivityId = id;
+    const extracurricular = { extracurricularActivityId, studentId};
+    console.log(extracurricular, "add item")
+    try {
+      await ApiExtracurricular.postExtracurricular(extracurricular);
+      this.toggleAssignModal();
+      this.getExtracurricularActivityList();
+      toastSuccess("The extracurricular activity has been assign successfullyyyyyyyyy");
+    } catch (err) {
+      toastError("...");
     }
   };
 
@@ -175,10 +209,29 @@ class ExtracurricularActivityListPage extends Component {
     }
   };
 
+  saveExtracurricular = () => {
+    this.addExtracurricular();
+  };
+
+  saveExtracurricularActivity = () => {
+    let { id } = this.state.item;
+    if (id) {
+      this.updateExtracurricularActivity();
+    } else {
+      this.addExtracurricular();
+    }
+  };
+
   onSubmit(e) {
     e.preventDefault();
     this.form.validateAll();
     this.saveExtracurricularActivity();
+  }
+
+  onSubmitAssign(e) {
+    e.preventDefault();
+    this.form.validateAll();
+    this.saveExtracurricular();
   }
 
   componentDidMount() {
@@ -186,7 +239,7 @@ class ExtracurricularActivityListPage extends Component {
   }
 
   render() {
-    const { isShowDeleteModal, isShowInfoModal, item } = this.state;
+    const { isShowDeleteModal, isShowInfoModal, isShowAssignModal, item } = this.state;
     const { extracurricularActivityPagedList } = this.props.extracurricularActivityPagedListReducer;
     const { sources, pageIndex, totalPages } = extracurricularActivityPagedList;
     const hasResults = sources && sources.length > 0;
@@ -312,6 +365,59 @@ class ExtracurricularActivityListPage extends Component {
           </div>
         </ModalInfo>
 
+        <ModalInfo title={this.state.formTitle} isShowModal={isShowAssignModal} hiddenFooter>
+          <div className="modal-wrapper">
+            <div className="form-wrapper">
+              <Form
+                onSubmit={e => this.onSubmit(e)}
+                ref={c => {
+                  this.form = c;
+                }}
+              >
+              <Row>
+                  <Col>
+                    <h5>Extracurricular activity:</h5>
+                    {item.name}
+                  </Col>
+                </Row>
+                <br></br>
+                <Row>
+                  <Col>
+                    <h5>Organized Unit:</h5>
+                    {item.organizedUnit}
+                    
+                  </Col>
+                </Row>
+                <br></br>
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <ValidationInput
+                        name="studentId"
+                        title="Student Id"
+                        type="text"
+                        required={true}
+                        value={item.studentId}
+                        onChange={this.onModelChange}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <div className="text-center">
+                  <Button color="danger" type="submit">
+                    Confirm Assign
+                  </Button>
+                  &nbsp;
+                  <Button color="secondary" onClick={this.toggleAssignModal}>
+                    Cancel
+                  </Button>
+                </div>
+              </Form>
+            </div>
+          </div>
+        </ModalInfo>
+
         <Row>
           <Col xs="12">
             <div className="flex-container header-table">
@@ -359,6 +465,10 @@ class ExtracurricularActivityListPage extends Component {
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
                           </Button> */}
+                          &nbsp;
+                          <Button className="btn-sm" color="success" onClick={() => this.showAssignModal(item)}>
+                            Assign Student
+                          </Button>
                         </td>
                       </tr>
                     );
@@ -383,7 +493,7 @@ class ExtracurricularActivityListPage extends Component {
 
 export default connect(
   state => ({
-    extracurricularActivityPagedListReducer: state.extracurricularActivityPagedListReducer
+    extracurricularActivityPagedListReducer: state.extracurricularActivityPagedListReducer,
   }),
   {
     getExtracurricularActivityList

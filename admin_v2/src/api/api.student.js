@@ -3,7 +3,7 @@ import RequestHelper from "../helpers/request.helper";
 
 export default class ApiStudent {
   static getAllStudent() {
-    return RequestHelper.get(appConfig.apiUrl + "students");
+    return RequestHelper.get(appConfig.apiUrl + "students/all");
   }
 
   static getStudentList(params) {
@@ -15,7 +15,7 @@ export default class ApiStudent {
   }
 
   static postStudent(student) {
-    return RequestHelper.post(appConfig.apiUrl + "students", student);
+    return RequestHelper.post(appConfig.apiUrl + "sso/student", student);
   }
 
   static updateStudent(student) {

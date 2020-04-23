@@ -1,8 +1,3 @@
-// import cookie from "react-cookies";
-
-//console.log(cookie.load("userLogin"));
-// const userLogin = cookie.load("userLogin");
-
 export default {
   items: [
     {
@@ -10,19 +5,47 @@ export default {
       url: "/admin/dashboard",
       permissions: [],
       icon: "icon-speedometer",
-      badge: {
-        variant: "info",
-        text: "NEW"
-      }
+      // badge: {
+      //   variant: "info",
+      //   text: "NEW"
+      // }
+    },
+    {
+      name: "Structure Manager",
+      icon: "fa fa-home",
+      permissions: ["Structure Manager"],
+      children: [
+        {
+          name: "Faculty",
+          url: "/admin/faculties",
+          icon: "fa fa-angle-right"
+        },
+        {
+          name: "Class",
+          url: "/admin/classes",
+          icon: "fa fa-angle-right"
+        },
+        {
+          name: "Major",
+          url: "/admin/majors",
+          icon: "fa fa-angle-right"
+        },
+        {
+          name: "Specialty",
+          url: "/admin/specialties",
+          icon: "fa fa-angle-right"
+        },
+        {
+          name: "Standard Certificate",
+          url: "/admin/standardOfCertificates",
+          icon: "fa fa-angle-right"
+        }
+      ]
     },
     {
       name: "Article Manager",
       icon: "fa fa-newspaper-o",
-      permissions: [],
-      attributes: {
-        replace: true,
-        activeStyle: { textTransform: "uppercase" }
-      },
+      permissions: ["Article Manager"],
       children: [
         {
           name: "Article",
@@ -36,82 +59,10 @@ export default {
         }
       ]
     },
-
-    // {
-    //   name: "Promotion",
-    //   url: "/promotions",
-    //   // permissions: ["categories"],
-    //   icon: "fa fa-list"
-    // },
-    // {
-    //   name: "Menu",
-    //   url: "/menus",
-    //   // permissions: ["categories"],
-    //   icon: "fa fa-list"
-    // },
-    // {
-    //   name: "Role",
-    //   url: "/roles",
-    //   icon: "fa fa-superpowers"
-    // },
-    // {
-    //   name: "Order",
-    //   url: "/orders",
-    //   // permissions: ["categories"],
-    //   icon: "fa fa-list"
-    // },
-    // {
-    //   // name: "Table",
-    //   // url: "/tables",
-    //   // permissions: ["categories"],
-    //   name: "User",
-    //   url: "/users",
-    //   icon: "fa fa-address-book"
-    // },
-    // {
-    //   name: "Customer",
-    //   url: "/customers",
-    //   // permissions: ["categories"],
-    //   icon: "fa fa-list"
-    // },
-    // {
-    //   name: "Review",
-    //   url: "/reviews",
-    //   icon: "fa fa-list"
-    // },
-    // {
-    //   name: "Booking",
-    //   url: "/bookings",
-    //   icon: "fa fa-list"
-    // },
-    {
-      name: "Faculty",
-      url: "/admin/faculties",
-      permissions: [],
-      icon: "fa fa-asterisk"
-    },
-    {
-      name: "Specialty",
-      url: "/admin/specialties",
-      permissions: [],
-      icon: "fa fa-graduation-cap"
-    },
-    {
-      name: "Class",
-      url: "/admin/classes",
-      permissions: [],
-      icon: "fa fa-braille"
-    },
-    {
-      name: "Major",
-      url: "/admin/majors",
-      permissions: [],
-      icon: "fa fa-graduation-cap"
-    },
     {
       name: "User Manager",
       icon: "fa fa-address-book",
-      permissions: [],
+      permissions: ["User Manager"],
       children: [
         {
           name: "User",
@@ -128,7 +79,7 @@ export default {
     {
       name: "Extracurricular",
       icon: "fa fa-star",
-      permissions: [],
+      permissions: ["Extracurricular Manager"],
       children: [
         {
           name: "Extracurricular Activity",
@@ -140,29 +91,31 @@ export default {
     {
       name: "Student Manager",
       icon: "fa fa-graduation-cap",
-      permissions: ["Cashier"],
+      permissions: ["Student Manager"],
       children: [
         {
-          name: "Extracurricular",
+          name: "Extracurricular Assign",
           url: "/admin/extracurriculars",
           icon: "fa fa-angle-right"
         },
-        {
-          name: "Report",
-          url: "/admin/reports",
-          icon: "fa fa-angle-right"
-        },
-        {
-          name: "Standard Certificate",
-          url: "/admin/standardOfCertificates",
-          icon: "fa fa-angle-right"
-        },
+        
         {
           name: "Certificate Status",
           url: "/admin/certificateStatuses",
           icon: "fa fa-angle-right"
+        },
+        {
+          name: "Student",
+          url: "/admin/students",
+          icon: "fa fa-angle-right"
         }
       ]
-    }
+    },
+    {
+        name: "Report",
+        url: "/admin/reports",
+        permissions: ["Student Manager", "Structure Manager", "Extracurricular Manager", "Article Manager"],
+        icon: "fa fa-flag"
+      }
   ]
 };

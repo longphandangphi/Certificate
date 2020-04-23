@@ -191,20 +191,24 @@ namespace Api
                     Name = "Super Admin"
                 },
                 new Role {
-                    Id = RoleConstants.CashierId,
-                    Name = "Cashier"
+                    Id = RoleConstants.ArticleManagerId,
+                    Name = "Article Manager"
                 },
                 new Role {
-                    Id = RoleConstants.WaiterId,
-                    Name = "Waiter"
+                    Id = RoleConstants.ExtracurricularManagerId,
+                    Name = "Extracurricular Manager"
                 },
                 new Role {
-                    Id = RoleConstants.ChefId,
-                    Name = "Chef"
+                    Id = RoleConstants.StructureManagerId,
+                    Name = "Structure Manager"
                 },
                 new Role {
-                    Id = RoleConstants.Student,
-                    Name = "Student"
+                    Id = RoleConstants.UserManagerId,
+                    Name = "User Manager"
+                },
+                new Role {
+                    Id = RoleConstants.StudentManagerId,
+                    Name = "Student Manager"
                 }
             };
 
@@ -276,12 +280,7 @@ namespace Api
                         new UserInRole()
                         {
                             UserId = UserConstants.SuperAdminUserId,
-                            RoleId = RoleConstants.WaiterId
-                        },
-                        new UserInRole()
-                        {
-                            UserId = UserConstants.SuperAdminUserId,
-                            RoleId = RoleConstants.CashierId
+                            RoleId = RoleConstants.ArticleManagerId
                         }
                     };
 

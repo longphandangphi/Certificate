@@ -26,7 +26,7 @@ namespace Api.Controllers
         #region GET
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(RequestListViewModel studentRequestListViewModel)
+        public async Task<IActionResult> GetAll([FromQuery] RequestListViewModel studentRequestListViewModel)
         {
             var students = await _studentService.ListStudentAsync(studentRequestListViewModel);
             return Ok(students);

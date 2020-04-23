@@ -23,8 +23,8 @@ class StandardCertificateListPage extends Component {
       item: {},
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultTake
       },
       query: ""
     };
@@ -59,23 +59,30 @@ class StandardCertificateListPage extends Component {
     let standardCertificate = {
       name: "",
 
-      physicalEducationCertificateMinimumRating: "",
-      physicalEducationCertificateReferenceContent: "",
+      physicalEducationReference: "none",
 
-      nationalDefenseAndSecurityCertificateMinimumRating: "",
-      nationalDefenseAndSecurityCertificateReferenceContent: "",
+      nationalDefenseAndSecurityReference: "none",
 
-      informaticsCertificateMinimumRating: "",
-      informaticsCertificateReferenceContent: "",
+      informaticsReference: "none",
 
-      languageCertificateMinimumRating: "",
-      languageCertificateReferenceContent: ""
+      languageReference: "none",
+
+      extracurricularPointReference: "none",
     };
+    this.setState({
+      item : {
+        physicalEducationReference :  "none",
+        nationalDefenseAndSecurityReference: "none",
+        informaticsReference: "none",
+        languageReference: "none",
+        extracurricularPointReference: "none",
+      }
+    })
     this.toggleModalInfo(standardCertificate, title);
   };
 
   showUpdateModal = item => {
-    let title = "Update StandardCertificate";
+    let title = "Update Standard Certificate";
     this.toggleModalInfo(item, title);
   };
 
@@ -92,7 +99,7 @@ class StandardCertificateListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -112,7 +119,7 @@ class StandardCertificateListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getStandardCertificateList()
@@ -132,41 +139,39 @@ class StandardCertificateListPage extends Component {
     const {
       name,
 
-      isRequirePhysicalEducationCertificate,
-      physicalEducationCertificateMinimumRating,
-      physicalEducationCertificateReferenceContent,
+      isRequirePhysicalEducation,
+      physicalEducationReference,
 
-      isRequireNationalDefenseAndSecurityCertificate,
-      nationalDefenseAndSecurityCertificateMinimumRating,
-      nationalDefenseAndSecurityCertificateReferenceContent,
+      isRequireNationalDefenseAndSecurity,
+      nationalDefenseAndSecurityReference,
 
-      isRequireInformaticsCertificate,
-      informaticsCertificateMinimumRating,
-      informaticsCertificateReferenceContent,
+      isRequireInformatics,
+      informaticsReference,
 
-      isRequireLanguageCertificate,
-      languageCertificateMinimumRating,
-      languageCertificateReferenceContent
+      isRequireLanguage,
+      languageReference,
+
+      isRequireExtracurricularPoint,
+      extracurricularPointReference
     } = this.state.item;
     
     const standardCertificate = {
       name,
 
-      isRequirePhysicalEducationCertificate,
-      physicalEducationCertificateMinimumRating,
-      physicalEducationCertificateReferenceContent,
+      isRequirePhysicalEducation,
+      physicalEducationReference,
 
-      isRequireNationalDefenseAndSecurityCertificate,
-      nationalDefenseAndSecurityCertificateMinimumRating,
-      nationalDefenseAndSecurityCertificateReferenceContent,
+      isRequireNationalDefenseAndSecurity,
+      nationalDefenseAndSecurityReference,
 
-      isRequireInformaticsCertificate,
-      informaticsCertificateMinimumRating,
-      informaticsCertificateReferenceContent,
+      isRequireInformatics,
+      informaticsReference,
 
-      isRequireLanguageCertificate,
-      languageCertificateMinimumRating,
-      languageCertificateReferenceContent
+      isRequireLanguage,
+      languageReference,
+
+      isRequireExtracurricularPoint,
+      extracurricularPointReference
     };
     try {
       let response = await ApiStandardCertificate.postStandardCertificate(standardCertificate);
@@ -186,42 +191,40 @@ class StandardCertificateListPage extends Component {
       id, 
       name,
 
-      isRequirePhysicalEducationCertificate,
-      physicalEducationCertificateMinimumRating,
-      physicalEducationCertificateReferenceContent,
+      isRequirePhysicalEducation,
+      physicalEducationReference,
 
-      isRequireNationalDefenseAndSecurityCertificate,
-      nationalDefenseAndSecurityCertificateMinimumRating,
-      nationalDefenseAndSecurityCertificateReferenceContent,
+      isRequireNationalDefenseAndSecurity,
+      nationalDefenseAndSecurityReference,
 
-      isRequireInformaticsCertificate,
-      informaticsCertificateMinimumRating,
-      informaticsCertificateReferenceContent,
+      isRequireInformatics,
+      informaticsReference,
 
-      isRequireLanguageCertificate,
-      languageCertificateMinimumRating,
-      languageCertificateReferenceContent 
+      isRequireLanguage,
+      languageReference,
+
+      isRequireExtracurricularPoint,
+      extracurricularPointReference
 
     } = this.state.item;
 
     const standardCertificate = { id, 
       name,
 
-      isRequirePhysicalEducationCertificate,
-      physicalEducationCertificateMinimumRating,
-      physicalEducationCertificateReferenceContent,
+      isRequirePhysicalEducation,
+      physicalEducationReference,
 
-      isRequireNationalDefenseAndSecurityCertificate,
-      nationalDefenseAndSecurityCertificateMinimumRating,
-      nationalDefenseAndSecurityCertificateReferenceContent,
+      isRequireNationalDefenseAndSecurity,
+      nationalDefenseAndSecurityReference,
 
-      isRequireInformaticsCertificate,
-      informaticsCertificateMinimumRating,
-      informaticsCertificateReferenceContent,
+      isRequireInformatics,
+      informaticsReference,
 
-      isRequireLanguageCertificate,
-      languageCertificateMinimumRating,
-      languageCertificateReferenceContent 
+      isRequireLanguage,
+      languageReference,
+
+      isRequireExtracurricularPoint,
+      extracurricularPointReference
     };
 
     try {
@@ -230,7 +233,7 @@ class StandardCertificateListPage extends Component {
       this.getStandardCertificateList();
       toastSuccess("The standardCertificate has been updated successfully");
     } catch (err) {
-      toastError("This StandardCertificate name is exist!");
+      toastError("Leave no information blank, please!");
     }
   };
 
@@ -256,25 +259,32 @@ class StandardCertificateListPage extends Component {
   // 1
   onPhysicalEducationChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.isRequirePhysicalEducationCertificate = value;
+    item.isRequirePhysicalEducation = value;
     this.setState({ item });
   };
   // 2
   onNationalDefenseAndSecurityChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.isRequireNationalDefenseAndSecurityCertificate = value;
+    item.isRequireNationalDefenseAndSecurity = value;
     this.setState({ item });
   };
   // 3
   onInformaticsChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.isRequireInformaticsCertificate = value;
+    item.isRequireInformatics = value;
     this.setState({ item });
   };
   // 4
   onLanguageChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.isRequireLanguageCertificate = value;
+    item.isRequireLanguage = value;
+    this.setState({ item });
+    console.log(this.state)
+  };
+  // 5
+  onExtracurricularPointChange = value => {
+    let item = Object.assign({}, this.state.item);
+    item.isRequireExtracurricularPoint = value;
     this.setState({ item });
   };
 
@@ -340,8 +350,8 @@ class StandardCertificateListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="isRequirePhysicalEducationCertificate"
-                        title="Is Require Physical Education Certificate"
+                        name="isRequirePhysicalEducation"
+                        title="Is require Physical Education certificate?"
                         placeholder="--Please select--"
                         style={{ display: "block" }}
                         onChange={this.onPhysicalEducationChange}
@@ -349,7 +359,7 @@ class StandardCertificateListPage extends Component {
                         valueField="id"
                         nameField="name"
                         defaultValue={IS_REQUIRE.filter(i => {
-                          if (i.id === item.isRequirePhysicalEducationCertificate) {
+                          if (i.id === item.isRequirePhysicalEducation) {
                             return true;
                           }
                           return false;
@@ -363,28 +373,13 @@ class StandardCertificateListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="physicalEducationCertificateMinimumRating"
-                        title="Physical Education Certificate Minimum Rating"
+                        name="physicalEducationReference"
+                        title="Physical Education certificate reference content"
                         type="text"
-                        required={item.isRequirePhysicalEducationCertificate}
-                        disabled={!item.isRequirePhysicalEducationCertificate}
-                        value={item.physicalEducationCertificateMinimumRating}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="physicalEducationCertificateReferenceContent"
-                        title="Physical Education Certificate Reference Content"
-                        type="text"
-                        required={item.isRequirePhysicalEducationCertificate}
-                        disabled={!item.isRequirePhysicalEducationCertificate}
-                        value={item.physicalEducationCertificateReferenceContent}
+                        required={item.isRequirePhysicalEducation}
+                        disabled={!item.isRequirePhysicalEducation}
+                        defaultValue={item.physicalEducationReference === "" ? "none" : item.physicalEducationReference}
+                        value={item.physicalEducationReference === "" ? "none" : item.physicalEducationReference}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -396,8 +391,8 @@ class StandardCertificateListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="isRequireNationalDefenseAndSecurityCertificate"
-                        title="Is Require National Defense And Security Certificate"
+                        name="isRequireNationalDefenseAndSecurity"
+                        title="Is require National Defense And Security certificate?"
                         placeholder="--Please select--"
                         style={{ display: "block" }}
                         onChange={this.onNationalDefenseAndSecurityChange}
@@ -405,7 +400,7 @@ class StandardCertificateListPage extends Component {
                         valueField="id"
                         nameField="name"
                         defaultValue={IS_REQUIRE.filter(i => {
-                          if (i.id === item.isRequireNationalDefenseAndSecurityCertificate) {
+                          if (i.id === item.isRequireNationalDefenseAndSecurity) {
                             return true;
                           }
                           return false;
@@ -419,28 +414,12 @@ class StandardCertificateListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="nationalDefenseAndSecurityCertificateMinimumRating"
-                        title="national Defense And Security Certificate Minimum Rating"
+                        name="nationalDefenseAndSecurityReference"
+                        title="National Defense And Security certificate reference content"
                         type="text"
-                        required={item.isRequireNationalDefenseAndSecurityCertificate}
-                        disabled={!item.isRequireNationalDefenseAndSecurityCertificate}
-                        value={item.nationalDefenseAndSecurityCertificateMinimumRating}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="nationalDefenseAndSecurityCertificateReferenceContent"
-                        title="National Defense And Security Certificate Reference Content"
-                        type="text"
-                        required={item.isRequireNationalDefenseAndSecurityCertificate}
-                        disabled={!item.isRequireNationalDefenseAndSecurityCertificate}
-                        value={item.nationalDefenseAndSecurityCertificateReferenceContent}
+                        required={item.isRequireNationalDefenseAndSecurity}
+                        disabled={!item.isRequireNationalDefenseAndSecurity}
+                        value={item.nationalDefenseAndSecurityReference === "" ? "none" : item.nationalDefenseAndSecurityReference}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -455,8 +434,8 @@ class StandardCertificateListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="isRequireInformaticsCertificate"
-                        title="Is Require Informatics Certificate"
+                        name="isRequireInformatics"
+                        title="Is require Informatics certificate?"
                         placeholder="--Please select--"
                         style={{ display: "block" }}
                         onChange={this.onInformaticsChange}
@@ -464,7 +443,7 @@ class StandardCertificateListPage extends Component {
                         valueField="id"
                         nameField="name"
                         defaultValue={IS_REQUIRE.filter(i => {
-                          if (i.id === item.isRequireInformaticsCertificate) {
+                          if (i.id === item.isRequireInformatics) {
                             return true;
                           }
                           return false;
@@ -478,28 +457,12 @@ class StandardCertificateListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="informaticsCertificateMinimumRating"
-                        title="Informatics Certificate Minimum Rating"
+                        name="informaticsReference"
+                        title="Informatics certificate reference content"
                         type="text"
-                        required={item.isRequireInformaticsCertificate}
-                        disabled={!item.isRequireInformaticsCertificate}
-                        value={item.informaticsCertificateMinimumRating}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="informaticsCertificateReferenceContent"
-                        title="Informatics Certificate Reference Content"
-                        type="text"
-                        required={item.isRequireInformaticsCertificate}
-                        disabled={!item.isRequireInformaticsCertificate}
-                        value={item.informaticsCertificateReferenceContent}
+                        required={item.isRequireInformatics}
+                        disabled={!item.isRequireInformatics}
+                        value={item.informaticsReference === "" ? "none" : item.informaticsReference}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -508,14 +471,14 @@ class StandardCertificateListPage extends Component {
 
                 {/* End TIN HỌC */}
                 <ColoredLine color="#CEF6F5" />
-                {/* TIN HỌC  */}
+                {/* Ngoại ngữ  */}
 
                 <Row>
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="isRequireLanguageCertificate"
-                        title="Is Require Language Certificate"
+                        name="isRequireLanguage"
+                        title="Is require Language certificate?"
                         placeholder="--Please select--"
                         style={{ display: "block" }}
                         onChange={this.onLanguageChange}
@@ -523,7 +486,7 @@ class StandardCertificateListPage extends Component {
                         valueField="id"
                         nameField="name"
                         defaultValue={IS_REQUIRE.filter(i => {
-                          if (i.id === item.isRequireLanguageCertificate) {
+                          if (i.id === item.isRequireLanguage) {
                             return true;
                           }
                           return false;
@@ -537,13 +500,40 @@ class StandardCertificateListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="languageCertificateMinimumRating"
-                        title="Language Certificate Minimum Rating"
+                        name="languageReference"
+                        title="Language Certificate Reference Content"
                         type="text"
-                        required={item.isRequireLanguageCertificate}
-                        disabled={!item.isRequireLanguageCertificate}
-                        value={item.languageCertificateMinimumRating}
+                        required={item.isRequireLanguage}
+                        disabled={!item.isRequireLanguage}
+                        value={item.languageReference === "" ? "none" : item.languageReference}
                         onChange={this.onModelChange}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                {/* End TIN HỌC */}
+                <ColoredLine color="#CEF6F5" />
+                {/* ĐIỂM NGOẠI KHÓA  */}
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <SelectInput
+                        name="isRequireExtracurricularPoint"
+                        title="Is Require Extracurricular Point?"
+                        placeholder="--Please select--"
+                        style={{ display: "block" }}
+                        onChange={this.onExtracurricularPointChange}
+                        options={IS_REQUIRE}
+                        valueField="id"
+                        nameField="name"
+                        defaultValue={IS_REQUIRE.filter(i => {
+                          if (i.id === item.isRequireExtracurricularPoint) {
+                            return true;
+                          }
+                          return false;
+                        }).map(i => i.id)}
                       />
                     </FormGroup>
                   </Col>
@@ -553,12 +543,12 @@ class StandardCertificateListPage extends Component {
                   <Col>
                     <FormGroup>
                       <ValidationInput
-                        name="languageCertificateReferenceContent"
-                        title="Language Certificate Reference Content"
+                        name="extracurricularPointReference"
+                        title="Extracurricular Point Reference Content"
                         type="text"
-                        required={item.isRequireLanguageCertificate}
-                        disabled={!item.isRequireLanguageCertificate}
-                        value={item.languageCertificateReferenceContent}
+                        required={item.isRequireExtracurricularPoint}
+                        disabled={!item.isRequireExtracurricularPoint}
+                        value={item.extracurricularPointReference === "" ? "none" : item.extracurricularPointReference}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -599,20 +589,19 @@ class StandardCertificateListPage extends Component {
                   <th>Standard Certificate name</th>
 
                   <th style={{ color: "#2ECCFA" }}>Physical Education</th>
-                  <th style={{ color: "#2ECCFA" }}>Minimum</th>
                   <th style={{ color: "#2ECCFA" }}>Reference Content</th>
 
                   <th style={{ color: "#2EFE64" }}>National Defense And Security</th>
-                  <th style={{ color: "#2EFE64" }}>Minimum</th>
                   <th style={{ color: "#2EFE64" }}>Reference Content</th>
 
                   <th style={{ color: "#FACC2E" }}>Informatics</th>
-                  <th style={{ color: "#FACC2E" }}>Minimum</th>
                   <th style={{ color: "#FACC2E" }}>Reference Content</th>
 
                   <th style={{ color: "#FE2EF7" }}>Language</th>
-                  <th style={{ color: "#FE2EF7" }}>Minimum</th>
                   <th style={{ color: "#FE2EF7" }}>Reference Content</th>
+
+                  <th style={{ color: "#FA5858" }}>Extracurricular Point</th>
+                  <th style={{ color: "#FA5858" }}>Reference Content</th>
 
                   <th>Action</th>
                 </tr>
@@ -626,34 +615,33 @@ class StandardCertificateListPage extends Component {
                         <td>{item.name}</td>
 
                         <td style={{ backgroundColor: "#EFFBFB" }}>
-                          {item.isRequirePhysicalEducationCertificate ? "Require" : "Not require"}
+                          {item.isRequirePhysicalEducation ? "Require" : "Not require"}
                         </td>
-                        <td style={{ backgroundColor: "#EFFBFB" }}>{item.physicalEducationCertificateMinimumRating}</td>
                         <td style={{ backgroundColor: "#EFFBFB" }}>
-                          {item.physicalEducationCertificateReferenceContent}
+                          {item.physicalEducationReference}
                         </td>
 
                         <td style={{ backgroundColor: "#F2FBEF" }}>
-                          {item.isRequireNationalDefenseAndSecurityCertificate ? "Require" : "Not require"}
+                          {item.isRequireNationalDefenseAndSecurity ? "Require" : "Not require"}
                         </td>
                         <td style={{ backgroundColor: "#F2FBEF" }}>
-                          {item.nationalDefenseAndSecurityCertificateMinimumRating}
-                        </td>
-                        <td style={{ backgroundColor: "#F2FBEF" }}>
-                          {item.nationalDefenseAndSecurityCertificateReferenceContent}
+                          {item.nationalDefenseAndSecurityReference}
                         </td>
 
                         <td style={{ backgroundColor: "#FBFBEF" }}>
-                          {item.isRequireInformaticsCertificate ? "Require" : "Not require"}
+                          {item.isRequireInformatics ? "Require" : "Not require"}
                         </td>
-                        <td style={{ backgroundColor: "#FBFBEF" }}>{item.informaticsCertificateMinimumRating}</td>
-                        <td style={{ backgroundColor: "#FBFBEF" }}>{item.informaticsCertificateReferenceContent}</td>
+                        <td style={{ backgroundColor: "#FBFBEF" }}>{item.informaticsReference}</td>
 
                         <td style={{ backgroundColor: "#F8EFFB" }}>
-                          {item.isRequireLanguageCertificate ? "Require" : "Not require"}
+                          {item.isRequireLanguage ? "Require" : "Not require"}
                         </td>
-                        <td style={{ backgroundColor: "#F8EFFB" }}>{item.languageCertificateMinimumRating}</td>
-                        <td style={{ backgroundColor: "#F8EFFB" }}>{item.languageCertificateReferenceContent}</td>
+                        <td style={{ backgroundColor: "#F8EFFB" }}>{item.languageReference}</td>
+
+                        <td style={{ backgroundColor: "#F8E0E0" }}>
+                          {item.isRequireExtracurricularPoint ? "Require" : "Not require"}
+                        </td>
+                        <td style={{ backgroundColor: "#F8E0E0" }}>{item.extracurricularPointReference }</td>
 
                         <td>
                           <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>

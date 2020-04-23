@@ -1,4 +1,6 @@
 ﻿using Api.Core.Business.IoC;
+using Api.Core.Business.Models.Classes;
+using Api.Core.Business.Models.Specialties;
 using Api.Core.DataAccess.Repository.Base;
 using Api.Core.Entities;
 using Api.Core.Entities.Enums;
@@ -34,7 +36,10 @@ namespace Api.Core.Business.Models.Students
 
                 var extracurricularActivityIdArray = extracurricularRepository.GetAll()
                                                         .Where(x => x.StudentId == Id).Select(x => x.ExtracurricularActivityId).ToArray();
-                
+
+                Class = new ClassViewModel(student.Class);
+                Specialty = new SpecialtyViewModel(student.Specialty);
+
                 foreach (var extracurricularActivityId in extracurricularActivityIdArray)
                 {
                     ExtracurricularPoint += extracurricularActivityRepository.GetAll().FirstOrDefault(x => x.Id == extracurricularActivityId).Point;
@@ -60,6 +65,10 @@ namespace Api.Core.Business.Models.Students
         public DateTime? DateOfBirth { get; set; }
 
         public int ExtracurricularPoint { get; set; }
+
+        public ClassViewModel Class { get; set; }
+
+        public SpecialtyViewModel Specialty { get; set; }
 
         //public RoleViewModel[] Roles { get; set; }
     }

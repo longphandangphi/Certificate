@@ -212,6 +212,7 @@ class SpecialtyListPage extends Component {
     const { isShowDeleteModal, isShowInfoModal, item, majors, standardOfCertificates } = this.state;
     const { specialtyPagedList } = this.props.specialtyPagedListReducer;
     const { sources, pageIndex, totalPages } = specialtyPagedList;
+    console.log(sources,"SOURCE");
     const hasResults = sources && sources.length > 0;
     return (
       <div className="animated fadeIn">

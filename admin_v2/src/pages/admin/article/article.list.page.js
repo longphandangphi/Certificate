@@ -19,7 +19,7 @@ import { pagination, IS_DESC } from "../../../constant/app.constant";
 import { FILE } from "../../../constant/file.constant";
 //import CKEditor from "@ckeditor/ckeditor5-react";
 //import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import ReactHtmlParser from "react-html-parser";
+//import ReactHtmlParser from "react-html-parser";
 import CKEditorInput from "../../../components/common/ckeditor-input";
 import moment from "moment";
 
@@ -431,7 +431,7 @@ class ArticleListPage extends Component {
                         <td>{item.preview}</td>
                         {/* <td>{ReactHtmlParser(item.detail)}</td> */}
                         <td>
-                          <img style={{ height: 50 }} src={item.picture} />
+                          <img style={{ height: 50 }} src={item.picture} alt=""/>
                         </td>
                         <td>
                           <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>

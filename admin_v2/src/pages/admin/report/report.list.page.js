@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, Button, FormGroup, Table, Label } from "reactstrap";
+import { Row, Col, Button, FormGroup, Table } from "reactstrap";
 import Form from "react-validation/build/form";
 import ModalConfirm from "../../../components/modal/modal-confirm";
 import Pagination from "../../../components/pagination/Pagination";
@@ -299,7 +299,7 @@ class ReportListPage extends Component {
                   <th>Create On</th>
                   <th>Report subject</th>
                   {/* <th>Content</th> */}
-                  <th>Student ID</th>
+                  <th style={{minWidth:270}}>Student ID</th>
                   <th>Student's Name</th>
                   <th>Response content</th>
                   <th>Action</th>
@@ -319,10 +319,10 @@ class ReportListPage extends Component {
                         <td>{item.subject}</td>
                         {/* <td>{item.content}</td> */}
                         <td>{item.studentViewModel.id}</td>
-                        <td>{item.studentViewModel.lastName + " " + item.studentViewModel.firstName}</td>
-                        <td className={item.response == "" ? "text-danger" : "text-success"}>{item.response == "" ? "Not yet" : item.response}</td>
+                        <td>{item.studentViewModel.firstName + " " + item.studentViewModel.lastName}</td>
+                        <td className={item.response === "" ? "text-danger" : "text-success"}>{item.response === "" ? "Not yet" : item.response}</td>
                         <td>
-                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)} style={{marginBottom:3}}>
                             View detail
                           </Button>
                           &nbsp;

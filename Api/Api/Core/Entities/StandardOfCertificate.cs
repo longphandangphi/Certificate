@@ -16,39 +16,35 @@ namespace Api.Core.Entities
         public string Name { get; set; }
 
         [Required]
-        public bool IsRequirePhysicalEducationCertificate { get; set; }
+        public bool IsRequirePhysicalEducation { get; set; }
+
 
         [Required]
-        public string PhysicalEducationCertificateMinimumRating { get; set; }
+        public string PhysicalEducationReference{ get; set; }
 
         [Required]
-        public string PhysicalEducationCertificateReferenceContent { get; set; }
+        public bool IsRequireNationalDefenseAndSecurity { get; set; }
+
 
         [Required]
-        public bool IsRequireNationalDefenseAndSecurityCertificate { get; set; }
+        public string NationalDefenseAndSecurityReference { get; set; }
 
         [Required]
-        public string NationalDefenseAndSecurityCertificateMinimumRating { get; set; }
+        public bool IsRequireInformatics { get; set; }
 
         [Required]
-        public string NationalDefenseAndSecurityCertificateReferenceContent { get; set; }
+        public string InformaticsReference { get; set; }
 
         [Required]
-        public bool IsRequireInformaticsCertificate { get; set; }
+        public bool IsRequireLanguage { get; set; }
 
         [Required]
-        public string InformaticsCertificateMinimumRating { get; set; }
+        public string LanguageReference { get; set; }
 
         [Required]
-        public string InformaticsCertificateReferenceContent { get; set; }
+        public bool IsRequireExtracurricularPoint { get; set; }
 
         [Required]
-        public bool IsRequireLanguageCertificate { get; set; }
-
-        [Required]
-        public string LanguageCertificateMinimumRating { get; set; }
-
-        [Required]
-        public string LanguageCertificateReferenceContent { get; set; }
+        public string ExtracurricularPointReference { get; set; }
     }
 }

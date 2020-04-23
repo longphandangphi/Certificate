@@ -21,7 +21,7 @@ namespace Api.Core.Business.Services
         Task<ResponseModel> CreateStandardOfCertificateAsync(StandardOfCertificateManageModel standardOfCertificateManagerModel);
         Task<ResponseModel> UpdateStandardOfCertificateAsync(Guid id, StandardOfCertificateManageModel standardOfCertificateManagerModel);
 
-        //Task<ResponseModel> DeleteItemAsync(Guid id);
+        Task<ResponseModel> DeleteStandardOfCertificateAsync(Guid id);
 
     }
     public class StandardOfCertificateService : IStandardOfCertificateService
@@ -139,6 +139,23 @@ namespace Api.Core.Business.Services
 
                 standardOfCertificateManageModel.GetStandardOfCertificateFromModel(standardOfCertificate);
                 return await _standardOfCertificateRepository.UpdateAsync(standardOfCertificate);
+            }
+        }
+
+        public async Task<ResponseModel> DeleteStandardOfCertificateAsync(Guid id)
+        {
+            var standardOfCertificate = await _standardOfCertificateRepository.GetByIdAsync(id);
+            if (standardOfCertificate == null)
+            {
+                return new ResponseModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    Message = "This StandardOfCertificate is not exist!"
+                };
+            }
+            else
+            {
+                return await _standardOfCertificateRepository.DeleteAsync(id);
             }
         }
     }

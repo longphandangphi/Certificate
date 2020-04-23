@@ -3,7 +3,7 @@ import RequestHelper from "../helpers/request.helper";
 
 export default class ApiSpecialty {
   static getAllSpecialty() {
-    return RequestHelper.get(appConfig.apiUrl + "specialties/all");
+    return RequestHelper.get(appConfig.apiUrl + "specialties");
   }
 
   static getSpecialtyList(params) {

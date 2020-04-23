@@ -6,7 +6,7 @@ export default class LoginRedirect extends Component {
     return (
       <Redirect
         to={{
-          pathname: "/login"
+          pathname: "/admin/login"
         }}
       />
     );

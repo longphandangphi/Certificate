@@ -62,6 +62,7 @@ namespace Api.Core.Business.Services
                 .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
                     || (x.Name.Contains(requestListViewModel.Query)
+                    || (x.Id.ToString().Contains(requestListViewModel.Query))
                     )))
                 .Select(x => new ExtracurricularActivityViewModel(x)).ToListAsync();
 

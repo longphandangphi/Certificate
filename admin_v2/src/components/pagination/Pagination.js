@@ -14,7 +14,6 @@ export default class Pagination extends Component {
         previousLabel={'<'}
         nextLabel={'>'}
         breakLabel={'...'}
-        forcePage={forcePage}
         pageClassName={'page-item'}
         pageLinkClassName="page-link"
         previousClassName='page-item'
