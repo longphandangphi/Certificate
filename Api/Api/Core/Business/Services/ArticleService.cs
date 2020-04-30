@@ -59,9 +59,10 @@ namespace Api.Core.Business.Services
             var list = await GetAll()
                 .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
-                    || (x.Title.Contains(requestListViewModel.Query)
+                    || (x.Title.Contains(requestListViewModel.Query))
+                    || (x.ArticleCategory.Id.ToString().Contains(requestListViewModel.Query))
                     || (x.CreatedOn.ToString().Contains(requestListViewModel.Query))
-                    )))
+                    ))
                 .Select(x => new ArticleViewModel(x)).ToListAsync();
 
             var articleViewModelProperties = GetAllPropertyNameOfArticleViewModel();
