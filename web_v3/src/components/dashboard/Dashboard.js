@@ -5,10 +5,12 @@ import NotificationList from '../projects/NotificationList'
 import ArticleList from '../projects/ArticleList'
 import Sidebar from '../layout/Sidebar';
 import axios from 'axios';
+import Navbar from '../layout/Navbar'
 
 class Dashboard extends Component {
     state = {
         articles: [],
+        notifications: []
     }
     componentDidMount() {
         const params = {
@@ -18,7 +20,6 @@ class Dashboard extends Component {
           .then(res => {
             const articles = res.data.sources;
             this.setState({ articles });
-            console.log("GET DONE")
         });
     }
     render() {
@@ -30,26 +31,30 @@ class Dashboard extends Component {
                 return true;
             } else { return false }
         }).slice(0,5);
+
         return (
-
-            <div className="container">
+            <div>
+                <Navbar />
+                <div className="container">
             
-                <CarouselSpecial/>
+                    <CarouselSpecial/>
 
-                <div className="row">
-                    <div className="col l4 m4 s12">
-                        <NotificationList articles={notifications}/>
-                    </div>
+                    <div className="row">
+                        <div className="col l4 m4 s12">
+                            <NotificationList articles={notifications}/>
+                        </div>
 
-                    <div className="col l5 m8 s12">
-                        <ArticleList articles={ this.state.articles.slice(0,6) }/>
-                    </div>
-                    
-                    <div className="col l3 s12">
-                        <Sidebar />
+                        <div className="col l5 m8 s12">
+                            <ArticleList articles={ this.state.articles.slice(0,6) }/>
+                        </div>
+                        
+                        <div className="col l3 s12">
+                            <Sidebar />
+                        </div>
                     </div>
                 </div>
             </div>
+            
         )
     }
 }

@@ -14,12 +14,8 @@ import lodash from "lodash";
 import { getArticleList } from "../../../actions/article.list.action";
 import ApiArticle from "../../../api/api.article";
 import ApiArticleCategory from "../../../api/api.articleCategory";
-//import ApiMedia from "../../../api/api.media";
 import { pagination, IS_DESC } from "../../../constant/app.constant";
 import { FILE } from "../../../constant/file.constant";
-//import CKEditor from "@ckeditor/ckeditor5-react";
-//import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-//import ReactHtmlParser from "react-html-parser";
 import CKEditorInput from "../../../components/common/ckeditor-input";
 import moment from "moment";
 
@@ -36,12 +32,11 @@ class ArticleListPage extends Component {
       params: {
         offset: pagination.initialPage,
         limit: pagination.defaultTake,
-        isDesc: pagination.defaultSort
       },
       query: ""
     };
     this.delayedCallback = lodash.debounce(this.search, 100);
-    this.delayedCallback2 = lodash.debounce(this.sort, 100);
+    this.delayedCallbackSort = lodash.debounce(this.sort, 100);
   }
 
   toggleDeleteModal = () => {
@@ -108,7 +103,7 @@ class ArticleListPage extends Component {
 
   onSortChange = e => {
     // e.persist();
-    this.delayedCallback2(e);
+    this.delayedCallbackSort(e);
   }
 
   sort = e => {
@@ -322,36 +317,10 @@ class ArticleListPage extends Component {
                 <Row>
                   <Col>
                     <FormGroup>
-                      {/* <ValidationInput
-                        name="detail"
-                        title="Detail"
-                        type="text"
-                        required={true}
-                        value={item.detail}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup> */}
-
-                      {/* <CKEditor editor={ClassicEditor} onChange={this.onDetailChange} data={item.detail} /> */}
                       <CKEditorInput title="Detail" name="detail" data={item.detail} onChange={this.onDetailChange} />
                     </FormGroup>
                   </Col>
                 </Row>
-
-                {/* <Row>
-                  <Col>
-                    <FormGroup>
-                      <ValidationInput
-                        name="picture"
-                        title="Picture"
-                        type="text"
-                        required={true}
-                        value={item.picture}
-                        onChange={this.onModelChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row> */}
 
                 <Row>
                   <Col>
@@ -375,8 +344,6 @@ class ArticleListPage extends Component {
           </div>
         </ModalInfo>
 
-
-
         <Row>
           <Col xs="12">
             <div className="flex-container header-table">
@@ -387,11 +354,8 @@ class ArticleListPage extends Component {
               <SelectInput
                         placeholder="Order by"
                         name="orderBy"
-                        //title="OrderBy"
                         defaultValue={IS_DESC ? IS_DESC.id : undefined}
-                        // showSearch={true}
                         style={{ display: "block" }}
-                        //required={true}
                         onChange={this.onSortChange}
                         options={IS_DESC}
                         valueField="id"
@@ -429,7 +393,6 @@ class ArticleListPage extends Component {
                         </td>
                         <td>{item.articleCategory.name}</td>
                         <td>{item.preview}</td>
-                        {/* <td>{ReactHtmlParser(item.detail)}</td> */}
                         <td>
                           <img style={{ height: 50 }} src={item.picture} alt=""/>
                         </td>

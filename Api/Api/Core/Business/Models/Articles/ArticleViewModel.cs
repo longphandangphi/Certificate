@@ -23,8 +23,8 @@ namespace Api.Core.Business.Models.Articles
                 Preview = article.Preview;
                 Detail = article.Detail;
                 Picture = article.Picture;
-                ArticleCategory = new ArticleCategoryViewModel(article.ArticleCategory);
                 CreateOn = article.CreatedOn;
+                ArticleCategory = new ArticleCategoryViewModel(article.ArticleCategory);
             }
         }
 

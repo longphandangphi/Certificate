@@ -5,11 +5,9 @@ import { Divider } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom'
 
-
 export default class NotificationList extends Component {
     render() {
         const {articles} = this.props;
-        console.log(this.props);
         return (
             <div>
                 <h5 className="center" >

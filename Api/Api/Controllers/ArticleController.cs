@@ -27,6 +27,13 @@ namespace Api.Controllers
             var article = await _articleService.ListArticleAsync(requestListViewModel);
             return Ok(article);
         }
+        
+        [HttpGet("/categories/{cate_id}")]
+        public async Task<IActionResult> GetAllByCateId(Guid cate_id, [FromQuery] RequestListViewModel requestListViewModel)
+        {
+            var article = await _articleService.ListArticleByCategoryIdAsync(cate_id, requestListViewModel);
+            return Ok(article);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetArticleById(Guid id)

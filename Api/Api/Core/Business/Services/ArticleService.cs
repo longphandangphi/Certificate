@@ -15,8 +15,8 @@ namespace Api.Core.Business.Services
 {
     public interface IArticleService
     {
-        //xem thêm sửa xóa
         Task<PagedList<ArticleViewModel>> ListArticleAsync(RequestListViewModel requestListViewModel);
+        Task<PagedList<ArticleViewModel>> ListArticleByCategoryIdAsync(Guid id, RequestListViewModel requestListViewModel);
         Task<ArticleViewModel> GetArticleByIdAsync(Guid? id);
         Task<ResponseModel> CreateArticleAsync(ArticleManageModel articleManagerModel);
         Task<ResponseModel> UpdateArticleAsync(Guid id, ArticleManageModel articleManagerModel);
@@ -60,8 +60,7 @@ namespace Api.Core.Business.Services
                 .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
                     || (x.Title.Contains(requestListViewModel.Query))
-                    || (x.ArticleCategory.Id.ToString().Contains(requestListViewModel.Query))
-                    || (x.CreatedOn.ToString().Contains(requestListViewModel.Query))
+                    //|| (x.ArticleCategory.Id.ToString().Contains(requestListViewModel.Query))
                     ))
                 .Select(x => new ArticleViewModel(x)).ToListAsync();
 
@@ -71,15 +70,36 @@ namespace Api.Core.Business.Services
 
             string matchedPropertyName = articleViewModelProperties.FirstOrDefault(x => x == requestPropertyName);
 
-            //foreach (var promotionViewModelProperty in promotionViewModelProperties)
-            //{
-            //    var lowerTypeViewModelProperty = promotionViewModelProperty.ToLower();
-            //    if (lowerTypeViewModelProperty.Equals(requestPropertyName))
-            //    {
-            //        matchedPropertyName = promotionViewModelProperty;
-            //        break;
-            //    }
-            //}
+            if (string.IsNullOrEmpty(matchedPropertyName))
+            {
+                matchedPropertyName = "CreateOn";
+            }
+
+            var type = typeof(ArticleViewModel);
+
+            var sortProperty = type.GetProperty(matchedPropertyName);
+
+            list = requestListViewModel.IsDesc ? list.OrderByDescending(x => sortProperty.GetValue(x, null)).ToList() : list.OrderBy(x => sortProperty.GetValue(x, null)).ToList();
+
+            return new PagedList<ArticleViewModel>(list, requestListViewModel.Offset ?? CommonConstants.Config.DEFAULT_SKIP, requestListViewModel.Limit ?? CommonConstants.Config.DEFAULT_TAKE);
+        }
+
+        public async Task<PagedList<ArticleViewModel>> ListArticleByCategoryIdAsync(Guid id, RequestListViewModel requestListViewModel)
+        {
+            var list = await GetAll()
+                .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
+                && x.ArticleCategory.Id.Equals(id)
+                && (string.IsNullOrEmpty(requestListViewModel.Query)
+                    //|| (x.Title.Contains(requestListViewModel.Query))
+                    //|| (x.ArticleCategory.Id.ToString().Contains(requestListViewModel.Query))
+                    ))
+                .Select(x => new ArticleViewModel(x)).ToListAsync();
+
+            var articleViewModelProperties = GetAllPropertyNameOfArticleViewModel();
+
+            var requestPropertyName = !string.IsNullOrEmpty(requestListViewModel.SortName) ? requestListViewModel.SortName.ToLower() : string.Empty;
+
+            string matchedPropertyName = articleViewModelProperties.FirstOrDefault(x => x == requestPropertyName);
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {

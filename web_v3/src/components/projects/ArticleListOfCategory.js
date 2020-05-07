@@ -5,6 +5,7 @@ import axios from 'axios'
 import Article from './Article'
 import Pagination from '../others/pagination/Pagination'
 import {pagination} from '../../constants/app.constant'
+import Navbar from '../layout/Navbar'
 
 export default class ArticleListOfCategory extends Component {
     state = {
@@ -14,9 +15,8 @@ export default class ArticleListOfCategory extends Component {
         totalPages: null,
         hasResults: null,
         params: {
-            offset: pagination.initialPage,
-            limit: pagination.defaultTake,
-            query: "",
+            // offset: pagination.initialPage,
+            // limit: pagination.defaultTake,
             isDesc: true
         }
 
@@ -58,17 +58,26 @@ export default class ArticleListOfCategory extends Component {
 
         const category_id = this.props.match.params.category_id;
 
+        console.log(category_id);
+
         const params = this.state.params;
 
-        params.query = category_id;
+        // params.query = category_id;
 
-        this.setState({
-            params: params
-        });
+        // this.setState({
+        //     params: params
+        // });
 
         axios.get(`https://localhost:44319/api/articles`, { params })
           .then(res => {
-            const articles = res.data.sources;
+            const articles = res.data.sources.filter(article => {
+                if (article.articleCategory.id === category_id) {
+                    console.log("TRUEE")
+                    return true;
+                } else {
+                    return false;
+                }
+            });
             const totalPages = res.data.totalPages;
             const pageIndex = res.data.pageIndex;
             const hasResults = articles && articles.length > 0;
@@ -83,40 +92,44 @@ export default class ArticleListOfCategory extends Component {
       }
  
     render() {
-        const { totalPages, pageIndex, hasResults} = this.state;
+        const { articles, totalPages, pageIndex, hasResults} = this.state;
         console.log(this.state,"STATE")
         return (
-            <div className="container">
+            <div>
+                <Navbar />
+                <div className="container">
  
-                <CarouselSpecial/>
+                    <CarouselSpecial/>
 
-                <div className="row">
-                    
-                    <div className="col l9 m12 s12">
-                        <h5 className="center" >
-                            <i className="material-icons green-text" >notifications_active</i>&nbsp;
-                            {this.state.title}
-                        </h5>
-                        {
-                            this.state.articles.map(article => 
-                                <Article article={article} key={article.id}/>
-                            )
-                        }
-                        {hasResults && totalPages > 1 && (
-                            <Pagination
-                                initialPage={0}
-                                totalPages={totalPages}
-                                forcePage={pageIndex - 1}
-                                pageRangeDisplayed={2}
-                                onPageChange={this.handlePageClick}
-                            />
-                        )}
-                    </div>
-                    <div className="col l3 s12">
-                        <Sidebar />
+                    <div className="row">
+                        
+                        <div className="col l9 m12 s12">
+                            <h5 className="center" >
+                                <i className="material-icons green-text" >notifications_active</i>&nbsp;
+                                {this.state.title}
+                            </h5>
+                            {
+                                articles.map(article => 
+                                    <Article article={article} key={article.id}/>
+                                )
+                            }
+                            {hasResults && totalPages > 1 && (
+                                <Pagination
+                                    initialPage={0}
+                                    totalPages={totalPages}
+                                    forcePage={pageIndex - 1}
+                                    pageRangeDisplayed={2}
+                                    onPageChange={this.handlePageClick}
+                                />
+                            )}
+                        </div>
+                        <div className="col l3 s12">
+                            <Sidebar />
+                        </div>
                     </div>
                 </div>
             </div>
+            
         )
     }
 }

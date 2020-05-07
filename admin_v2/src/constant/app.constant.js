@@ -1,7 +1,7 @@
 export const pagination = {
-  defaultTake: 4,
+  defaultTake: 5,
   initialPage: 1,
-  defaultSort: true
+  defaultSort: false
 };
 
 export const IS_REQUIRE = [
