@@ -7,12 +7,8 @@ import {
   Col,
   Container,
   Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Row
 } from "reactstrap";
-import Loading from "../others/common/LoadingIndicator"
 import RequestHelper from "../helpers/request.helper"
 import Navbar from '../layout/Navbar'
 
@@ -28,10 +24,7 @@ class SignIn extends Component {
           error: ""
         };
     }
-    // state ={
-    //     email: '',
-    //     password: ''
-    // } 
+
     componentDidMount() {
         if (cookie.load("token")) {
           this.props.history.push("/");
@@ -42,23 +35,22 @@ class SignIn extends Component {
     let { user } = this.state;
     if (!user.email || !user.password)
         return this.setState({
-        error: "Require both Username and password to login!"
+        error: "Require both email and password to login!"
         });
     try {
         this.setState({ loading: true, error: "" });
-        // const data = await Api.login(user);
-        const data = await RequestHelper.post("https://localhost:44319/api/sso/loginAdmin",user)
+        const data = await RequestHelper.post("https://localhost:44319/api/sso/loginStudent",user)
         const token = data.token;
-        const jwtPayload = data.jwtPayload;
+        //const jwtPayload = data.jwtPayload;
+        console.log(data.jwtPayload,"DATA JWT PAYLOAD")
         cookie.save("token", token);
-        cookie.save("userLogin", jwtPayload);
+        //cookie.save("userLogin", jwtPayload);
 
-        this.setState({ loading: false });
         this.props.history.push("/");
     } catch (err) {
         return this.setState({
-        loading: false,
-        error: "Invalid username or password!"
+        // loading: false,
+        error: "Invalid email or password!"
         });
     }
     };
@@ -78,70 +70,49 @@ class SignIn extends Component {
         }
       };
 
-    // handleSubmit = () => {
-
-    // }
-
-    // handleChange =() => {
-
-    // }
-
     render() {
-        const { loading, error } = this.state;
+        const {  error } = this.state;
         return (
           <>
             <div>
               <Navbar/>
             </div>
-            {loading && <Loading />}
-            <div className={`app flex-row align-items-center ${loading && "wrapper-indicator"}`}>
+            <div className={`app flex-row align-items-center `} style={{paddingTop:30, width:400, minWidth:400, margin:'auto'}}>
               <Container>
                 <Row className="justify-content-center">
                   <Col md="4">
                     <Card className="p-4 text-center">
-                      <CardBody>
-                        <p className="text-muted">Login with Admin account</p>
-                        <InputGroup className="mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="icon-user" />
-                            </InputGroupText>
-                          </InputGroupAddon>
+                      <CardBody style={{padding:10}}>
+                        <h5 className="text-muted center">Đăng nhập</h5>
+                        <label>Email:</label>
                           <Input
                             name="email"
                             type="text"
-                            placeholder="Username"
+                            placeholder="Email.."
                             autoComplete="email"
                             onChange={this.onChange}
                             onKeyPress={this.keyPressed}
                           />
-                        </InputGroup>
-                        <InputGroup className="mb-4">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="icon-lock" />
-                            </InputGroupText>
-                          </InputGroupAddon>
+                          <label>Password:</label>
                           <Input
                             name="password"
                             type="password"
-                            placeholder="Password"
+                            placeholder="Password.."
                             autoComplete="password"
                             onChange={this.onChange}
                             onKeyPress={this.keyPressed}
                           />
-                        </InputGroup>
                         {error && <p style={{ color: "red" }}>{error}</p>}
                         <Row
                           style={{
                             justifyContent: "center"
                           }}
                         >
-                          <Col xs="6">
-                            <Button onClick={this.onLogin} color="primary" className="px-6">
+                            <Button style={{marginTop:10}} onClick={this.onLogin} color="success" className="px-6">
                               Login
                             </Button>
-                          </Col>
+                            {/* &nbsp;
+                            <a style={{}} href="long.com">Quên mật khẩu?</a> */}
                         </Row>
                       </CardBody>
                     </Card>

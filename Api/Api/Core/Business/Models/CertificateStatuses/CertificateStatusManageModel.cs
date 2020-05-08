@@ -16,6 +16,9 @@ namespace Api.Core.Business.Models.CertificateStatuses
 
         [Required]
         public bool InformaticsCertificateStatus { get; set; }
+        
+        [Required]
+        public bool ExtracurricularPointStatus { get; set; }
 
         public void GetCertificateStatusFromModel(CertificateStatus certificateStatus)
         {
@@ -23,6 +26,7 @@ namespace Api.Core.Business.Models.CertificateStatuses
             certificateStatus.PhysicalEducationCertificateStatus = PhysicalEducationCertificateStatus;
             certificateStatus.LanguageCertificateStatus = LanguageCertificateStatus;
             certificateStatus.InformaticsCertificateStatus = InformaticsCertificateStatus;
+            certificateStatus.ExtracurricularPointStatus = ExtracurricularPointStatus;
         }
 
         //validate trung ten?

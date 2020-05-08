@@ -25,12 +25,12 @@ namespace Api.Core.Business.Models.CertificateStatuses
                 PhysicalEducationCertificateStatus = certificateStatus.PhysicalEducationCertificateStatus;
                 LanguageCertificateStatus = certificateStatus.LanguageCertificateStatus;
                 InformaticsCertificateStatus = certificateStatus.InformaticsCertificateStatus;
-
-                var studentRepository = IoCHelper.GetInstance<IRepository<Student>>();
+                ExtracurricularPointStatus = certificateStatus.ExtracurricularPointStatus;
+                //var studentRepository = IoCHelper.GetInstance<IRepository<Student>>();
                 //StudentId = studentRepository.GetAll().FirstOrDefault(x => x.CertificateStatusId == Id);
-                StudentViewModel = new StudentViewModel(studentRepository.GetAll().FirstOrDefault(x => x.CertificateStatusId == Id));
+                //StudentViewModel = new StudentViewModel(studentRepository.GetAll().FirstOrDefault(x => x.CertificateStatusId == Id));
 
-                StudentId = StudentViewModel.Id;
+                //StudentId = StudentViewModel.Id;
             }
         }
 
@@ -44,8 +44,10 @@ namespace Api.Core.Business.Models.CertificateStatuses
 
         public bool InformaticsCertificateStatus { get; set; }
 
-        public StudentViewModel StudentViewModel { get; set; }
+        public bool ExtracurricularPointStatus { get; set; }
 
-        public Guid StudentId { get; set; }
+        //public StudentViewModel StudentViewModel { get; set; }
+
+        //public Guid StudentId { get; set; }
     }
 }

@@ -37,7 +37,7 @@ class Narbar extends Component {
         return (
             <nav className="nav-wrapper light-blue lighten-5">
                 <div className="container">
-                    <NavLink to="/"><img src={logo} alt="Trang chủ" style={{width:300}}/></NavLink>
+                    <NavLink to="/"><img src={logo} alt="Trang chủ" style={{width:'30%'}}/></NavLink>
                     <a href="long.com" className="brand-logo center light-blue-text darken-1" style={{marginLeft: 0}}>
                         {/* <span style={{paddingBottom:5}}>DUE</span> */}
                     </a>

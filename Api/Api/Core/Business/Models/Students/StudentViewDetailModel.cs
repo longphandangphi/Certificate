@@ -19,7 +19,7 @@ namespace Api.Core.Business.Models.Students
 
         }
 
-        public StudentViewDetailModel(Student student) : base()
+        public StudentViewDetailModel(Student student) : this()
         {
             if (student != null)
             {

@@ -14,7 +14,7 @@ namespace Api.Core.Entities
 
         }
 
-        public UserInRole(Guid userId, Guid role) : base()
+        public UserInRole(Guid userId, Guid role) 
         {
             UserId = userId;
             RoleId = role;

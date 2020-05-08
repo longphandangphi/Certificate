@@ -9,11 +9,11 @@ namespace Api.Core.Business.Models.Roles
 {
     public class RoleViewModel : ApiBaseModel
     {
-        public RoleViewModel() : base()
+        public RoleViewModel() 
         {
 
         }
-        public RoleViewModel(Role role)
+        public RoleViewModel(Role role) : this()
         {
             if (role != null)
             {

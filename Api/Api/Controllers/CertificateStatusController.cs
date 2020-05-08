@@ -1,15 +1,19 @@
 ﻿using Api.Core.Business.Filters;
+using Api.Core.Business.IoC;
 using Api.Core.Business.Models.Base;
 using Api.Core.Business.Models.CertificateStatuses;
 using Api.Core.Business.Services;
+using Api.Core.DataAccess.Repository.Base;
+using Api.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
     [Route("api/certificateStatuses")]
-    public class CertificateStatusController : Controller
+    public class CertificateStatusController : BaseController
     {
         private readonly ICertificateStatusService _certificateStatusService;
 
@@ -29,6 +33,17 @@ namespace Api.Controllers
         public async Task<IActionResult> GetCertificateStatusById(Guid id)
         {
             var certificateStatus = await _certificateStatusService.GetCertificateStatusByIdAsync(id);
+            return Ok(certificateStatus);
+        }
+
+        [HttpGet("self")]
+        public async Task<IActionResult> GetCertificateStatus()
+        {
+            var studentRepository = IoCHelper.GetInstance<IRepository<Student>>();
+            var SelfCertificateStatusId = studentRepository.GetAll()
+                                                        .FirstOrDefault(x => x.Id == CurrentUserId).CertificateStatusId;
+
+            var certificateStatus = await _certificateStatusService.GetCertificateStatusBySelfIdAsync(SelfCertificateStatusId);
             return Ok(certificateStatus);
         }
 

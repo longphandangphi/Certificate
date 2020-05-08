@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Footer from './components/layout/Footer'
 import Dashboard from './components/dashboard/Dashboard'
 import ArticleDetail from './components/projects/ArticleDetail'
+import CertificateStatus from './components/projects/CertificateStatus'
 import ArticleListOfCategory from './components/projects/ArticleListOfCategory'
 import ArticleListOfAllCategory from './components/projects/ArticleListOfAllCategory'
 import SignIn from './components/auth/SignIn'
@@ -22,6 +23,7 @@ class App extends Component {
             <Route path="/article/:article_id" component={ArticleDetail}/>
             <Route exact path="/category/all" component={ArticleListOfAllCategory}/>
             <Route path="/category/:category_id" component={ArticleListOfCategory}/>
+            <Route path="/certificateStatus" component={CertificateStatus}/>
             
           </Switch>
           <Footer />

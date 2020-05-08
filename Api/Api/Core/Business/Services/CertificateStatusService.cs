@@ -18,6 +18,7 @@ namespace Api.Core.Business.Services
         //xem sửa 
         Task<PagedList<CertificateStatusViewModel>> ListCertificateStatusAsync(RequestListViewModel requestListViewModel);
         Task<CertificateStatusViewModel> GetCertificateStatusByIdAsync(Guid? id);
+        Task<CertificateStatusViewModel> GetCertificateStatusBySelfIdAsync(Guid? id);
 
         //Task<ResponseModel> CreateCertificateStatusAsync(CertificateStatusManageModel certificateStatusManagerModel);
         Task<ResponseModel> UpdateCertificateStatusAsync(Guid id, CertificateStatusManageModel certificateStatusManagerModel);
@@ -83,7 +84,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "StudentId";
+                matchedPropertyName = "NationalDefenseAndSecurityCertificateStatus";
             }
 
             var type = typeof(CertificateStatusViewModel);
@@ -96,6 +97,13 @@ namespace Api.Core.Business.Services
         }
 
         public async Task<CertificateStatusViewModel> GetCertificateStatusByIdAsync(Guid? id)
+        {
+            var certificateStatus = await _certificateStatusRepository.GetByIdAsync(id);
+            //var user = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            return new CertificateStatusViewModel(certificateStatus);
+        }
+
+        public async Task<CertificateStatusViewModel> GetCertificateStatusBySelfIdAsync(Guid? id)
         {
             var certificateStatus = await _certificateStatusRepository.GetByIdAsync(id);
             //var user = await GetAll().FirstOrDefaultAsync(x => x.Id == id);

@@ -77,7 +77,7 @@ namespace Api.Core.Business.Services
 
         public async Task<ResponseModel> LoginStudentAsync(UserLoginModel userLoginModel)
         {
-            var user = await _studentService.GetStudentByUsernameAsync(userLoginModel.Email);
+            var user = await _studentService.GetStudentByEmailAsync(userLoginModel.Email);
             if (user != null)
             {
                 var result = PasswordUtilities.ValidatePass(user.Password, userLoginModel.Password, user.PasswordSalt);

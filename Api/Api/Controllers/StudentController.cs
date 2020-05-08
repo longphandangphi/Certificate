@@ -12,7 +12,7 @@ namespace Api.Controllers
 {
     [Route("api/students")]
     [ValidateModel]
-    public class StudentController : Controller
+    public class StudentController : BaseController
     {
         private readonly IStudentService _studentService;
         private readonly IEmailService _emailService;
@@ -37,6 +37,14 @@ namespace Api.Controllers
         public async Task<IActionResult> GetStudentById(Guid id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
+            return Ok(student);
+        }
+        
+        [HttpGet("self")]
+        //[CustomAuthorize]
+        public async Task<IActionResult> GetStudentBySelfId()
+        {
+            var student = await _studentService.GetStudentBySelfIdAsync(CurrentUserId);
             return Ok(student);
         }
 

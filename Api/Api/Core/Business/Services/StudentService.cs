@@ -28,7 +28,9 @@ namespace Api.Core.Business.Services
 
         Task<StudentViewDetailModel> GetStudentByIdAsync(Guid? id);
 
-        Task<Student> GetStudentByUsernameAsync(string username);
+        Task<StudentViewDetailModel> GetStudentBySelfIdAsync(Guid? id);
+
+        Task<Student> GetStudentByEmailAsync(string username);
 
         Task<ResponseModel> ChangeStudentPasswordAsync(Guid id, StudentChangePasswordModel studentChangePasswordModel);
 
@@ -72,6 +74,8 @@ namespace Api.Core.Business.Services
         private IQueryable<Student> GetAll()
         {
             return _studentRepository.GetAll()
+                        .Include(x => x.Class)
+                        .Include(x => x.Specialty)
                         .Include(x => x.CertificateStatus)
                         .Include(x => x.Specialty)
                             .ThenInclude(x => x.Major)
@@ -262,13 +266,19 @@ namespace Api.Core.Business.Services
             var student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
             return new StudentViewDetailModel(student);
         }
+        
+        public async Task<StudentViewDetailModel> GetStudentBySelfIdAsync(Guid? id)
+        {
+            var student = await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            return new StudentViewDetailModel(student);
+        }
 
         //public async Task<Student> GetStudentByEmailAsync(string email)
         //{
         //    return await GetAll().FirstOrDefaultAsync(x => x.Email == email);
         //}
 
-        public async Task<Student> GetStudentByUsernameAsync(string email)
+        public async Task<Student> GetStudentByEmailAsync(string email)
         {
             return await GetAll().FirstOrDefaultAsync(x => x.Email == email);
         }

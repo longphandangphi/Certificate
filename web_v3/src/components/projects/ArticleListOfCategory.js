@@ -15,8 +15,8 @@ export default class ArticleListOfCategory extends Component {
         totalPages: null,
         hasResults: null,
         params: {
-            // offset: pagination.initialPage,
-            // limit: pagination.defaultTake,
+            offset: pagination.initialPage,
+            limit: pagination.defaultTake,
             isDesc: true
         }
 
@@ -68,16 +68,9 @@ export default class ArticleListOfCategory extends Component {
         //     params: params
         // });
 
-        axios.get(`https://localhost:44319/api/articles`, { params })
+        axios.get(`https://localhost:44319/api/articles/categories/`+ category_id, { params })
           .then(res => {
-            const articles = res.data.sources.filter(article => {
-                if (article.articleCategory.id === category_id) {
-                    console.log("TRUEE")
-                    return true;
-                } else {
-                    return false;
-                }
-            });
+            const articles = res.data.sources;
             const totalPages = res.data.totalPages;
             const pageIndex = res.data.pageIndex;
             const hasResults = articles && articles.length > 0;

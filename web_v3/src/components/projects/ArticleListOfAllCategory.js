@@ -5,6 +5,7 @@ import axios from 'axios'
 import Article from './Article'
 import Pagination from '../others/pagination/Pagination'
 import {pagination} from '../../constants/app.constant'
+import Navbar from '../layout/Navbar'
 
 export default class ArticleListOfAllCategory extends Component {
     state = {
@@ -85,37 +86,41 @@ export default class ArticleListOfAllCategory extends Component {
         const { totalPages, pageIndex, hasResults} = this.state;
         console.log(this.state,"STATE")
         return (
-            <div className="container">
+            <div>
+                <Navbar />
+                <div className="container">
 
-                <CarouselSpecial/>
+                    <CarouselSpecial/>
 
-                <div className="row">
+                    <div className="row">
 
-                    <div className="col l9 m12 s12">
-                        <h5 className="center" >
-                            <i className="material-icons green-text" >notifications_active</i>&nbsp;
-                            Tất cả bài viết
-                        </h5>
-                        {
-                            this.state.articles.map(article =>
-                                <Article article={article} key={article.id}/>
-                            )
-                        }
-                        {hasResults && totalPages > 1 && (
-                            <Pagination
-                                initialPage={0}
-                                totalPages={totalPages}
-                                forcePage={pageIndex - 1}
-                                pageRangeDisplayed={2}
-                                onPageChange={this.handlePageClick}
-                            />
-                        )}
-                    </div>
-                    <div className="col l3 s12">
-                        <Sidebar />
+                        <div className="col l9 m12 s12">
+                            <h5 className="center" >
+                                <i className="material-icons green-text" >notifications_active</i>&nbsp;
+                                Tất cả bài viết
+                            </h5>
+                            {
+                                this.state.articles.map(article =>
+                                    <Article article={article} key={article.id}/>
+                                )
+                            }
+                            {hasResults && totalPages > 1 && (
+                                <Pagination
+                                    initialPage={0}
+                                    totalPages={totalPages}
+                                    forcePage={pageIndex - 1}
+                                    pageRangeDisplayed={2}
+                                    onPageChange={this.handlePageClick}
+                                />
+                            )}
+                        </div>
+                        <div className="col l3 s12">
+                            <Sidebar />
+                        </div>
                     </div>
                 </div>
             </div>
+            
         )
     }
 }

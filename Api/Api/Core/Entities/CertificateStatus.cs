@@ -12,6 +12,7 @@ namespace Api.Core.Entities
             PhysicalEducationCertificateStatus = false;
             LanguageCertificateStatus = false;
             InformaticsCertificateStatus = false;
+            ExtracurricularPointStatus = false;
         }
 
         [Required]
@@ -25,6 +26,9 @@ namespace Api.Core.Entities
 
         [Required]
         public bool InformaticsCertificateStatus { get; set; }
+
+        [Required]
+        public bool ExtracurricularPointStatus { get; set; }
 
 
         public Student Student { get; set; }
