@@ -32,15 +32,15 @@ namespace Api.Core.Business.Models.Students
                 DateOfBirth = student.DateOfBirth;
                 ExtracurricularPoint = 0;
 
-                ClassViewModel = new ClassViewModel(student.Class);
-                SpecialtyViewModel = new SpecialtyViewModel(student.Specialty);
-                CertificateStatusViewModel = new CertificateStatusViewModel(student.CertificateStatus);
+                Class = new ClassViewModel(student.Class);
+                Specialty = new SpecialtyViewModel(student.Specialty);
+                CertificateStatus = new CertificateStatusViewModel(student.CertificateStatus);
 
                 var extracurricularRepository = IoCHelper.GetInstance<IRepository<Extracurricular>>();
                 var extracurricularActivityRepository = IoCHelper.GetInstance<IRepository<ExtracurricularActivity>>();
 
                 var extracurricularActivityIdArray = extracurricularRepository.GetAll()
-                                                        .Where(x => x.Id == Id).Select(x => x.ExtracurricularActivityId).ToArray();
+                                                        .Where(x => x.StudentId == Id).Select(x => x.ExtracurricularActivityId).ToArray();
 
                 foreach (var extracurricularActivityId in extracurricularActivityIdArray)
                 {
@@ -68,11 +68,11 @@ namespace Api.Core.Business.Models.Students
 
         public int ExtracurricularPoint { get; set; }
 
-        public ClassViewModel ClassViewModel { get; set; }
+        public ClassViewModel Class { get; set; }
 
-        public SpecialtyViewModel SpecialtyViewModel { get; set; }
+        public SpecialtyViewModel Specialty { get; set; }
 
-        public CertificateStatusViewModel CertificateStatusViewModel { get; set; }
+        public CertificateStatusViewModel CertificateStatus { get; set; }
 
 
 

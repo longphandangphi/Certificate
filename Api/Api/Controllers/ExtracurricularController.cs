@@ -10,7 +10,7 @@ namespace Api.Controllers
 {
     [Route("api/extracurriculars")]
     [ValidateModel]
-    public class ExtracurricularController : Controller
+    public class ExtracurricularController : BaseController
     {
         private readonly IExtracurricularService _extracurricularService;
 
@@ -30,6 +30,13 @@ namespace Api.Controllers
         public async Task<IActionResult> GetAllByStudentId(Guid studentId, [FromQuery] RequestListViewModel requestListViewModel)
         {
             var extracurricular = await _extracurricularService.ListExtracurricularByStudentIdAsync(studentId, requestListViewModel);
+            return Ok(extracurricular);
+        }
+
+        [HttpGet("self")]
+        public async Task<IActionResult> GetAllBySelfStudentId([FromQuery] RequestListViewModel requestListViewModel)
+        {
+            var extracurricular = await _extracurricularService.ListExtracurricularBySelfStudentIdAsync(CurrentUserId, requestListViewModel);
             return Ok(extracurricular);
         }
 

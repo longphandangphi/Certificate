@@ -9,6 +9,7 @@ import ModalInfo from "../../../components/modal/modal-info";
 import { toastSuccess, toastError } from "../../../helpers/toast.helper";
 import lodash from "lodash";
 import { getCertificateStatusList } from "../../../actions/certificateStatus.list.action";
+import { getStudentList } from "../../../actions/student.list.action";
 import ApiCertificateStatus from "../../../api/api.certificateStatus";
 //import ApiStudent from "../../../api/api.student";
 import { pagination, IS_COMPLETE } from "../../../constant/app.constant";
@@ -64,6 +65,7 @@ class CertificateStatusListPage extends Component {
   };
 
   showUpdateModal = item => {
+    // console.log(item.certificateStatus,"LOL ITEM")
     let title = "Update Certificate Status";
     this.toggleModalInfo(item, title);
   };
@@ -78,7 +80,7 @@ class CertificateStatusListPage extends Component {
         query: e.target.value
       },
       () => {
-        this.getCertificateStatusList();
+        this.getStudentList();
       }
     );
   };
@@ -112,6 +114,12 @@ class CertificateStatusListPage extends Component {
     this.setState({ item });
   };
 
+  onExtracurricularPointChange = value => {
+    let item = Object.assign({}, this.state.item);
+    item.extracurricularPointStatus = value;
+    this.setState({ item });
+  };
+
   handlePageClick = e => {
     this.setState(
       {
@@ -120,15 +128,15 @@ class CertificateStatusListPage extends Component {
           offset: e.selected + 1
         }
       },
-      () => this.getCertificateStatusList()
+      () => this.getStudentList()
     );
   };
 
-  getCertificateStatusList = () => {
+  getStudentList = () => {
     let params = Object.assign({}, this.state.params, {
       query: this.state.query
     });
-    this.props.getCertificateStatusList(params);
+    this.props.getStudentList(params);
   };
 
   addCertificateStatus = async () => {
@@ -141,8 +149,8 @@ class CertificateStatusListPage extends Component {
       console.log("response");
       console.log(response);
       this.toggleModalInfo();
-      this.getCertificateStatusList();
-      toastSuccess("The certificateStatus has been created successfully");
+      this.getStudentList();
+      toastSuccess("The Certificate Status has been created successfully");
     } catch (err) {
       console.log(err);
       toastError("This CertificateStatus name is exist!");
@@ -153,22 +161,24 @@ class CertificateStatusListPage extends Component {
     const { id, nationalDefenseAndSecurityCertificateStatus, 
       physicalEducationCertificateStatus, 
       languageCertificateStatus, 
-      informaticsCertificateStatus 
+      informaticsCertificateStatus,
+      extracurricularPointStatus
     } = this.state.item;
 
     const certificateStatus = { id, 
       nationalDefenseAndSecurityCertificateStatus, 
       physicalEducationCertificateStatus, 
       languageCertificateStatus, 
-      informaticsCertificateStatus 
+      informaticsCertificateStatus,
+      extracurricularPointStatus
     };
     try {
       await ApiCertificateStatus.updateCertificateStatus(certificateStatus);
       this.toggleModalInfo();
-      this.getCertificateStatusList();
-      toastSuccess("The certificateStatus has been updated successfully");
+      this.getStudentList();
+      toastSuccess("The Certificate Status has been updated successfully");
     } catch (err) {
-      toastError("This CertificateStatus name is exist!");
+      toastError("Error occurred!");
     }
   };
 
@@ -176,7 +186,7 @@ class CertificateStatusListPage extends Component {
     try {
       await ApiCertificateStatus.deleteCertificateStatus(this.state.itemId);
       this.toggleDeleteModal();
-      this.getCertificateStatusList();
+      this.getStudentList();
       toastSuccess("The certificateStatus has been deleted successfully");
     } catch (err) {
       toastError(err + "");
@@ -199,13 +209,13 @@ class CertificateStatusListPage extends Component {
   }
 
   componentDidMount() {
-    this.getCertificateStatusList();
+    this.getStudentList();
   }
 
   render() {
     const { isShowDeleteModal, isShowInfoModal, item } = this.state;
-    const { certificateStatusPagedList } = this.props.certificateStatusPagedListReducer;
-    const { sources, pageIndex, totalPages } = certificateStatusPagedList;
+    const { studentPagedList } = this.props.studentPagedListReducer;
+    const { sources, pageIndex, totalPages } = studentPagedList;
     const hasResults = sources && sources.length > 0;
     return (
       <div className="animated fadeIn">
@@ -315,6 +325,28 @@ class CertificateStatusListPage extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <SelectInput
+                        name="extracurricularPointStatus"
+                        title="Extracurricular Point Status"
+                        defaultValue={IS_COMPLETE.filter(comp => {
+                          if (comp.id === item.extracurricularPointStatus) {
+                            return true; 
+                          }
+                          return false;
+                        }).map(comp => comp.id)}
+                        style={{ display: "block" }}
+                        required={true}
+                        onChange={this.onExtracurricularPointChange}
+                        options={IS_COMPLETE}
+                        valueField="id"
+                        nameField="name"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
 
                 <div className="text-center">
                   <Button color="danger" type="submit">
@@ -347,10 +379,11 @@ class CertificateStatusListPage extends Component {
                   <th></th>
                   <th>Student ID</th>
                   <th>Student Name</th>
-                  <th>GDQP</th>
-                  <th>GDTC</th>
-                  <th>CCNN</th>
-                  <th>CCTH</th>
+                  <th>Giáo dục Quốc phòng</th>
+                  <th>Giáo dục Thể chất</th>
+                  <th>Ngoại ngữ</th>
+                  <th>Tin học</th>
+                  <th>Điểm ngoại khóa</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -360,24 +393,27 @@ class CertificateStatusListPage extends Component {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
-                        <td>{item.studentViewModel.id}</td>
-                        <td>{item.studentViewModel.firstName + " " + item.studentViewModel.lastName}</td>
+                        <td>{item.id}</td>
+                        <td>{item.lastName + " " + item.firstName}</td>
 
-                        <td className={item.nationalDefenseAndSecurityCertificateStatus ? "text-success" : "text-danger"}>
-                          {item.nationalDefenseAndSecurityCertificateStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.nationalDefenseAndSecurityCertificateStatus ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.nationalDefenseAndSecurityCertificateStatus ? "Completed" : "Not yet"}
                         </td>
-                        <td className={item.physicalEducationCertificateStatus ? "text-success" : "text-danger"}>
-                          {item.physicalEducationCertificateStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.physicalEducationCertificateStatus ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.physicalEducationCertificateStatus ? "Completed" : "Not yet"}
                         </td>
-                        <td className={item.languageCertificateStatus ? "text-success" : "text-danger"}>
-                          {item.languageCertificateStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.languageCertificateStatus ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.languageCertificateStatus ? "Completed" : "Not yet"}
                         </td>
-                        <td className={item.informaticsCertificateStatus ? "text-success" : "text-danger"}>
-                          {item.informaticsCertificateStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.informaticsCertificateStatus ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.informaticsCertificateStatus ? "Completed" : "Not yet"}
+                        </td>
+                        <td className={item.certificateStatus.extracurricularPointStatus ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.extracurricularPointStatus ? "Completed" : "Not yet"}
                         </td>
 
                         <td>
-                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item.certificateStatus)}>
                             Change Status
                           </Button>
                           {/* &nbsp;
@@ -408,9 +444,11 @@ class CertificateStatusListPage extends Component {
 
 export default connect(
   state => ({
-    certificateStatusPagedListReducer: state.certificateStatusPagedListReducer
+    certificateStatusPagedListReducer: state.certificateStatusPagedListReducer,
+    studentPagedListReducer: state.studentPagedListReducer
   }),
   {
-    getCertificateStatusList
+    getCertificateStatusList,
+    getStudentList
   }
 )(CertificateStatusListPage);

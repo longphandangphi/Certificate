@@ -19,6 +19,7 @@ namespace Api.Core.Business.Services
         Task<PagedList<ExtracurricularViewModel>> ListExtracurricularAsync(RequestListViewModel requestListViewModel);
 
         Task<PagedList<ExtracurricularOfStudentViewModel>> ListExtracurricularByStudentIdAsync(Guid studentId, RequestListViewModel requestListViewModel);
+        Task<PagedList<ExtracurricularOfStudentViewModel>> ListExtracurricularBySelfStudentIdAsync(Guid? studentId, RequestListViewModel requestListViewModel);
         Task<ExtracurricularViewModel> GetExtracurricularByIdAsync(Guid? id);
         Task<ResponseModel> CreateExtracurricularAsync(ExtracurricularManageModel extracurricularManagerModel);
 
@@ -105,6 +106,35 @@ namespace Api.Core.Business.Services
         //}
 
         public async Task<PagedList<ExtracurricularOfStudentViewModel>> ListExtracurricularByStudentIdAsync(Guid studentId,  RequestListViewModel requestListViewModel)
+        {
+            var list = await GetAll()
+                .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
+                && (string.IsNullOrEmpty(requestListViewModel.Query)
+                    || (x.StudentId.ToString().Contains(requestListViewModel.Query)
+                    ))
+                && (x.StudentId == studentId))
+                .Select(x => new ExtracurricularOfStudentViewModel(x)).ToListAsync();
+
+            var extracurricularViewModelProperties = GetAllPropertyNameOfExtracurricularViewModel();
+
+            var requestPropertyName = !string.IsNullOrEmpty(requestListViewModel.SortName) ? requestListViewModel.SortName.ToLower() : string.Empty;
+
+            string matchedPropertyName = extracurricularViewModelProperties.FirstOrDefault(x => x == requestPropertyName);
+
+            if (string.IsNullOrEmpty(matchedPropertyName))
+            {
+                matchedPropertyName = "Id";
+            }
+
+            var type = typeof(ExtracurricularOfStudentViewModel);
+
+            var sortProperty = type.GetProperty(matchedPropertyName);
+
+            list = requestListViewModel.IsDesc ? list.OrderByDescending(x => sortProperty.GetValue(x, null)).ToList() : list.OrderBy(x => sortProperty.GetValue(x, null)).ToList();
+
+            return new PagedList<ExtracurricularOfStudentViewModel>(list, requestListViewModel.Offset ?? CommonConstants.Config.DEFAULT_SKIP, requestListViewModel.Limit ?? CommonConstants.Config.DEFAULT_TAKE);
+        }
+        public async Task<PagedList<ExtracurricularOfStudentViewModel>> ListExtracurricularBySelfStudentIdAsync(Guid? studentId,  RequestListViewModel requestListViewModel)
         {
             var list = await GetAll()
                 .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)

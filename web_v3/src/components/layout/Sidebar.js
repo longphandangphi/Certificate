@@ -22,7 +22,7 @@ export default class Sidebar extends Component {
             <div>
                 <ul className="collection with-header">
                     <li className="collection-header"><h5><i className="material-icons orange-text left">school</i>Sinh viên</h5></li>
-                    <li className="collection-item"><NavLink to="sass.html">Hoạt động ngoại khóa</NavLink></li>
+                    <li className="collection-item"><NavLink to="/extracurricular">Hoạt động ngoại khóa</NavLink></li>
                     <li className="collection-item"><NavLink to="/certificateStatus">Điều kiện xét tốt nghiệp</NavLink></li>
                 </ul>
                 

@@ -105,8 +105,9 @@ namespace Api.Core.Business.Services
             .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
                 && (string.IsNullOrEmpty(requestListViewModel.Query)
                     || (x.FirstName.Contains(requestListViewModel.Query)
-                    || (x.Email.Contains(requestListViewModel.Query)
-                    ))))
+                    || (x.Email.Contains(requestListViewModel.Query))
+                    || (x.Id.ToString().Contains(requestListViewModel.Query))
+                    )))
                 .Select(x => new StudentViewModel(x)).ToListAsync();
 
             var studentViewModelProperties = GetAllPropertyNameOfStudentViewModel();
