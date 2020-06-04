@@ -1,7 +1,10 @@
 ﻿using Api.Core.Business.Filters;
+using Api.Core.Business.IoC;
 using Api.Core.Business.Models.Base;
 using Api.Core.Business.Models.StandardOfCertificates;
 using Api.Core.Business.Services;
+using Api.Core.DataAccess.Repository.Base;
+using Api.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,7 +15,7 @@ namespace Api.Controllers
 {
     [Route("api/standardOfCertificates")]
     [ValidateModel]
-    public class StandardOfCertificateController : Controller
+    public class StandardOfCertificateController : BaseController
     {
         private readonly IStandardOfCertificateService _standardOfCertificateService;
 
@@ -33,6 +36,18 @@ namespace Api.Controllers
         {
             var standardOfCertificate = await _standardOfCertificateService.GetStandardOfCertificateByIdAsync(id);
             return Ok(standardOfCertificate);
+        }
+
+        [HttpGet("self")]
+        public async Task<IActionResult> GetStandardOfCertificateBySelfId()
+        {
+            var studentRepository = IoCHelper.GetInstance<IRepository<Student>>();
+            var specialtyId = studentRepository.GetAll().FirstOrDefault(x => x.Id == CurrentUserId).SpecialtyId;
+            var specialtyRepository = IoCHelper.GetInstance<IRepository<Specialty>>();
+            var selfStandardOfCertificateId = specialtyRepository.GetAll()
+                                                        .FirstOrDefault(x => x.Id == specialtyId).StandardOfCertificateId;
+            var standardOfCertificate = await _standardOfCertificateService.GetStandardOfCertificateBySelfIdAsync(selfStandardOfCertificateId);
+            return Ok(standardOfCertificate);  
         }
 
         [HttpPost]

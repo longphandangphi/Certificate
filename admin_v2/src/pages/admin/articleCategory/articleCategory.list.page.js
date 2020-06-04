@@ -252,7 +252,7 @@ class ArticleCategoryListPage extends Component {
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>

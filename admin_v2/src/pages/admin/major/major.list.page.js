@@ -21,8 +21,8 @@ class MajorListPage extends Component {
       item: {},
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultTake
       },
       query: ""
     };
@@ -79,7 +79,7 @@ class MajorListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -99,7 +99,7 @@ class MajorListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getMajorList()
@@ -247,7 +247,7 @@ class MajorListPage extends Component {
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>

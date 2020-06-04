@@ -40,7 +40,6 @@ export default class ArticleListOfCategory extends Component {
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
         if (this.props.match.params.category_id !== prevProps.match.params.category_id) {
-            console.log("Nhay vo day")
             this.setState({
                 params: {
                     ...this.state.params,
@@ -58,15 +57,7 @@ export default class ArticleListOfCategory extends Component {
 
         const category_id = this.props.match.params.category_id;
 
-        console.log(category_id);
-
         const params = this.state.params;
-
-        // params.query = category_id;
-
-        // this.setState({
-        //     params: params
-        // });
 
         axios.get(`https://localhost:44319/api/articles/categories/`+ category_id, { params })
           .then(res => {
@@ -86,7 +77,6 @@ export default class ArticleListOfCategory extends Component {
  
     render() {
         const { articles, totalPages, pageIndex, hasResults} = this.state;
-        console.log(this.state,"STATE")
         return (
             <div>
                 <Navbar />

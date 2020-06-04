@@ -20,17 +20,19 @@ class Extracurricular extends Component {
                     extracurriculars: res.sources
                 })
             });
-            RequestHelper.get(`https://localhost:44319/api/students/self`)
-            .then(res => {
-                this.setState({
-                    student: res
-                })
-            });
+            setTimeout(() => {
+                RequestHelper.get(`https://localhost:44319/api/students/self`)
+                .then(res => {
+                    this.setState({
+                        student: res
+                    })
+                });
+            },100)
+            
         }
     }
 
     render() {
-        console.log(this.state,"LOL");
          const { extracurriculars, student } = this.state;
         return (
             <div>
@@ -39,7 +41,7 @@ class Extracurricular extends Component {
                     <div className="row" style={{marginTop: 15}}>
                         <div className="col l9 s12">
                             
-                            <h5 className="center cyan-text ">Hoạt động ngoại khóa</h5>
+                            <h5 className="center cyan-text ">HOẠT ĐỘNG NGOẠI KHÓA</h5>
 
                             <div className="row">
                                 <div className="col s12">

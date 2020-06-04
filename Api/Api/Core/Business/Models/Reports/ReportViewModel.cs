@@ -20,7 +20,7 @@ namespace Api.Core.Business.Models.Reports
             Subject = report.Subject;
             Content = report.Content;
             Response = report.Response;
-            StudentViewModel = new StudentViewModel(report.Student);
+            //StudentViewModel = new StudentViewModel(report.Student);
             CreateOn = report.CreatedOn;
         }
 
@@ -34,6 +34,6 @@ namespace Api.Core.Business.Models.Reports
 
         public DateTime? CreateOn { get; set; }
 
-        public StudentViewModel StudentViewModel { get; set; }
+        //public StudentViewModel StudentViewModel { get; set; }
     }
 }

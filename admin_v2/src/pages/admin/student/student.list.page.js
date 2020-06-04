@@ -406,7 +406,7 @@ class StudentListPage extends Component {
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Name or email.."
+                placeholder="Student ID"
               />
 
               <SelectInput
@@ -442,7 +442,7 @@ class StudentListPage extends Component {
 
               
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>
@@ -451,7 +451,7 @@ class StudentListPage extends Component {
                   <th>Class</th>
                   <th>Specialty</th>
                   <th>Extracurricular Point</th>
-                  <th>Action</th>
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -476,15 +476,15 @@ class StudentListPage extends Component {
                         <td>{item.class.name}</td>
                         <td>{item.specialty.name}</td>
                         <td>{item.extracurricularPoint}</td>
-                        <td>
-                          {/* <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
+                        {/* <td>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
-                          </Button> */}
-                          {/* &nbsp;
+                          </Button>
+                          &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button> */}
-                        </td>
+                          </Button>
+                        </td> */}
                       </tr>
                     );
                   })}

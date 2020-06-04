@@ -8,27 +8,27 @@ namespace Api.Core.Entities
     {
         public CertificateStatus() : base()
         {
-            NationalDefenseAndSecurityCertificateStatus = false;
-            PhysicalEducationCertificateStatus = false;
-            LanguageCertificateStatus = false;
-            InformaticsCertificateStatus = false;
-            ExtracurricularPointStatus = false;
+            NationalDefenseAndSecurity = false;
+            PhysicalEducation = false;
+            Language = false;
+            Informatics = false;
+            ExtracurricularPoint = false;
         }
 
         [Required]
-        public bool NationalDefenseAndSecurityCertificateStatus { get; set; }
+        public bool NationalDefenseAndSecurity { get; set; }
 
         [Required]
-        public bool PhysicalEducationCertificateStatus { get; set; }
+        public bool PhysicalEducation { get; set; }
 
         [Required]
-        public bool LanguageCertificateStatus { get; set; }
+        public bool Language { get; set; }
 
         [Required]
-        public bool InformaticsCertificateStatus { get; set; }
+        public bool Informatics { get; set; }
 
         [Required]
-        public bool ExtracurricularPointStatus { get; set; }
+        public bool ExtracurricularPoint { get; set; }
 
 
         public Student Student { get; set; }

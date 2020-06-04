@@ -17,7 +17,6 @@ namespace Api.Core.Business.Models.Reports
         [Required]
         public string Content { get; set; }
 
-        [Required]
         public string Response { get; set; }
 
         [Required]

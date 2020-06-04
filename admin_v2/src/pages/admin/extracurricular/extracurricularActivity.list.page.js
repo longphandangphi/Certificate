@@ -22,8 +22,8 @@ class ExtracurricularActivityListPage extends Component {
       item: {},
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultlimit
       },
       query: ""
     };
@@ -92,7 +92,7 @@ class ExtracurricularActivityListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -112,7 +112,7 @@ class ExtracurricularActivityListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getExtracurricularActivityList()
@@ -353,16 +353,16 @@ class ExtracurricularActivityListPage extends Component {
         <Row>
           <Col xs="12">
             <div className="flex-container header-table">
-              <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
+              {/* <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
                 Create
-              </Button>
+              </Button> */}
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>

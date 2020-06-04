@@ -30,8 +30,8 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
-        <AppNavbarBrand
-          full={{ src: logo, width: 150, height: 25, alt: "Logo" }} // 85-25
+        <AppNavbarBrand 
+          full={{ src: logo, width: 150, height: 25, alt: "Logo" , paddingLeft: 10}} // 85-25
           minimized={{ src: sygnet, width: 30, height: 30, alt: "CoreUI Logo" }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
@@ -42,7 +42,7 @@ class DefaultHeader extends Component {
           </NavItem>
         </Nav> */}
         <Nav className="ml-auto" navbar>
-          <NavItem className="d-md-down-none">
+          {/* <NavItem className="d-md-down-none">
             <NavLink href="#">
               <i className="icon-bell" />
               <Badge pill color="danger">
@@ -59,8 +59,8 @@ class DefaultHeader extends Component {
             <NavLink href="#">
               <i className="icon-location-pin" />
             </NavLink>
-          </NavItem>
-          <UncontrolledDropdown direction="down">
+          </NavItem> */}
+          <UncontrolledDropdown direction="down" style={{marginRight: 15}}>
             <DropdownToggle nav>
               <img
                 src={"../../assets/img/avatars/no-avatar.jpg"}
@@ -78,7 +78,7 @@ class DefaultHeader extends Component {
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
-        <AppAsideToggler className="d-md-down-none" />
+        {/* <AppAsideToggler className="d-md-down-none" /> */}
         <AppAsideToggler className="d-lg-none" mobile />
       </React.Fragment>
     );

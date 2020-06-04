@@ -6,27 +6,27 @@ namespace Api.Core.Business.Models.CertificateStatuses
     public class CertificateStatusManageModel
     {
         [Required]
-        public bool NationalDefenseAndSecurityCertificateStatus { get; set; }
+        public bool NationalDefenseAndSecurity { get; set; }
 
         [Required]
-        public bool PhysicalEducationCertificateStatus { get; set; }
+        public bool PhysicalEducation { get; set; }
 
         [Required]
-        public bool LanguageCertificateStatus { get; set; }
+        public bool Language { get; set; }
 
         [Required]
-        public bool InformaticsCertificateStatus { get; set; }
+        public bool Informatics { get; set; }
         
         [Required]
-        public bool ExtracurricularPointStatus { get; set; }
+        public bool ExtracurricularPoint { get; set; }
 
         public void GetCertificateStatusFromModel(CertificateStatus certificateStatus)
         {
-            certificateStatus.NationalDefenseAndSecurityCertificateStatus = NationalDefenseAndSecurityCertificateStatus;
-            certificateStatus.PhysicalEducationCertificateStatus = PhysicalEducationCertificateStatus;
-            certificateStatus.LanguageCertificateStatus = LanguageCertificateStatus;
-            certificateStatus.InformaticsCertificateStatus = InformaticsCertificateStatus;
-            certificateStatus.ExtracurricularPointStatus = ExtracurricularPointStatus;
+            certificateStatus.NationalDefenseAndSecurity = NationalDefenseAndSecurity;
+            certificateStatus.PhysicalEducation = PhysicalEducation;
+            certificateStatus.Language = Language;
+            certificateStatus.Informatics = Informatics;
+            certificateStatus.ExtracurricularPoint = ExtracurricularPoint;
         }
 
         //validate trung ten?

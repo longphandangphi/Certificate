@@ -8,6 +8,8 @@ import ArticleListOfCategory from './components/projects/ArticleListOfCategory'
 import ArticleListOfAllCategory from './components/projects/ArticleListOfAllCategory'
 import SignIn from './components/auth/SignIn'
 import Extracurricular from './components/projects/Extracurricular'
+import StandardOfCertificate from './components/projects/StandardOfCertificate'
+import Report from './components/projects/Report'
 
 class App extends Component {
   render(){
@@ -22,6 +24,8 @@ class App extends Component {
             <Route path="/category/:category_id" component={ArticleListOfCategory}/>
             <Route path="/certificateStatus" component={CertificateStatus}/>
             <Route path="/extracurricular" component={Extracurricular}/>
+            <Route path="/standardOfCertificate" component={StandardOfCertificate}/>
+            <Route path="/report" component={Report}/>
           </Switch>
           <Footer />
         </div>

@@ -250,7 +250,7 @@ class FacultyListPage extends Component {
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>
@@ -271,10 +271,10 @@ class FacultyListPage extends Component {
                           <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
-                          &nbsp;
+                          {/* &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );

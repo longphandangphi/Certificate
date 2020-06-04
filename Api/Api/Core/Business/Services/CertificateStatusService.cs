@@ -84,7 +84,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "NationalDefenseAndSecurityCertificateStatus";
+                matchedPropertyName = "NationalDefenseAndSecurity";
             }
 
             var type = typeof(CertificateStatusViewModel);

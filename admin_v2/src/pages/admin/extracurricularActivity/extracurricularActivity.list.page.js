@@ -23,8 +23,8 @@ class ExtracurricularActivityListPage extends Component {
       item: {}, 
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultlimit
       },
       query: ""
     };
@@ -107,7 +107,7 @@ class ExtracurricularActivityListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -127,7 +127,7 @@ class ExtracurricularActivityListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getExtracurricularActivityList()
@@ -218,7 +218,7 @@ class ExtracurricularActivityListPage extends Component {
     if (id) {
       this.updateExtracurricularActivity();
     } else {
-      this.addExtracurricular();
+      this.addExtracurricularActivity();
     }
   };
 
@@ -228,11 +228,11 @@ class ExtracurricularActivityListPage extends Component {
     this.saveExtracurricularActivity();
   }
 
-  onSubmitAssign(e) {
-    e.preventDefault();
-    this.form.validateAll();
-    this.saveExtracurricular();
-  }
+  // onSubmitAssign(e) {
+  //   e.preventDefault();
+  //   this.form.validateAll();
+  //   this.saveExtracurricular();
+  // }
 
   componentDidMount() {
     this.getExtracurricularActivityList();
@@ -369,7 +369,7 @@ class ExtracurricularActivityListPage extends Component {
           <div className="modal-wrapper">
             <div className="form-wrapper">
               <Form
-                onSubmit={e => this.onSubmit(e)}
+                onSubmit={e => this.onSubmitAssign(e)}
                 ref={c => {
                   this.form = c;
                 }}
@@ -430,7 +430,7 @@ class ExtracurricularActivityListPage extends Component {
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>
@@ -465,10 +465,10 @@ class ExtracurricularActivityListPage extends Component {
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
                           </Button> */}
-                          &nbsp;
+                          {/* &nbsp;
                           <Button className="btn-sm" color="success" onClick={() => this.showAssignModal(item)}>
                             Assign Student
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );

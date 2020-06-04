@@ -24,8 +24,8 @@ class ClassListPage extends Component {
       faculties: [],
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultTake
       },
       query: ""
     };
@@ -89,7 +89,7 @@ class ClassListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -109,7 +109,7 @@ class ClassListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getClassList()
@@ -285,7 +285,7 @@ class ClassListPage extends Component {
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>

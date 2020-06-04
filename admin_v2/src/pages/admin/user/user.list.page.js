@@ -287,12 +287,12 @@ class UserListPage extends Component {
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>
                   <th>Name</th>
-                  <th>FullName</th>
+                  <th>FullName</th> 
                   <th>Email</th>
                   <th>Roles</th>
                   <th>Action</th>

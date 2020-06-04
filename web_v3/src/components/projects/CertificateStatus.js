@@ -8,8 +8,9 @@ import 'antd/dist/antd.css'
 class CertificateStatus extends Component {
     state = {
         certificateStatus : {},
-        student: {}
+        student: {},
     }
+
     componentDidMount() {
         if(cookie.load('token') === undefined){
             this.props.history.push("/signin");
@@ -20,17 +21,18 @@ class CertificateStatus extends Component {
                     certificateStatus: res
                 })
             });
-            RequestHelper.get(`https://localhost:44319/api/students/self`)
-            .then(res => {
-                this.setState({
-                    student: res
-                })
-            });
+            setTimeout(() => {
+                RequestHelper.get(`https://localhost:44319/api/students/self`)
+                .then(res => {
+                    this.setState({
+                        student: res
+                    })
+                });
+            },100)
         }
     }
 
     render() {
-        console.log(this.state,"LOL");
         const { certificateStatus, student } = this.state;
         return (
             <div>
@@ -39,7 +41,7 @@ class CertificateStatus extends Component {
                     <div className="row" style={{marginTop: 15}}>
                         <div className="col l9 s12">
                             
-                            <h5 className="center">TRẠNG THÁI CHỨNG CHỈ</h5>
+                            <h5 className="center cyan-text ">TRẠNG THÁI CHỨNG CHỈ</h5>
 
                             <div className="row">
                                 <div className="col s12">
@@ -61,11 +63,11 @@ class CertificateStatus extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <table>
+                            <table className="highlight">
                                 <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Điều kiện yêu cầu<a href="chi"> (Xem chi tiết)</a></th>
+                                    <th>Điều kiện yêu cầu<a href="/standardOfCertificate"> (Xem chi tiết)</a></th>
                                     <th>Trạng thái của bạn</th>
                                 </tr>
                                 </thead>
@@ -78,9 +80,11 @@ class CertificateStatus extends Component {
                                     </td>
                                     <td>
                                         {
-                                            certificateStatus.nationalDefenseAndSecurityCertificateStatus 
-                                            ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
-                                            : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>)
+                                            student.specialty && student.specialty.standardOfCertificate.isRequireNationalDefenseAndSecurity
+                                            ?   (certificateStatus.nationalDefenseAndSecurityCertificateStatus 
+                                                ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
+                                                : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>))
+                                            :   (<span><i className="material-icons blue-text">indeterminate_check_box</i> Không bắt buộc</span>)
                                         }
                                     </td>
                                 </tr>
@@ -90,10 +94,12 @@ class CertificateStatus extends Component {
                                         {student.specialty && student.specialty.standardOfCertificate.physicalEducationReference}
                                     </td>
                                     <td>
-                                        {
-                                            certificateStatus.physicalEducationCertificateStatus 
-                                            ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
-                                            : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>)
+                                        {   
+                                            student.specialty && student.specialty.standardOfCertificate.isRequirePhysicalEducation
+                                            ?   (certificateStatus.physicalEducationCertificateStatus 
+                                                ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
+                                                : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>))
+                                            :   (<span><i className="material-icons blue-text">indeterminate_check_box</i> Không bắt buộc</span>)
                                         }
                                     </td>
                                 </tr>
@@ -104,9 +110,11 @@ class CertificateStatus extends Component {
                                     </td>
                                     <td>
                                         {
-                                            certificateStatus.languageCertificateStatus 
-                                            ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
-                                            : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>)
+                                            student.specialty && student.specialty.standardOfCertificate.isRequireLanguage
+                                            ?   (certificateStatus.languageCertificateStatus 
+                                                ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
+                                                : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>))
+                                            :   (<span><i className="material-icons blue-text">indeterminate_check_box</i> Không bắt buộc</span>)
                                         }
 
                                     </td>
@@ -118,9 +126,11 @@ class CertificateStatus extends Component {
                                     </td>
                                     <td>
                                         {
-                                            certificateStatus.informaticsCertificateStatus 
-                                            ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
-                                            : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>)
+                                            student.specialty && student.specialty.standardOfCertificate.isRequireInformatics
+                                            ? (certificateStatus.informaticsCertificateStatus 
+                                                ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
+                                                : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>))
+                                            :   (<span><i className="material-icons blue-text">indeterminate_check_box</i> Không bắt buộc</span>)
                                         }
                                     </td>
                                 </tr>
@@ -131,12 +141,15 @@ class CertificateStatus extends Component {
                                     </td>
                                     <td>
                                         {
-                                            certificateStatus.extracurricularPointStatus 
-                                            ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
-                                            : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>)
+                                            student.specialty && student.specialty.standardOfCertificate.isRequireExtracurricularPoint
+                                            ?   (certificateStatus.extracurricularPointStatus 
+                                                ? ( <span><i className="material-icons green-text">check_box</i> Đã hoàn thành</span>) 
+                                                : ( <span><i className="material-icons red-text">cancel</i> Chưa hoàn thành</span>)) 
+                                            :   (<span><i className="material-icons blue-text">indeterminate_check_box</i> Không bắt buộc</span>)
                                         }
                                     </td>
                                 </tr>
+                                
                                 </tbody>
                             </table>
                         </div>

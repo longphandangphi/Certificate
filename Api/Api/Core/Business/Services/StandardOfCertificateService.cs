@@ -18,6 +18,7 @@ namespace Api.Core.Business.Services
         //xem thêm sửa 
         Task<PagedList<StandardOfCertificateViewModel>> ListStandardOfCertificateAsync(RequestListViewModel requestListViewModel);
         Task<StandardOfCertificateViewModel> GetStandardOfCertificateByIdAsync(Guid? id);
+        Task<StandardOfCertificateViewModel> GetStandardOfCertificateBySelfIdAsync(Guid? id);
         Task<ResponseModel> CreateStandardOfCertificateAsync(StandardOfCertificateManageModel standardOfCertificateManagerModel);
         Task<ResponseModel> UpdateStandardOfCertificateAsync(Guid id, StandardOfCertificateManageModel standardOfCertificateManagerModel);
 
@@ -89,6 +90,12 @@ namespace Api.Core.Business.Services
             var standardOfCertificate = await _standardOfCertificateRepository.GetByIdAsync(id);
             return new StandardOfCertificateViewModel(standardOfCertificate);
         }
+        public async Task<StandardOfCertificateViewModel> GetStandardOfCertificateBySelfIdAsync(Guid? id)
+        {
+            var standardOfCertificate = await _standardOfCertificateRepository.GetByIdAsync(id);
+            return new StandardOfCertificateViewModel(standardOfCertificate);
+        }
+
 
         public async Task<ResponseModel> CreateStandardOfCertificateAsync(StandardOfCertificateManageModel standardOfCertificateManageModel)
         {

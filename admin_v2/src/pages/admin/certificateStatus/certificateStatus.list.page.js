@@ -92,31 +92,31 @@ class CertificateStatusListPage extends Component {
 
   onNationalDefenseAndSecurityChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.nationalDefenseAndSecurityCertificateStatus = value;
+    item.nationalDefenseAndSecurity = value;
     this.setState({ item });
   };
 
   onPhysicalEducationChange  = value => {
     let item = Object.assign({}, this.state.item);
-    item.physicalEducationCertificateStatus = value;
+    item.physicalEducation = value;
     this.setState({ item });
   };
 
   onLanguageChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.languageCertificateStatus = value;
+    item.language = value;
     this.setState({ item });
   };
 
   onInformaticsChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.informaticsCertificateStatus = value;
+    item.informatics = value;
     this.setState({ item });
   };
 
   onExtracurricularPointChange = value => {
     let item = Object.assign({}, this.state.item);
-    item.extracurricularPointStatus = value;
+    item.extracurricularPoint = value;
     this.setState({ item });
   };
 
@@ -158,19 +158,19 @@ class CertificateStatusListPage extends Component {
   };
 
   updateCertificateStatus = async () => {
-    const { id, nationalDefenseAndSecurityCertificateStatus, 
-      physicalEducationCertificateStatus, 
-      languageCertificateStatus, 
-      informaticsCertificateStatus,
-      extracurricularPointStatus
+    const { id, nationalDefenseAndSecurity, 
+      physicalEducation, 
+      language, 
+      informatics,
+      extracurricularPoint
     } = this.state.item;
 
     const certificateStatus = { id, 
-      nationalDefenseAndSecurityCertificateStatus, 
-      physicalEducationCertificateStatus, 
-      languageCertificateStatus, 
-      informaticsCertificateStatus,
-      extracurricularPointStatus
+      nationalDefenseAndSecurity, 
+      physicalEducation, 
+      language, 
+      informatics,
+      extracurricularPoint
     };
     try {
       await ApiCertificateStatus.updateCertificateStatus(certificateStatus);
@@ -238,10 +238,10 @@ class CertificateStatusListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="nationalDefenseAndSecurityCertificateStatus"
+                        name="nationalDefenseAndSecurity"
                         title="National Defense And Security Status"
                         defaultValue={IS_COMPLETE.filter(comp => {
-                          if (comp.id === item.nationalDefenseAndSecurityCertificateStatus) {
+                          if (comp.id === item.nationalDefenseAndSecurity) {
                             return true; 
                           }
                           return false;
@@ -261,10 +261,10 @@ class CertificateStatusListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="physicalEducationCertificateStatus"
+                        name="physicalEducation"
                         title="Physical Education Certificate Status"
                         defaultValue={IS_COMPLETE.filter(comp => {
-                          if (comp.id === item.physicalEducationCertificateStatus) {
+                          if (comp.id === item.physicalEducation) {
                             return true; 
                           }
                           return false;
@@ -284,10 +284,10 @@ class CertificateStatusListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="languageCertificateStatus"
+                        name="language"
                         title="Language Certificate Status"
                         defaultValue={IS_COMPLETE.filter(comp => {
-                          if (comp.id === item.languageCertificateStatus) {
+                          if (comp.id === item.language) {
                             return true; 
                           }
                           return false;
@@ -307,10 +307,10 @@ class CertificateStatusListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="informaticsCertificateStatus"
+                        name="informatics"
                         title="Informatics Certificate Status"
                         defaultValue={IS_COMPLETE.filter(comp => {
-                          if (comp.id === item.informaticsCertificateStatus) {
+                          if (comp.id === item.informatics) {
                             return true; 
                           }
                           return false;
@@ -329,10 +329,10 @@ class CertificateStatusListPage extends Component {
                   <Col>
                     <FormGroup>
                       <SelectInput
-                        name="extracurricularPointStatus"
+                        name="extracurricularPoint"
                         title="Extracurricular Point Status"
                         defaultValue={IS_COMPLETE.filter(comp => {
-                          if (comp.id === item.extracurricularPointStatus) {
+                          if (comp.id === item.extracurricularPoint) {
                             return true; 
                           }
                           return false;
@@ -373,7 +373,7 @@ class CertificateStatusListPage extends Component {
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>
@@ -396,20 +396,20 @@ class CertificateStatusListPage extends Component {
                         <td>{item.id}</td>
                         <td>{item.lastName + " " + item.firstName}</td>
 
-                        <td className={item.certificateStatus.nationalDefenseAndSecurityCertificateStatus ? "text-success" : "text-danger"}>
-                          {item.certificateStatus.nationalDefenseAndSecurityCertificateStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.nationalDefenseAndSecurity ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.nationalDefenseAndSecurity ? "Completed" : "Not yet"}
                         </td>
-                        <td className={item.certificateStatus.physicalEducationCertificateStatus ? "text-success" : "text-danger"}>
-                          {item.certificateStatus.physicalEducationCertificateStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.physicalEducation ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.physicalEducation ? "Completed" : "Not yet"}
                         </td>
-                        <td className={item.certificateStatus.languageCertificateStatus ? "text-success" : "text-danger"}>
-                          {item.certificateStatus.languageCertificateStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.language ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.language ? "Completed" : "Not yet"}
                         </td>
-                        <td className={item.certificateStatus.informaticsCertificateStatus ? "text-success" : "text-danger"}>
-                          {item.certificateStatus.informaticsCertificateStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.informatics ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.informatics ? "Completed" : "Not yet"}
                         </td>
-                        <td className={item.certificateStatus.extracurricularPointStatus ? "text-success" : "text-danger"}>
-                          {item.certificateStatus.extracurricularPointStatus ? "Completed" : "Not yet"}
+                        <td className={item.certificateStatus.extracurricularPoint ? "text-success" : "text-danger"}>
+                          {item.certificateStatus.extracurricularPoint ? "Completed" : "Not yet"}
                         </td>
 
                         <td>

@@ -12,6 +12,10 @@ import SelectInput from "../../../components/common/select-input";
 import { getStandardCertificateList } from "../../../actions/standardCertificate.list.action";
 import ApiStandardCertificate from "../../../api/api.standardCertificate";
 import { pagination, IS_REQUIRE } from "../../../constant/app.constant";
+import CKEditorInput from "../../../components/common/ckeditor-input";
+import ReactHtmlParser from "react-html-parser";
+import { FcHighPriority, FcMinus} from 'react-icons/fc';
+
 
 class StandardCertificateListPage extends Component {
   constructor(props) {
@@ -112,6 +116,12 @@ class StandardCertificateListPage extends Component {
   onSearchChange = e => {
     e.persist();
     this.delayedCallback(e);
+  };
+
+  onLanguageReferenceChange = e => {
+    let item = Object.assign({}, this.state.item);
+    item.languageReference = e.editor.getData();
+    this.setState({ item });
   };
 
   handlePageClick = e => {
@@ -496,7 +506,7 @@ class StandardCertificateListPage extends Component {
                   </Col>
                 </Row>
 
-                <Row>
+                {/* <Row>
                   <Col>
                     <FormGroup>
                       <ValidationInput
@@ -508,6 +518,14 @@ class StandardCertificateListPage extends Component {
                         value={item.languageReference === "" ? "none" : item.languageReference}
                         onChange={this.onModelChange}
                       />
+                    </FormGroup>
+                  </Col>
+                </Row> */}
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <CKEditorInput title="Language reference" name="languageReference" data={item.languageReference} onChange={this.onLanguageReferenceChange} />
                     </FormGroup>
                   </Col>
                 </Row>
@@ -572,7 +590,7 @@ class StandardCertificateListPage extends Component {
 
         <Row>
           <Col xs="12">
-            <div className="flex-container header-table">
+            <div className="flex-container header-table ">
               <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
                 Create
               </Button>
@@ -582,26 +600,26 @@ class StandardCertificateListPage extends Component {
                 placeholder="Searching..."
               />
             </div>
-            <Table className="admin-table" responsive bordered>
+            <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>
                   <th>Standard Certificate name</th>
 
-                  <th style={{ color: "#2ECCFA" }}>Physical Education</th>
-                  <th style={{ color: "#2ECCFA" }}>Reference Content</th>
+                  <th style={{ color: "#2ECCFA" , width: '15%'}}>Physical Education</th>
+                  {/* <th style={{ color: "#2ECCFA" }}>Reference Content</th> */}
 
-                  <th style={{ color: "#2EFE64" }}>National Defense And Security</th>
-                  <th style={{ color: "#2EFE64" }}>Reference Content</th>
+                  <th style={{ color: "#2EFE64" , width: '15%'}}>National Defense And Security</th>
+                  {/* <th style={{ color: "#2EFE64" }}>Reference Content</th> */}
 
-                  <th style={{ color: "#FACC2E" }}>Informatics</th>
-                  <th style={{ color: "#FACC2E" }}>Reference Content</th>
+                  <th style={{ color: "#FACC2E" , width: '15%'}}>Informatics</th>
+                  {/* <th style={{ color: "#FACC2E" }}>Reference Content</th> */}
 
-                  <th style={{ color: "#FE2EF7" }}>Language</th>
-                  <th style={{ color: "#FE2EF7" }}>Reference Content</th>
+                  <th style={{ color: "#FE2EF7" , width: '15%'}}>Language</th>
+                  {/* <th style={{ color: "#FE2EF7" }}>Reference Content</th> */}
 
-                  <th style={{ color: "#FA5858" }}>Extracurricular Point</th>
-                  <th style={{ color: "#FA5858" }}>Reference Content</th>
+                  <th style={{ color: "#FA5858" , width: '15%'}}>Extracurricular Point</th>
+                  {/* <th style={{ color: "#FA5858" }}>Reference Content</th> */}
 
                   <th>Action</th>
                 </tr>
@@ -614,43 +632,53 @@ class StandardCertificateListPage extends Component {
                         <td>{index + 1}</td>
                         <td>{item.name}</td>
 
-                        <td style={{ backgroundColor: "#EFFBFB" }}>
-                          {item.isRequirePhysicalEducation ? "Require" : "Not require"}
-                        </td>
-                        <td style={{ backgroundColor: "#EFFBFB" }}>
+                        <td>
+                          {item.isRequirePhysicalEducation ? (<span><FcHighPriority/>&nbsp;Require</span>) : (<span><FcMinus/>&nbsp;Not require</span>)}
+                          <hr/>
                           {item.physicalEducationReference}
                         </td>
+                        {/* <td style={{ backgroundColor: "#EFFBFB" }}>
+                          {item.physicalEducationReference}
+                        </td> */}
 
-                        <td style={{ backgroundColor: "#F2FBEF" }}>
-                          {item.isRequireNationalDefenseAndSecurity ? "Require" : "Not require"}
-                        </td>
-                        <td style={{ backgroundColor: "#F2FBEF" }}>
+                        <td>
+                          {item.isRequireNationalDefenseAndSecurity ? (<span><FcHighPriority/>&nbsp;Require</span>) : (<span><FcMinus/>&nbsp;Not require</span>)}
+                          <hr/>
                           {item.nationalDefenseAndSecurityReference}
                         </td>
+                        {/* <td style={{ backgroundColor: "#F2FBEF" }}>
+                          {item.nationalDefenseAndSecurityReference}
+                        </td> */}
 
-                        <td style={{ backgroundColor: "#FBFBEF" }}>
-                          {item.isRequireInformatics ? "Require" : "Not require"}
+                        <td>
+                          {item.isRequireInformatics ? (<span><FcHighPriority/>&nbsp;Require</span>) : (<span><FcMinus/>&nbsp;Not require</span>)}
+                          <hr/>
+                          {item.informaticsReference}
                         </td>
-                        <td style={{ backgroundColor: "#FBFBEF" }}>{item.informaticsReference}</td>
+                        {/* <td style={{ backgroundColor: "#FBFBEF" }}>{item.informaticsReference}</td> */}
 
-                        <td style={{ backgroundColor: "#F8EFFB" }}>
-                          {item.isRequireLanguage ? "Require" : "Not require"}
+                        <td>
+                          {item.isRequireLanguage ? (<span><FcHighPriority/>&nbsp;Require</span>) : (<span><FcMinus/>&nbsp;Not require</span>)}
+                          <hr/>
+                          {ReactHtmlParser(item.languageReference)}
                         </td>
-                        <td style={{ backgroundColor: "#F8EFFB" }}>{item.languageReference}</td>
+                        {/* <td style={{ backgroundColor: "#F8EFFB" }}>{ReactHtmlParser(item.languageReference)}</td> */}
 
-                        <td style={{ backgroundColor: "#F8E0E0" }}>
-                          {item.isRequireExtracurricularPoint ? "Require" : "Not require"}
+                        <td>
+                          {item.isRequireExtracurricularPoint ? (<span><FcHighPriority/>&nbsp;Require</span>) : (<span><FcMinus/>&nbsp;Not require</span>)}
+                          <hr/>
+                          {item.extracurricularPointReference }
                         </td>
-                        <td style={{ backgroundColor: "#F8E0E0" }}>{item.extracurricularPointReference }</td>
+                        {/* <td style={{ backgroundColor: "#F8E0E0" }}>{item.extracurricularPointReference }</td> */}
 
                         <td>
                           <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
-                          &nbsp;
+                          {/* &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );

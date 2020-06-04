@@ -95,7 +95,7 @@ class Login extends Component {
                       <Input
                         name="email"
                         type="text"
-                        placeholder="Username"
+                        placeholder="Email"
                         autoComplete="email"
                         onChange={this.onChange}
                         onKeyPress={this.keyPressed}

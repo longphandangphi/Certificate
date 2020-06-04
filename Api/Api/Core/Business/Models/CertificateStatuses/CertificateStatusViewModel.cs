@@ -21,11 +21,11 @@ namespace Api.Core.Business.Models.CertificateStatuses
             if (certificateStatus != null)
             {
                 Id = certificateStatus.Id;
-                NationalDefenseAndSecurityCertificateStatus = certificateStatus.NationalDefenseAndSecurityCertificateStatus;
-                PhysicalEducationCertificateStatus = certificateStatus.PhysicalEducationCertificateStatus;
-                LanguageCertificateStatus = certificateStatus.LanguageCertificateStatus;
-                InformaticsCertificateStatus = certificateStatus.InformaticsCertificateStatus;
-                ExtracurricularPointStatus = certificateStatus.ExtracurricularPointStatus;
+                NationalDefenseAndSecurity = certificateStatus.NationalDefenseAndSecurity;
+                PhysicalEducation = certificateStatus.PhysicalEducation;
+                Language = certificateStatus.Language;
+                Informatics = certificateStatus.Informatics;
+                ExtracurricularPoint = certificateStatus.ExtracurricularPoint;
                 //var studentRepository = IoCHelper.GetInstance<IRepository<Student>>();
                 //StudentId = studentRepository.GetAll().FirstOrDefault(x => x.CertificateStatusId == Id);
                 //StudentViewModel = new StudentViewModel(studentRepository.GetAll().FirstOrDefault(x => x.CertificateStatusId == Id));
@@ -36,15 +36,15 @@ namespace Api.Core.Business.Models.CertificateStatuses
 
         public Guid Id { get; set; }
 
-        public bool NationalDefenseAndSecurityCertificateStatus { get; set; }
+        public bool NationalDefenseAndSecurity { get; set; }
 
-        public bool PhysicalEducationCertificateStatus { get; set; }
+        public bool PhysicalEducation { get; set; }
 
-        public bool LanguageCertificateStatus { get; set; }
+        public bool Language { get; set; }
 
-        public bool InformaticsCertificateStatus { get; set; }
+        public bool Informatics { get; set; }
 
-        public bool ExtracurricularPointStatus { get; set; }
+        public bool ExtracurricularPoint { get; set; }
 
         //public StudentViewModel StudentViewModel { get; set; }
 
