@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
   GET_STUDENT_LIST,
+  GET_STUDENT_LIST_2,
   getStudentListSuccess,
   getStudentListFailed,
   GET_DELETED_STUDENT_LIST,
@@ -20,6 +21,19 @@ function* getStudentList(action) {
 
 export function* watchStudentListSagasAsync() {
   yield takeLatest(GET_STUDENT_LIST, getStudentList);
+}
+
+function* getStudentList2(action) {
+  try {
+    const payload = yield call(ApiStudent.getStudentList2, action.payload.params);
+    yield put(getStudentListSuccess(payload));
+  } catch (error) {
+    yield put(getStudentListFailed());
+  }
+}
+
+export function* watchStudentListSagasAsync2() {
+  yield takeLatest(GET_STUDENT_LIST_2, getStudentList2);
 }
 
 function* getDeletedStudentList(action) {

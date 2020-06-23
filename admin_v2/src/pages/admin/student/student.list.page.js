@@ -25,7 +25,7 @@ class StudentListPage extends Component {
       classes: [],
       specialties: [],
       sortByClass: [],
-      sortBelowPoint: 50,
+      sortBelowPoint: 1000,
       itemId: null,
       params: {
         offset: pagination.initialPage,
@@ -167,21 +167,21 @@ class StudentListPage extends Component {
   };
 
   addStudent = async () => {
-    console.log("add: state ==================");
-    console.log(this.state);
+    // console.log("add: state ==================");
+    // console.log(this.state);
     const { username, firstName, lastName, email, password, placeOfBirth, classId, specialtyId } = this.state.item;
     const student = { username, firstName, lastName, email, password, placeOfBirth, classId, specialtyId };
     try {
       let response = await ApiStudent.postStudent(student);
-      console.log("response");
-      console.log(response);
+      // console.log("response");
+      // console.log(response);
       this.toggleModalInfo();
       this.getStudentList();
       toastSuccess("The student has been created successfully");
     } catch (err) {
-      console.log("err");
-      console.log(err);
-      toastError("Leave no information blank, please!");
+      // console.log("err");
+      // console.log(err);
+      toastError("Create fail, please try again!");
     }
   };
 
@@ -233,7 +233,8 @@ class StudentListPage extends Component {
   render() {
     const { isShowDeleteModal, isShowInfoModal, item, classes, specialties, sortByClass, sortBelowPoint } = this.state;
     const { studentPagedList } = this.props.studentPagedListReducer;
-    const { sources, pageIndex, totalPages } = studentPagedList;
+    const sources = studentPagedList;
+    const { pageIndex, totalPages } = studentPagedList;
     console.log(sources,"SOURCE");
     const hasResults = sources && sources.length > 0;
     return (
@@ -354,7 +355,7 @@ class StudentListPage extends Component {
                         showSearch={true}
                         style={{display: "block"}}
                         required={true}
-                        onChange={this.onsClassChange}
+                        onChange={this.onClassChange}
                         options={classes}
                         valueField="id"
                         nameField="name"
@@ -434,7 +435,7 @@ class StudentListPage extends Component {
               </div> */}
               <input
                 onChange={this.onSortBelow}
-                defaultValue= "50"
+                defaultValue= "1000"
                 className="form-control form-control-sm"
                 placeholder="Below Point.."
                 type="number"
@@ -490,7 +491,7 @@ class StudentListPage extends Component {
                   })}
               </tbody>
             </Table>
-            {hasResults && totalPages > 1 && (
+            {/* {hasResults && totalPages > 1 && (
               <Pagination
                 initialPage={0}
                 totalPages={totalPages}
@@ -498,7 +499,7 @@ class StudentListPage extends Component {
                 pageRangeDisplayed={2}
                 onPageChange={this.handlePageClick}
               />
-            )}
+            )} */}
           </Col>
         </Row>
       </div>

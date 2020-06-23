@@ -247,7 +247,7 @@ class FacultyListPage extends Component {
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Searching..."
+                placeholder="Faculty name..."
               />
             </div>
             <Table className="admin-table table-hover table-striped" responsive bordered>
@@ -268,7 +268,7 @@ class FacultyListPage extends Component {
                         <td>{item.name}</td>
                         <td>{item.description}</td>
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
                           {/* &nbsp;

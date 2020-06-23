@@ -14,6 +14,7 @@ import ApiCertificateStatus from "../../../api/api.certificateStatus";
 //import ApiStudent from "../../../api/api.student";
 import { pagination, IS_COMPLETE } from "../../../constant/app.constant";
 import SelectInput from "../../../components/common/select-input";
+import ApiClass from "../../../api/api.class";
 
 class CertificateStatusListPage extends Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class CertificateStatusListPage extends Component {
       isShowInfoModal: false,
       item: {},
       itemId: null,
+      sortByClass: [],
+      classes: [],
       params: {
         offset: pagination.initialPage,
         limit: pagination.defaultTake
@@ -120,6 +123,11 @@ class CertificateStatusListPage extends Component {
     this.setState({ item });
   };
 
+  onSortByClassChange = (e) => {
+    console.log(e,"Sort By Class");
+    this.setState({ sortByClass : e});
+  }
+
   handlePageClick = e => {
     this.setState(
       {
@@ -210,12 +218,22 @@ class CertificateStatusListPage extends Component {
 
   componentDidMount() {
     this.getStudentList();
+    this.getClassList();
   }
 
+  getClassList = () => {
+    ApiClass.getAllClass().then(values => {
+      this.setState({ 
+        classes: values.sources
+       });
+    });
+  };
+
   render() {
-    const { isShowDeleteModal, isShowInfoModal, item } = this.state;
+    const { isShowDeleteModal, isShowInfoModal, item, classes, sortByClass } = this.state;
     const { studentPagedList } = this.props.studentPagedListReducer;
-    const { sources, pageIndex, totalPages } = studentPagedList;
+    const sources =  studentPagedList;
+    const { pageIndex, totalPages } = studentPagedList;
     const hasResults = sources && sources.length > 0;
     return (
       <div className="animated fadeIn">
@@ -370,7 +388,20 @@ class CertificateStatusListPage extends Component {
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Searching..."
+                placeholder="StudentId..."
+              />
+              <SelectInput
+                placeholder="--Class--"
+                name="sortByClass"
+                title="Class:"
+                defaultValue={classes ? classes.id : undefined}
+                showSearch={true}
+                style={{ display: "block" }}
+                //required={true}
+                onChange={this.onSortByClassChange}
+                options={classes}
+                valueField="id"
+                nameField="name"
               />
             </div>
             <Table className="admin-table table-hover table-striped" responsive bordered>
@@ -379,17 +410,28 @@ class CertificateStatusListPage extends Component {
                   <th></th>
                   <th>Student ID</th>
                   <th>Student Name</th>
-                  <th>Giáo dục Quốc phòng</th>
-                  <th>Giáo dục Thể chất</th>
-                  <th>Ngoại ngữ</th>
-                  <th>Tin học</th>
-                  <th>Điểm ngoại khóa</th>
+                  <th>National Defense And Security</th>
+                  <th>PhysicalEducation</th>
+                  <th>Language</th>
+                  <th>Informatics</th>
+                  <th>Extracurricular Point</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {hasResults &&
-                  sources.map((item, index) => {
+                  sources
+                  .filter(student => {
+                    if( student.class.id.includes(sortByClass)){
+                      console.log("TRUE");
+                      return true;
+                    }
+                    else {
+                      console.log("False");
+                      return false;
+                    }
+                  }) 
+                  .map((item, index) => {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>

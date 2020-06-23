@@ -4,6 +4,7 @@ import Navbar from '../layout/Navbar'
 import cookie from 'react-cookies'
 import RequestHelper from '../helpers/request.helper'
 import 'antd/dist/antd.css'
+import ReactHtmlParser from "react-html-parser";
 
 class StandardOfCertificate extends Component {
     state = {
@@ -152,7 +153,7 @@ class StandardOfCertificate extends Component {
                                                                 <p>Chi tiết:</p>
                                                             </div>
                                                             <div className="col s8">
-                                                                <p>{student.specialty && standardOfCertificate.languageReference}</p>
+                                                                <p>{student.specialty && ReactHtmlParser(standardOfCertificate.languageReference)}</p>
                                                             </div>
                                                         </div>
                                                     </div>

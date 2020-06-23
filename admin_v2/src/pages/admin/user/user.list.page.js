@@ -24,8 +24,8 @@ class UserListPage extends Component {
       roles: [],
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultTake
       },
       query: ""
     };
@@ -56,10 +56,13 @@ class UserListPage extends Component {
   };
 
   showAddNew = () => {
-    let title = "Create Item";
+    let title = "Create a new Admin";
     let item = {
-      name: "",
-      roles: ""
+      username: "",
+      fullName: "",
+      email: "",
+      password: "",
+      roleIds: ""
     };
     this.toggleModalInfo(item, title);
   };
@@ -88,7 +91,7 @@ class UserListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -108,7 +111,7 @@ class UserListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getUserList()
@@ -128,11 +131,30 @@ class UserListPage extends Component {
     });
   };
 
+  addUser = async () => {
+    //console.log("add: state ==================");
+    //console.log(this.state);
+    const { username, fullName, email, password, roleIds } = this.state.item;
+    const user = { username, fullName, email, password, roleIds };
+    try {
+      let response = await ApiUser.postUser(user);
+      //console.log("response");
+      //console.log(response);
+      this.toggleModalInfo();
+      this.getUserList();
+      toastSuccess("New user has been created successfully");
+    } catch (err) {
+      //console.log("err");
+      //console.log(err);
+      toastError("User creation failed! "+err);
+    }
+  };
+
   updateUser = async () => {
     const { id, username, fullName, email, roleIds } = this.state.item;
     const user = { id, username, fullName, email, roleIds };
     try {
-      console.log(user, "USER");
+      //console.log(user, "USER");
       await ApiUser.updateUser(user);
       this.toggleModalInfo();
       this.getUserList();
@@ -158,6 +180,7 @@ class UserListPage extends Component {
     if (id) {
       this.updateUser();
     } else {
+      this.addUser();
     }
   };
 
@@ -197,7 +220,7 @@ class UserListPage extends Component {
                     <FormGroup>
                       <ValidationInput
                         name="username"
-                        title="UserName"
+                        title="Username"
                         type="text"
                         required={true}
                         value={item.username}
@@ -231,6 +254,21 @@ class UserListPage extends Component {
                         type="text"
                         required={true}
                         value={item.email}
+                        onChange={this.onModelChange}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <ValidationInput
+                        name="password"
+                        title="Password"
+                        type="text"
+                        required={true}
+                        value={item.password}
                         onChange={this.onModelChange}
                       />
                     </FormGroup>
@@ -278,20 +316,20 @@ class UserListPage extends Component {
           <Col xs="12">
             <div className="flex-container header-table">
               <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
-                Create article
+                Create a new admin
               </Button>
 
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Searching..."
+                placeholder="Email or FullName..."
               />
             </div>
             <Table className="admin-table table-hover table-striped" responsive bordered>
               <thead>
                 <tr>
                   <th></th>
-                  <th>Name</th>
+                  <th>Username</th>
                   <th>FullName</th> 
                   <th>Email</th>
                   <th>Roles</th>
@@ -309,7 +347,7 @@ class UserListPage extends Component {
                         <td>{item.email}</td>
                         <td>{item.roles.map(role => role.name) + "; "}</td>
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
                           &nbsp;

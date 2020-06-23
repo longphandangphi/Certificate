@@ -7,6 +7,10 @@ export default class ApiStudent {
   }
 
   static getStudentList(params) {
+    return RequestHelper.get(appConfig.apiUrl + "students/noPagination", params);
+  }
+
+  static getStudentList2(params) {
     return RequestHelper.get(appConfig.apiUrl + "students", params);
   }
 

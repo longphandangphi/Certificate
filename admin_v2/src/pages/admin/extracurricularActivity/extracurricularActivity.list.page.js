@@ -24,7 +24,7 @@ class ExtracurricularActivityListPage extends Component {
       itemId: null,
       params: {
         offset: pagination.initialPage,
-        limit: pagination.defaultlimit
+        limit: pagination.defaultTake
       },
       query: ""
     };

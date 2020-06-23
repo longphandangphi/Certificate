@@ -23,7 +23,7 @@ class ExtracurricularActivityListPage extends Component {
       itemId: null,
       params: {
         offset: pagination.initialPage,
-        limit: pagination.defaultlimit
+        limit: pagination.defaultTake
       },
       query: ""
     };
@@ -156,7 +156,7 @@ class ExtracurricularActivityListPage extends Component {
       this.getExtracurricularActivityList();
       toastSuccess("The extracurricular activity has been assign successfully");
     } catch (err) {
-      toastError("...");
+      toastError("Assign faild!");
     }
   };
 

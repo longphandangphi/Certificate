@@ -1,5 +1,6 @@
 import {
   GET_STUDENT_LIST,
+  GET_STUDENT_LIST_2,
   GET_STUDENT_LIST_SUCCESS,
   GET_STUDENT_LIST_FAILED,
   GET_DELETED_STUDENT_LIST,
@@ -21,6 +22,11 @@ export function studentListReducer(state = initialState, action) {
         loading: true,
         failed: false
       });
+    case GET_STUDENT_LIST_2:
+    return Object.assign({}, state, {
+      loading: true,
+      failed: false
+    });
     case GET_STUDENT_LIST_SUCCESS:
       return Object.assign({}, state, {
         studentPagedList: action.payload,

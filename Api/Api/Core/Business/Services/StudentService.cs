@@ -18,6 +18,8 @@ namespace Api.Core.Business.Services
     {
         Task<PagedList<StudentViewModel>> ListStudentAsync(RequestListViewModel requestListViewModel);
 
+        Task<List<StudentViewModel>> ListStudentAsync2(RequestListViewModel requestListViewModel);
+
         Task<ResponseModel> RegisterAsync(StudentRegisterModel studentRegisterModel);
 
         // Task<ResponseModel> UpdateProfileAsync(Guid id, StudentUpdateProfileModel studentUpdateProfileModel);
@@ -116,7 +118,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Id";
+                matchedPropertyName = "FirstName";
             }
 
             var type = typeof(StudentViewModel);
@@ -125,6 +127,34 @@ namespace Api.Core.Business.Services
             list = requestListViewModel.IsDesc ? list.OrderByDescending(x => sortProperty.GetValue(x, null)).ToList() : list.OrderBy(x => sortProperty.GetValue(x, null)).ToList();
 
             return new PagedList<StudentViewModel>(list, requestListViewModel.Offset ?? CommonConstants.Config.DEFAULT_SKIP, requestListViewModel.Limit ?? CommonConstants.Config.DEFAULT_TAKE);
+        }
+
+        public async Task<List<StudentViewModel>> ListStudentAsync2(RequestListViewModel requestListViewModel)
+        {
+            var list = await GetAll()
+            .Where(x => (!requestListViewModel.IsActive.HasValue || x.RecordActive == requestListViewModel.IsActive)
+                && (string.IsNullOrEmpty(requestListViewModel.Query)
+                    || (x.FirstName.Contains(requestListViewModel.Query)
+                    || (x.Email.Contains(requestListViewModel.Query))
+                    || (x.Id.ToString().Contains(requestListViewModel.Query))
+                    )))
+                .Select(x => new StudentViewModel(x)).ToListAsync();
+
+            var studentViewModelProperties = GetAllPropertyNameOfStudentViewModel();
+            var requestPropertyName = !string.IsNullOrEmpty(requestListViewModel.SortName) ? requestListViewModel.SortName.ToLower() : string.Empty;
+            string matchedPropertyName = studentViewModelProperties.FirstOrDefault(x => x == requestPropertyName);
+
+            if (string.IsNullOrEmpty(matchedPropertyName))
+            {
+                matchedPropertyName = "FirstName";
+            }
+
+            var type = typeof(StudentViewModel);
+            var sortProperty = type.GetProperty(matchedPropertyName);
+
+            list = requestListViewModel.IsDesc ? list.OrderByDescending(x => sortProperty.GetValue(x, null)).ToList() : list.OrderBy(x => sortProperty.GetValue(x, null)).ToList();
+
+            return list;
         }
 
         public async Task<ResponseModel> RegisterAsync(StudentRegisterModel studentRegisterModel)

@@ -282,7 +282,7 @@ class ClassListPage extends Component {
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Searching..."
+                placeholder="Class name..."
               />
             </div>
             <Table className="admin-table table-hover table-striped" responsive bordered>
@@ -305,13 +305,13 @@ class ClassListPage extends Component {
                         <td>{item.faculty.name}</td>
                         <td>{item.description}</td>
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
-                          &nbsp;
+                          {/* &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );

@@ -21,10 +21,14 @@ namespace Api.Core.Business.Models.Reports
             Content = report.Content;
             Response = report.Response;
             //StudentViewModel = new StudentViewModel(report.Student);
+            StudentId = report.StudentId;
             CreateOn = report.CreatedOn;
+
         }
 
         public Guid Id { get; set; }
+
+        public Guid StudentId { get; set; }
 
         public string Subject { get; set; }
 

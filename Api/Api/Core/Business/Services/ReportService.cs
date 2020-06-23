@@ -75,7 +75,7 @@ namespace Api.Core.Business.Services
 
             if (string.IsNullOrEmpty(matchedPropertyName))
             {
-                matchedPropertyName = "Id";
+                matchedPropertyName = "CreateOn";
             }
 
             var type = typeof(ReportViewModel);

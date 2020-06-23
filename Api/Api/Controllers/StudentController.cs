@@ -32,6 +32,13 @@ namespace Api.Controllers
             return Ok(students);
         }
 
+        [HttpGet("noPagination")]
+        public async Task<IActionResult> GetAll2([FromQuery] RequestListViewModel studentRequestListViewModel)
+        {
+            var students = await _studentService.ListStudentAsync2(studentRequestListViewModel);
+            return Ok(students);
+        }
+
         [HttpGet("{id}")]
         //[CustomAuthorize]
         public async Task<IActionResult> GetStudentById(Guid id)

@@ -283,9 +283,9 @@ class ReportListPage extends Component {
         <Row>
           <Col xs="12">
             <div className="flex-container header-table">
-              <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
+              {/* <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
                 Create
-              </Button>
+              </Button> */}
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
@@ -298,10 +298,10 @@ class ReportListPage extends Component {
                   <th></th>
                   <th>Create On</th>
                   <th>Report subject</th>
-                  {/* <th>Content</th> */}
+                  <th>Content</th>
                   <th style={{minWidth:270}}>Student ID</th>
-                  <th>Student's Name</th>
-                  <th>Response content</th>
+                  {/* <th>Student's Name</th> */}
+                  {/* <th>Response content</th> */}
                   <th>Action</th>
                 </tr>
               </thead>
@@ -317,14 +317,14 @@ class ReportListPage extends Component {
                             .format("YYYY-MM-DD HH:mm")}
                         </td>
                         <td>{item.subject}</td>
-                        {/* <td>{item.content}</td> */}
-                        <td>{item.studentViewModel.id}</td>
-                        <td>{item.studentViewModel.firstName + " " + item.studentViewModel.lastName}</td>
-                        <td className={item.response === "" ? "text-danger" : "text-success"}>{item.response === "" ? "Not yet" : item.response}</td>
+                        <td>{ReactHtmlParser(item.content)}</td>
+                        <td>{item.studentId}</td>
+                        {/* <td>{item.studentViewModel.firstName + " " + item.studentViewModel.lastName}</td> */}
+                        {/* <td className={item.response === "" ? "text-danger" : "text-success"}>{item.response === "" ? "Not yet" : item.response}</td> */}
                         <td>
-                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)} style={{marginBottom:3}}>
-                            View detail
-                          </Button>
+                          {/* <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)} style={{marginBottom:3}}>
+                            Response
+                          </Button> */}
                           &nbsp;
                           <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete

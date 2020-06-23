@@ -597,7 +597,7 @@ class StandardCertificateListPage extends Component {
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Searching..."
+                placeholder="Searching by name..."
               />
             </div>
             <Table className="admin-table table-hover table-striped" responsive bordered>

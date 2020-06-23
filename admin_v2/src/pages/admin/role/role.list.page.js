@@ -221,9 +221,9 @@ class RoleListPage extends Component {
         <Row>
           <Col xs="12">
             <div className="flex-container header-table">
-              <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
+              {/* <Button onClick={this.showAddNew} className="btn btn-pill btn-success btn-sm">
                 Create
-              </Button>
+              </Button> */}
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
@@ -240,19 +240,26 @@ class RoleListPage extends Component {
               </thead>
               <tbody>
                 {hasResults &&
-                  sources.map((item, index) => {
+                  sources
+                  .filter(role => {
+                    if (role.name === "Super Admin") {
+                      return false;
+                    }
+                    return true;
+                  })
+                  .map((item, index) => {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
                         <td>{item.name}</td>
                         <td>
-                          <Button className="btn-sm" color="secondary" onClick={() => this.showUpdateModal(item)}>
+                          <Button className="btn-sm" color="info" onClick={() => this.showUpdateModal(item)}>
                             Edit
                           </Button>
                           &nbsp;
-                          <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
+                          {/* <Button className="btn-sm" color="danger" onClick={() => this.showConfirmDelete(item.id)}>
                             Delete
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     );

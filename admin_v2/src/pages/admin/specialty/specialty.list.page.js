@@ -26,8 +26,8 @@ class SpecialtyListPage extends Component {
       standardOfCertificates: [],
       itemId: null,
       params: {
-        skip: pagination.initialPage,
-        take: pagination.defaultTake
+        offset: pagination.initialPage,
+        limit: pagination.defaultTake
       },
       query: ""
     };
@@ -98,7 +98,7 @@ class SpecialtyListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: 1
+          offset: 1
         },
         query: e.target.value
       },
@@ -118,7 +118,7 @@ class SpecialtyListPage extends Component {
       {
         params: {
           ...this.state.params,
-          skip: e.selected + 1
+          offset: e.selected + 1
         }
       },
       () => this.getSpecialtyList()
@@ -323,7 +323,7 @@ class SpecialtyListPage extends Component {
               <input
                 onChange={this.onSearchChange}
                 className="form-control form-control-sm"
-                placeholder="Searching by Specialty..."
+                placeholder="Specialty name..."
               />
             </div>
             <Table className="admin-table table-hover table-striped" responsive bordered>
